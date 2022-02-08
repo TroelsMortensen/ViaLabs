@@ -1,68 +1,8 @@
 @page "/"
 
-@using Application.MarkdownConvert
-
-<div style="display:flex; width: 100%; justify-content: space-evenly">
-    <div style="min-width: 45%;">
-        <MarkdownEditor @bind-Value="@markdownValue"
-                        ValueHTMLChanged="@MdToHtml"
-                        CustomButtonClicked="OnCustomButtonClicked"
-                        ImageUploadEndpoint=""
-                        ImageUploadChanged="@OnImageUploadChanged"
-                        ImageUploadStarted="@OnImageUploadStarted"
-                        ImageUploadProgressed="@OnImageUploadProgressed"
-                        ImageUploadEnded="@OnImageUploadEnded"
-                        UploadImage="true">
-            @* <Toolbar> *@
-            @*     <MarkdownToolbarButton Name="Test" Icon="fa fa-bolt" Action="MarkdownAction.Bold"/> *@
-            @*     <MarkdownToolbarButton Separator Name="CustomImageUpload" Icon="fa fa-star" Title="My Image upload" /> *@
-            @* </Toolbar> *@
-        </MarkdownEditor>
-    </div>
-    <div style="min-width: 45%; min-height: 600px; background-color: #e0fbff">
-        @slideContent
-    </div>
-</div>
+<h1>Via Labs index page</h1>
 
 @code
 {
-    private string markdownValue = String.Empty;
-
-    private MarkupString slideContent;
-    private readonly MarkdigAdapter converter = new();
-
-    private Task MdToHtml(string mdSource)
-    {
-        slideContent = (MarkupString)converter.ConvertMdToHtml(mdSource);
-        return Task.CompletedTask;
-    }
-
-    Task OnImageUploadChanged(FileChangedEventArgs e)
-    {
-        this.StateHasChanged();
-        return Task.CompletedTask;
-    }
-
-    Task OnImageUploadStarted(FileStartedEventArgs e)
-    {
-        Console.WriteLine($"Started Image: {e.File.Name}");
-        return Task.CompletedTask;
-    }
-
-    Task OnImageUploadProgressed(FileProgressedEventArgs e)
-    {
-        Console.WriteLine($"Image: {e.File.Name} Progress: {(int)e.Percentage}");
-        return Task.CompletedTask;
-    }
-
-    Task OnImageUploadEnded(FileEndedEventArgs e)
-    {
-        Console.WriteLine($"Finished Image: {e.File.Name}, Success: {e.Success}");
-        return Task.CompletedTask;
-    }
-
-    private Task OnCustomButtonClicked(MarkdownButtonEventArgs args)
-    {
-        throw new NotImplementedException();
-    }
+    
 }

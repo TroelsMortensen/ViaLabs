@@ -1,0 +1,71 @@
+﻿@page "/Profile"
+
+<div style="display:flex; justify-content: center">
+    <div class="profile-card">
+        <h1>Profile</h1>
+        <p>
+            Hello @userName.
+        </p>
+        @if (isViaTeacher)
+        {
+            <p>
+                It looks like you are a teacher at VIA.
+            </p>
+        }
+    </div><div class="profile-card">
+        <h1>Profile</h1>
+        <p>
+            Hello @userName.
+        </p>
+        @if (isViaTeacher)
+        {
+            <p>
+                It looks like you are a teacher at VIA.
+            </p>
+        }
+    </div>
+    <div class="profile-card">
+        <h1>Profile</h1>
+        <p>
+            Hello @userName.
+        </p>
+        @if (isViaTeacher)
+        {
+            <p>
+                It looks like you are a teacher at VIA.
+            </p>
+        }
+    </div>
+</div>
+
+@code {
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthStateTask { get; set; }
+
+    private string userName = String.Empty;
+    private bool isViaTeacher;
+
+    protected override async Task OnInitializedAsync()
+    {
+        AuthenticationState authState = await AuthStateTask;
+        userName = authState?.User.Identity.Name;
+        isViaTeacher = IsViaTeacher(userName);
+    }
+
+    private bool IsViaTeacher(string s)
+    {
+        if (!s.StartsWith("VIA\\")) return false;
+        string cleanedUserName = s.Replace("VIA\\", "");
+        if (cleanedUserName.Any(char.IsDigit)) return false;
+        return true;
+    }
+
+    // protected override Task OnAfterRenderAsync(bool firstRender)
+    // {
+    //     ClaimsPrincipal authStateUser = AuthState?.User;
+    //     Console.WriteLine("CP:" + authStateUser);
+    //     return base.OnAfterRenderAsync(firstRender);
+    // }
+
+}
