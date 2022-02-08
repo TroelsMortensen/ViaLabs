@@ -1,0 +1,24 @@
+This one!!!  https://www.puresourcecode.com/dotnet/blazor/markdown-editor-component-for-blazor/
+Den her som alternativ: https://blazorise.com/docs/extensions/markdown/ -> men der er license. Men det er vist okay ved non-commercial manner.
+
+bootstrap har noget masonry layout. Generelt kig mere på bootstrap.
+https://getbootstrap.com/docs/5.0/examples/masonry/
+
+
+https://www.youtube.com/watch?v=vwOLdgFb2yQ
+https://blazorhelpwebsite.com/ViewBlogPost/7
+https://github.com/Blazored/TextEditor
+
+Kig på blazered markdown editor, der var noget med license.
+
+JWT login: https://www.youtube.com/watch?v=v7q3pEK1EA0
+
+https://www.google.com/url?sa=t&source=web&cd=&ved=2ahUKEwjhu-P3lbf1AhWFy4sKHcGwBroQFnoECD0QAQ&url=https%3A%2F%2Fpandao.github.io%2Feditor.md%2Fen.html&usg=AOvVaw0sxOMmgmZ-4B413fDADFbn
+
+https://simplemde.com/
+
+https://www.google.com/search?q=javascript+markdown+editor+tutorial&sxsrf=AOaemvLNAlt8iFUcOu8yiDmgNSzK4pyWsA%3A1642367022599&ei=LojkYeHsI4WXrwTB4ZrQCw&oq=Javascript+markdown+editor&gs_lcp=ChNtb2JpbGUtZ3dzLXdpei1zZXJwEAEYAjIGCAAQBxAeMgUIABDLATIECAAQHjIECAAQHjIGCAAQBRAeMgYIABAFEB4yBggAEAUQHjIGCAAQCBAeOgcIIxCwAxAnOgcIABBHELADOgQIABBDOgUIABCABDoICAAQCBAHEB46CAgAEAcQHhATOgoIABAHEAUQHhATOgoIABAIEAcQHhATSgQIQRgAUJEMWMkgYOtCaAFwAHgAgAGnAYgBwQmSAQM0LjeYAQCgAQHIAQnAAQE&sclient=mobile-gws-wiz-serp
+
+
+promising:
+https://easy-markdown-editor.tk/

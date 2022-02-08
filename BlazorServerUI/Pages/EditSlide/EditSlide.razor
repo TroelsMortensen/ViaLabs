@@ -1,0 +1,28 @@
+﻿@page "/EditSlide"
+
+@using Application.MarkdownConvert
+
+<div style="display:flex; width: 100%; justify-content: space-evenly">
+    <div style="min-width: 45%;">
+        <div>
+            <button>Preview</button>
+            <button>Save</button>
+            <input type="checkbox"/>
+            <label>Autosave</label>
+        </div>
+    </div>
+    <div style="min-width: 45%; min-height: 600px; background-color: #e0fbff">
+        @slideContent
+    </div>
+</div>
+
+@code
+{
+    private MarkupString slideContent;
+
+    private void MdToHtml(string mdSource)
+    {
+        MarkdigAdapter converter = new();
+        slideContent = (MarkupString)converter.ConvertMdToHtml(mdSource);
+    }
+}

@@ -1,0 +1,21 @@
+﻿@inherits LayoutComponentBase
+
+<PageTitle>BlazorServerUI</PageTitle>
+
+<div class="page">
+
+
+    <main>
+        <div class="top-row px-4 auth">
+            <NavLink class="nav-link" href="EditSlide" >
+                <span class="oi oi-home" aria-hidden="true"></span> Edit
+            </NavLink>
+            <LoginDisplay/>
+            <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
+        </div>
+
+        <article class="content px-4">
+            @Body
+        </article>
+    </main>
+</div>
