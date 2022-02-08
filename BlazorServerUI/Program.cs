@@ -1,6 +1,6 @@
+using Application;
+using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +16,12 @@ builder.Services.AddAuthorization(options =>
 
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+
+// Add custom services
+builder.Services.AddAppServices();
+builder.Services.AddJsonDataServices();
+
+// End custom services
 
 var app = builder.Build();
 

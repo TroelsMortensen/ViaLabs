@@ -1,4 +1,7 @@
 ﻿@page "/Profile"
+@using Application.EntryContracts
+@using Entities
+@inject ITeacherHome teacherHome
 
 <div style="display:flex; justify-content: center">
     <div class="profile-card">
@@ -45,27 +48,14 @@
 
     private string userName = String.Empty;
     private bool isViaTeacher;
+    private Teacher? approvedTeacher;
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState?.User.Identity.Name;
-        isViaTeacher = IsViaTeacher(userName);
+        isViaTeacher = teacherHome.IsViaTeacher(userName);
+        approvedTeacher = teacherHome.GetTeacher(userName);
     }
-
-    private bool IsViaTeacher(string s)
-    {
-        if (!s.StartsWith("VIA\\")) return false;
-        string cleanedUserName = s.Replace("VIA\\", "");
-        if (cleanedUserName.Any(char.IsDigit)) return false;
-        return true;
-    }
-
-    // protected override Task OnAfterRenderAsync(bool firstRender)
-    // {
-    //     ClaimsPrincipal authStateUser = AuthState?.User;
-    //     Console.WriteLine("CP:" + authStateUser);
-    //     return base.OnAfterRenderAsync(firstRender);
-    // }
 
 }
