@@ -9,5 +9,6 @@ public static class ServiceExtensions
     public static void AddAppServices(this IServiceCollection services)
     {
         services.AddScoped<ITeacherHome, TeacherHome>();
+        services.AddScoped<ICategoryHome, CategoryHome>();
     }
 }

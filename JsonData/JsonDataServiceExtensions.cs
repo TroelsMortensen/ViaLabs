@@ -10,5 +10,6 @@ public static class JsonDataServiceExtensions
     {
         services.AddScoped<JsonDataContext>();
         services.AddScoped<ITeacherRepo, TeacherRepo>();
+        services.AddScoped<ICategoryRepo, CategoryRepo>();
     }
 }

@@ -17,6 +17,7 @@
                     <img class="icon" src="icons/AddCategory.svg" @onclick="CreateNewCategory" title="New Category"/>
                 </div>
             </div>
+            <hr/>
             <div class="column-container">
                 <div class="guide-coloumn">
                     <div class="category-card">
@@ -51,17 +52,18 @@
     private bool isViaTeacher;
     private Teacher? approvedTeacher;
 
+    private ICollection<Category> categories = new List<Category>();
+
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name;
         Console.WriteLine(userName);
         isViaTeacher = teacherHome.IsViaTeacher(userName);
-        if (isViaTeacher)
-        {
-            approvedTeacher = await teacherHome.GetTeacherAsync(userName);
-        }
-    // TODO catch exceptions here, and show toast error message
+        if (!isViaTeacher) return;
+        approvedTeacher = await teacherHome.GetTeacherAsync(userName);
+        
+        // TODO catch exceptions here, and show toast error message
     }
 
     private Task CreateNewGuide()
