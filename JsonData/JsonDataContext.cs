@@ -28,7 +28,8 @@ public class JsonDataContext
                 {
                     new Teacher("VIA\\TRMO")
                 },
-                UnApprovedTeachers = new List<Teacher>()
+                UnApprovedTeachers = new List<Teacher>(),
+                Categories = new List<Category>()
             };
             string vldAsJson = JsonSerializer.Serialize(vld);
             File.WriteAllText(path, vldAsJson);

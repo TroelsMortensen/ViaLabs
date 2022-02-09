@@ -15,7 +15,8 @@ public class CategoryRepo : ICategoryRepo
     public Task CreateAsync(Category category)
     {
         category.Id = Guid.NewGuid();
-        
+        context.ViaLabData.Categories.Add(category);
+        context.SaveChanges();
         return Task.CompletedTask;
     }
 }
