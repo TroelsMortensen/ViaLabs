@@ -6,5 +6,6 @@ public interface ITeacherHome
 {
     // public Task<User> GetUser(string userName);
     public bool IsViaTeacher(string userName);
-    Teacher GetTeacher(string userName);
+    Task<Teacher?> GetTeacherAsync(string userName);
+    
 }

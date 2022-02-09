@@ -1,0 +1,26 @@
+.nav-header {
+    background-color: #e8f0ff;
+    border-bottom: 3px solid #d6d5d5;
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: baseline;
+    
+}
+
+.forum-title {
+    /*text-align: center;*/
+    cursor:pointer;
+    margin:auto;
+}
+
+.menu-icons {
+    align-self: center;
+    margin-right: 10px
+    /*text-align: right;*/
+}
+
+.menu-icon {
+    cursor: pointer;
+    height: 32px;
+}

@@ -1,0 +1,22 @@
+﻿@inject NavigationManager navMgr
+
+<PageTitle>Forum</PageTitle>
+
+<div class="nav-header">
+    <nav class="forum-title">
+        <h1 @onclick='() => navMgr.NavigateTo("/")'>ViaLabs</h1>
+    </nav>
+    <nav class="menu-icons">
+        <img class="menu-icon" src="icons/Profile.png" @onclick="GoToProfile" title="Profile"/>
+    </nav>
+</div>
+
+@code {
+
+    private Task GoToProfile()
+    {
+        navMgr.NavigateTo($"/Profile");
+        return Task.CompletedTask;
+    }
+    
+}

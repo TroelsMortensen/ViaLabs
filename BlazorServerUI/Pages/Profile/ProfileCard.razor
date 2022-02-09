@@ -1,0 +1,47 @@
+﻿@using Entities
+<div class="profile-card">
+    <h1>Profile</h1>
+    <p>
+        <b>Hello @UserName.</b>
+    </p>
+    @if (!IsViaTeacher)
+    {
+        <p>
+            It looks like you are <i>not</i> a teacher at VIA. There isn't much for you to do in the profile page then, sorry.
+        </p>
+    }
+    else
+    {
+        
+        @if (ApprovedTeacher is null)
+        {
+            <p>
+                It looks like you are a teacher at VIA.
+            </p>
+            <p>
+                You are, however, not yet approved to create anything.<br/>
+                Send an email to trmo@via.dk with your user name ( "@UserName" ) to get approved.
+            </p>
+        }
+        else
+        {
+            <p>
+                Known aliases: ...
+            </p>
+        }
+    }
+
+</div>
+
+@code {
+
+    [Parameter]
+    public string UserName { get; set; }
+
+    [Parameter]
+    public bool IsViaTeacher { get; set; }
+
+    [Parameter]
+    public Teacher? ApprovedTeacher { get; set; }
+
+}

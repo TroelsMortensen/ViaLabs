@@ -4,5 +4,5 @@ namespace Application.Repositories;
 
 public interface ITeacherRepo
 {
-    public Task<Teacher> GetApprovedTeacher(string userName);
+    public Task<Teacher?> GetApprovedTeacher(string name);
 }

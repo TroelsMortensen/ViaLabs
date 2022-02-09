@@ -6,7 +6,6 @@ namespace Application.HomeImpls;
 
 public class TeacherHome : ITeacherHome
 {
-
     private ITeacherRepo teacherRepo;
 
     public TeacherHome(ITeacherRepo teacherRepo)
@@ -16,14 +15,15 @@ public class TeacherHome : ITeacherHome
 
     public bool IsViaTeacher(string userName)
     {
+        if (string.IsNullOrEmpty(userName)) return false;
         if (!userName.StartsWith("VIA\\")) return false;
         string cleanedUserName = userName.Replace("VIA\\", "");
         if (cleanedUserName.Any(char.IsDigit)) return false;
         return true;
     }
 
-    public Teacher GetTeacher(string userName)
+    public Task<Teacher?> GetTeacherAsync(string userName)
     {
-        throw new NotImplementedException();
+        return teacherRepo.GetApprovedTeacher(userName);
     }
 }

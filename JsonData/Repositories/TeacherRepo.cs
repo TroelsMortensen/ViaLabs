@@ -12,8 +12,9 @@ public class TeacherRepo : ITeacherRepo
         this.context = context;
     }
 
-    public Task<Teacher> GetApprovedTeacher(string userName)
+    public Task<Teacher?> GetApprovedTeacher(string name)
     {
-        throw new NotImplementedException();
+        Teacher? firstOrDefault = context.ViaLabData.Teachers.FirstOrDefault(teacher => teacher.Name.Equals(name));
+        return Task.FromResult(firstOrDefault);
     }
 }
