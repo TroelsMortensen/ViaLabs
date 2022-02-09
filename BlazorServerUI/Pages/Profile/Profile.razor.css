@@ -26,6 +26,8 @@
 }
 
 .icon {
-    height:5rem;
+    height:2em;
     cursor: pointer;
+    margin-top: 8px;
+    margin-left: 5px;
 }

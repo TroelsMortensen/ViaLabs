@@ -7,17 +7,29 @@
     @if (approvedTeacher is not null)
     {
         <div class="guides-container">
-            <h1>
-                Guides
-            </h1>
-
+            <div style="display:flex; justify-content: center">
+                <div>
+                    <h1>
+                        Guides
+                    </h1>
+                </div>
+                <div>
+                    <img class="icon" src="icons/AddCategory.svg" @onclick="CreateNewCategory" title="New Category"/>
+                </div>
+            </div>
             <div class="column-container">
                 <div class="guide-coloumn">
                     <div class="category-card">
-                        <h2>
-                            Un-categorized
-                            <img class="icon" src="icons/AddGuide.svg" @onclick="CreateNewGuide" title="New Guide"/>
-                        </h2>
+                        <div style="display:flex; justify-content: center">
+                            <div>
+                                <h2>
+                                    Un-categorized
+                                </h2>
+                            </div>
+                            <div>
+                                <img class="icon" src="icons/AddGuide.svg" @onclick="CreateNewGuide" title="New Guide"/>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div class="guide-coloumn">
@@ -56,6 +68,11 @@
     {
         Guide guide = new Guide(approvedTeacher);
         return Task.CompletedTask;
+    }
+
+    private Task CreateNewCategory()
+    {
+        throw new NotImplementedException();
     }
 
 }
