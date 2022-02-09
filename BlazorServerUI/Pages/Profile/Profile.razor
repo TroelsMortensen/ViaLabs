@@ -4,28 +4,28 @@
 @inject ITeacherHome teacherHome
 
 <div style="display:flex; justify-content: center">
+    @if (approvedTeacher is not null)
+    {
+        <div class="guides-container">
+            <h1>
+                Guides
+            </h1>
 
-    <div class="guides-container">
-        <h1>
-            Guides
-            <img class="icon" src="icons/Guide.svg" @onclick="CreateNewGuide" title="New Guide"/>
-        </h1>
+            <div class="column-container">
+                <div class="guide-coloumn">
+                    <div class="category-card">
+                        <h2>
+                            Un-categorized
+                            <img class="icon" src="icons/Guide.svg" @onclick="CreateNewGuide" title="New Guide"/>
+                        </h2>
+                    </div>
+                </div>
+                <div class="guide-coloumn">
 
-        <div class="column-container">
-            <div class="guide-coloumn">
-                <div class="category-card">
-                    <h2>
-                        Un-categorized
-                        <img class="icon" src="icons/Guide.svg" @onclick="CreateNewGuide" title="New Guide"/>
-                    </h2>
                 </div>
             </div>
-            <div class="guide-coloumn">
-
-            </div>
         </div>
-    </div>
-
+    }
     <ProfileCard ApprovedTeacher="@approvedTeacher" UserName="@userName" IsViaTeacher="@isViaTeacher"/>
 
 </div>
@@ -54,7 +54,7 @@
 
     private Task CreateNewGuide()
     {
-        
+        Guide guide = new Guide(approvedTeacher);
         return Task.CompletedTask;
     }
 

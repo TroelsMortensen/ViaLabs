@@ -1,0 +1,10 @@
+/Application/bin/
+/Application/obj/
+/BlazorServerUI/bin/
+/BlazorServerUI/obj/
+/Entities/bin/
+/Entities/obj/
+/JsonData/bin/
+/JsonData/obj/
+/MarkdownEditorComponent/bin/
+/MarkdownEditorComponent/obj/
