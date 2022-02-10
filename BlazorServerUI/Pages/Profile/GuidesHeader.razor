@@ -1,0 +1,40 @@
+﻿@using Application.EntryContracts
+@using BlazorServerUI.Pages.Components
+@inject ICategoryHome categoryHome
+
+<div style="display:flex; justify-content: center">
+    <div>
+        <h1>
+            Guides
+        </h1>
+    </div>
+    <div>
+        <img class="new-category-icon" src="icons/AddCategory.svg" @onclick="@(() => showModal = true)" title="New Category"/>
+    </div>
+</div>
+<hr/>
+
+<Modal ShowModal="@showModal">
+    <h3>New Category</h3>
+    <hr/>
+    <div style="margin-bottom: 5px">
+        <label style="font-weight: bold">Category title</label>
+    </div>
+    <div>
+        <input type="text" style="border-radius: 10px; padding: 3px; text-align: center"/>
+    </div>
+    <div style="margin-top: 15px">
+        <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="NewCategory">Accept</button>
+        <button class="negative-color vialab-button" style="margin-left: 10px" @onclick="@(() => showModal = false)">Cancel</button>
+    </div>
+</Modal>
+
+@code
+{
+    private bool showModal;
+    
+    private Task NewCategory()
+    {
+        return Task.CompletedTask;
+    }
+}

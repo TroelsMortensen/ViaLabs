@@ -1,0 +1,28 @@
+.positive-color{
+    background-color: #80ff80;
+}
+
+.negative-color{
+    background-color: #ff8888;
+}
+
+.neutral-color {
+    background-color: #88e3ff;
+}
+
+.warning-color {
+    background-color: #fffd88;
+}
+
+.vialab-button{
+    border-radius: 10px;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: solid 1px #0c4128;
+}
+
+.vialab-button:hover{
+    opacity: 0.8;
+    box-shadow: 0 2px 10px 2px #3f3f3f;
+}

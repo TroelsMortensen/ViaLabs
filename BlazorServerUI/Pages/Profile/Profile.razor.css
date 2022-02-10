@@ -1,29 +1,4 @@
-.guides-container {
-    flex-grow: 2;
-    /*padding: 25px;*/
-    text-align: center;
-    margin: 25px;
 
-}
-
-.column-container {
-    display: flex;
-    width: 100%;
-
-    justify-content: space-evenly;
-}
-
-.guide-coloumn {
-    width:50%;
-}
-
-.category-card {
-    border: solid;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-    /*padding: 25px;*/
-    text-align: center;
-    margin: 5px;
-}
 
 .icon {
     height:2em;
@@ -31,3 +6,4 @@
     margin-top: 8px;
     margin-left: 5px;
 }
+

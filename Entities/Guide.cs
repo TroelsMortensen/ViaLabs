@@ -9,8 +9,9 @@ public class Guide
     public bool IncludeStepNums { get; set; }
     public Category? Category { get; set; }
 
-    public Guide(Teacher owner)
+    public Guide(Teacher owner, string title)
     {
         Owner = owner;
+        Title = title;
     }
 }

@@ -1,0 +1,15 @@
+.category-card {
+    border: solid;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    /*padding: 25px;*/
+    text-align: center;
+    margin: 5px;
+    max-width: 400px;
+}
+
+.new-guide-icon {
+    height:2em;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-left: 15px;
+}

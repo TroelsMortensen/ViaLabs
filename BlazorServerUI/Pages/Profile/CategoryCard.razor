@@ -1,0 +1,22 @@
+﻿<div class="category-card">
+    <div style="display:flex; justify-content: center">
+        <div>
+            <h2>
+                Un-categorized
+            </h2>
+        </div>
+        <div>
+            <img class="new-guide-icon" src="icons/AddGuide.svg" @onclick="@(NewGuide)" title="New Guide"/>
+        </div>
+    </div>
+    
+</div>
+
+@code {
+
+    private Task NewGuide()
+    {
+        return Task.CompletedTask;
+    }
+
+}
