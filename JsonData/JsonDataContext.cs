@@ -7,14 +7,18 @@ public class JsonDataContext
 {
     private string path = "vialabs.json";
 
-    private ViaLabData viaLabData = null!;
+    private ViaLabData? viaLabData;
 
     public ViaLabData ViaLabData
     {
         get
         {
-            LoadData();
-            return viaLabData;
+            if (viaLabData is null)
+            {
+                LoadData();
+            }
+
+            return viaLabData!;
         }
     }
 
@@ -39,7 +43,7 @@ public class JsonDataContext
     private void LoadData()
     {
         string vldAsJson = File.ReadAllText(path);
-        viaLabData = JsonSerializer.Deserialize<ViaLabData>(vldAsJson)!;
+        viaLabData = JsonSerializer.Deserialize<ViaLabData>(vldAsJson);
     }
 
     public void SaveChanges()
@@ -49,6 +53,6 @@ public class JsonDataContext
             WriteIndented = true
         });
         File.WriteAllText(path, vldAsJson);
-        viaLabData = null!;
+        viaLabData = null;
     }
 }
