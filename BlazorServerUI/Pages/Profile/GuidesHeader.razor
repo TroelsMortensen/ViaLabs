@@ -28,7 +28,7 @@
         <label>Background color:</label>
     </div>
     <div style="margin-bottom: 5px">
-        <input type="color" id="color-picker" value="@backgroundColor" @bind="@backgroundColor"/>
+        <input type="color" id="color-picker" value="@backgroundColor" @onchange="args => backgroundColor = args.Value!.ToString()!"/>
     </div>
     @if (!string.IsNullOrEmpty(errorLabel))
     {
@@ -45,12 +45,12 @@
 @code
 {
     [CascadingParameter]
-    public Task<AuthenticationState> AuthenticationState { get; set; }
+    public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
     [Parameter]
     public EventCallback<Category> OnCategoryCreated { get; set; }
 
-    private string? backgroundColor = "#ffffff";
+    private string backgroundColor = "#ffffff";
     private bool showModal;
     private string errorLabel = String.Empty;
     private string categoryTitle = String.Empty;
@@ -59,19 +59,15 @@
     {
         AuthenticationState authState = await AuthenticationState;
         string teacherName = authState.User.Identity!.Name!;
-        
-        errorLabel = "";
-        Category category = new()
-        {
-            Title = categoryTitle,
-            Owner = new Teacher(teacherName),
-            BackgroundColor = backgroundColor
-        };
-        
+
+        errorLabel = string.Empty;
+        Category category = new(categoryTitle, new Teacher(teacherName), backgroundColor);
+
         try
         {
             Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
             await OnCategoryCreated.InvokeAsync(finishedCategory);
+            showModal = false;
         }
         catch (Exception e)
         {

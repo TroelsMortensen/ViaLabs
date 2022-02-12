@@ -1,4 +1,5 @@
 ﻿@using Entities
+@using System.Text.Json
 <div class="guides-container">
 
     <GuidesHeader OnCategoryCreated="@CategoryAdded"/>
@@ -18,8 +19,12 @@
 
     
     
-    private void CategoryAdded(Category category)
+    private Task CategoryAdded(Category category)
     {
-        
+        Console.WriteLine(JsonSerializer.Serialize(category, new JsonSerializerOptions
+        {
+            WriteIndented = true
+        }));
+        return Task.CompletedTask;
     }
 }
