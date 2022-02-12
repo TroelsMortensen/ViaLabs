@@ -117,7 +117,7 @@ namespace MarkdownEditorComponent
         /// <returns></returns>
         public static IEnumerable<object> Serialize(List<MarkdownToolbarButton> buttons)
         {
-            foreach (var button in buttons)
+            foreach (MarkdownToolbarButton button in buttons)
             {
                 if (button.Separator)
                     yield return "|";

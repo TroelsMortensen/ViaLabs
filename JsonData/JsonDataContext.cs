@@ -48,7 +48,7 @@ public class JsonDataContext
 
     public void SaveChanges()
     {
-        var vldAsJson = JsonSerializer.Serialize(viaLabData, new JsonSerializerOptions
+        string vldAsJson = JsonSerializer.Serialize(viaLabData, new JsonSerializerOptions
         {
             WriteIndented = true
         });

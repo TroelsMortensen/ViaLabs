@@ -14,18 +14,22 @@ public class CategoryHome : ICategoryHome
         this.categoryRepo = categoryRepo;
     }
 
-    public Task CreateCategory(CategoryDTO category)
+    public async Task<Category> CreateCategoryAsync(Category category)
     {
-        ValidateCategory(category);
-        Task task = categoryRepo.CreateAsync(new Category
-        {
-            Title = category.Title
-        });
-        return task;
+        await ValidateNewCategoryAsync(category);
+        return await categoryRepo.CreateAsync(category);
     }
 
-    private void ValidateCategory(CategoryDTO category)
+    private async Task ValidateNewCategoryAsync(Category category)
     {
-        
+        if (string.IsNullOrEmpty(category.Title)) throw new ArgumentException("Title cannot be empty");
+        if (category.Title.Length < 3) throw new ArgumentException("Title must be 3 or more characters");
+        if (category.Title.Length > 15) throw new ArgumentException("Title must be 15 or fewer characters");
+
+        Category? existing = await categoryRepo.GetCategoryByTitleAndTeacherAsync(category.Title, category.Owner.Name);
+        if (existing != null)
+        {
+            throw new ArgumentException("Category name already in use");
+        }
     }
 }

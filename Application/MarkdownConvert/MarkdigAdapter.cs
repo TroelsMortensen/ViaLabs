@@ -79,7 +79,7 @@ public class MarkdigAdapter : IMarkdownConverter
     {
         // TODO at some point, remove any leading numbering of file name, and prefix automatically by the i variable in the loop. I foresee that when changes are made to the tutorial steps, we will see numberings like 3.1, and 3.05 etc. The final output should number better
 
-        var mdFiles = GetAndSortMdFiles(pathToMdSteps);
+        List<string> mdFiles = GetAndSortMdFiles(pathToMdSteps);
 
         StringBuilder sb = new();
         for (int i = 0; i < mdFiles.Count; i++)
@@ -94,7 +94,7 @@ public class MarkdigAdapter : IMarkdownConverter
 
     private string StripLeadingZeros(string fileName)
     {
-        var trimmedForZero = fileName.TrimStart('0');
+        string trimmedForZero = fileName.TrimStart('0');
         return trimmedForZero;
     }
 

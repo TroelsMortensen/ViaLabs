@@ -4,5 +4,6 @@ namespace Application.Repositories;
 
 public interface ICategoryRepo
 {
-    Task CreateAsync(Category category);
+    Task<Category> CreateAsync(Category category);
+    Task<Category?> GetCategoryByTitleAndTeacherAsync(string categoryTitle, string ownerName);
 }

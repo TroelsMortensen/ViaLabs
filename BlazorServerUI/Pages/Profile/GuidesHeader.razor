@@ -1,5 +1,6 @@
 ﻿@using Application.EntryContracts
 @using BlazorServerUI.Pages.Components
+@using Entities
 @inject ICategoryHome categoryHome
 
 <div style="display:flex; justify-content: center">
@@ -20,10 +21,22 @@
     <div style="margin-bottom: 5px">
         <label style="font-weight: bold">Category title</label>
     </div>
-    <div>
-        <input type="text" style="border-radius: 10px; padding: 3px; text-align: center"/>
+    <div style="margin-bottom: 5px">
+        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@categoryTitle" max="15"/>
     </div>
-    <div style="margin-top: 15px">
+    <div style="margin-bottom: 5px">
+        <label>Background color:</label>
+    </div>
+    <div style="margin-bottom: 5px">
+        <input type="color" id="color-picker" value="@backgroundColor" @bind="@backgroundColor"/>
+    </div>
+    @if (!string.IsNullOrEmpty(errorLabel))
+    {
+        <div>
+            <label style="color:red">@errorLabel</label>
+        </div>
+    }
+    <div style="margin-top: 5px">
         <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="NewCategory">Accept</button>
         <button class="negative-color vialab-button" style="margin-left: 10px" @onclick="@(() => showModal = false)">Cancel</button>
     </div>
@@ -31,10 +44,38 @@
 
 @code
 {
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthenticationState { get; set; }
+
+    [Parameter]
+    public EventCallback<Category> OnCategoryCreated { get; set; }
+
+    private string? backgroundColor = "#ffffff";
     private bool showModal;
-    
-    private Task NewCategory()
+    private string errorLabel = String.Empty;
+    private string categoryTitle = String.Empty;
+
+    private async Task NewCategory()
     {
-        return Task.CompletedTask;
+        AuthenticationState authState = await AuthenticationState;
+        string teacherName = authState.User.Identity!.Name!;
+        
+        errorLabel = "";
+        Category category = new()
+        {
+            Title = categoryTitle,
+            Owner = new Teacher(teacherName),
+            BackgroundColor = backgroundColor
+        };
+        
+        try
+        {
+            Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
+            await OnCategoryCreated.InvokeAsync(finishedCategory);
+        }
+        catch (Exception e)
+        {
+            errorLabel = "Error: " + e.Message;
+        }
     }
 }

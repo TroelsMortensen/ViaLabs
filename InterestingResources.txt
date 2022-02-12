@@ -1,4 +1,7 @@
 This one!!!  https://www.puresourcecode.com/dotnet/blazor/markdown-editor-component-for-blazor/
+Doc: https://www.puresourcecode.com/dotnet/blazor/markdown-editor-component-for-blazor/#google_vignette
+
+
 Den her som alternativ: https://blazorise.com/docs/extensions/markdown/ -> men der er license. Men det er vist okay ved non-commercial manner.
 
 bootstrap har noget masonry layout. Generelt kig mere på bootstrap.

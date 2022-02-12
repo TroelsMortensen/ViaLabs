@@ -2,7 +2,7 @@ using Application;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 
-var builder = WebApplication.CreateBuilder(args);
+WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddAuthentication(NegotiateDefaults.AuthenticationScheme)
@@ -23,7 +23,7 @@ builder.Services.AddJsonDataServices();
 
 // End custom services
 
-var app = builder.Build();
+WebApplication app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -1,6 +1,7 @@
-﻿<div class="guides-container">
+﻿@using Entities
+<div class="guides-container">
 
-    <GuidesHeader/>
+    <GuidesHeader OnCategoryCreated="@CategoryAdded"/>
 
     <div class="column-container">
         <div class="guide-coloumn">
@@ -14,5 +15,11 @@
 </div>
 
 @code {
+
     
+    
+    private void CategoryAdded(Category category)
+    {
+        
+    }
 }
