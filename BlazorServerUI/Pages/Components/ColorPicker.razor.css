@@ -1,0 +1,17 @@
+#color-picker {
+    border-radius: 10px;
+    height: 30px;
+    width: 15ch;
+    border: none;
+    outline: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+}
+
+#color-picker::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+#color-picker::-webkit-color-swatch {
+    border: none;
+    border-radius: 10px;
+}

@@ -28,7 +28,7 @@
         <label>Background color:</label>
     </div>
     <div style="margin-bottom: 5px">
-        <input type="color" id="color-picker" value="@backgroundColor" @onchange="args => backgroundColor = args.Value!.ToString()!"/>
+        <ColorPicker OnColorChange="@(args => backgroundColor = args)" />
     </div>
     @if (!string.IsNullOrEmpty(errorLabel))
     {
@@ -68,6 +68,7 @@
             Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
             await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;
+            categoryTitle = String.Empty;
         }
         catch (Exception e)
         {
