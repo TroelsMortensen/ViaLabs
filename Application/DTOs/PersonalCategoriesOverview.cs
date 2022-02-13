@@ -4,5 +4,5 @@ namespace Application.DTOs;
 
 public class PersonalCategoriesOverview
 {
-    public IList<CategoryDTO> Categories { get; set; }
+    public IList<CategoriesWithGuidesOverviewDto> Categories { get; set; }
 }

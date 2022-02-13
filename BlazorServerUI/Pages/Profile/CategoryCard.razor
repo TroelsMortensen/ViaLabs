@@ -1,18 +1,21 @@
-﻿<div class="category-card">
-    <div style="display:flex; justify-content: center">
-        <div>
-            <h2>
-                Un-categorized
-            </h2>
-        </div>
-        <div>
+﻿<div class="category-card" style="background-color: @BackgroundColor">
+    <div class="card-title">
+        <nav style="margin:auto">
+            <h2 >@Title</h2>
+        </nav>
+        <nav class="menu-icons">
             <img class="new-guide-icon" src="icons/AddGuide.svg" @onclick="@(NewGuide)" title="New Guide"/>
-        </div>
+        </nav>
     </div>
-    
 </div>
 
 @code {
+
+    [Parameter]
+    public string Title { get; set; } = "N/A";
+
+    [Parameter]
+    public string BackgroundColor { get; set; } = "#ffffff";
 
     private Task NewGuide()
     {

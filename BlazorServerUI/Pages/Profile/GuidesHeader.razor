@@ -1,6 +1,7 @@
 ﻿@using Application.EntryContracts
 @using BlazorServerUI.Pages.Components
 @using Entities
+@using Application.DTOs
 @inject ICategoryHome categoryHome
 
 <div style="display:flex; justify-content: center">
@@ -48,7 +49,7 @@
     public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
     [Parameter]
-    public EventCallback<Category> OnCategoryCreated { get; set; }
+    public EventCallback<CategoryDto> OnCategoryCreated { get; set; }
 
     private string backgroundColor = "#ffffff";
     private bool showModal;
@@ -66,7 +67,14 @@
         try
         {
             Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
-            await OnCategoryCreated.InvokeAsync(finishedCategory);
+
+            CategoryDto finishedCategoryDto = new CategoryDto()
+            {
+                Id = finishedCategory.Id,
+                Title = finishedCategory.Title,
+                BackgroundColor = finishedCategory.BackgroundColor
+            };
+            await OnCategoryCreated.InvokeAsync(finishedCategoryDto);
             showModal = false;
             categoryTitle = String.Empty;
         }

@@ -1,16 +1,11 @@
-﻿using System.Collections.ObjectModel;
+﻿namespace Application.DTOs;
 
-namespace Application.DTOs;
-
-public class CategoryDTO
+public class CategoryDto
 {
     public Guid Id { get; set; }
     public string Title { get; set; }
-    public IList<GuideDTO> Guides { get; set; } = new List<GuideDTO>();
 
-    public CategoryDTO(Guid id, string title)
-    {
-        Id = id;
-        Title = title;
-    }
+    public string BackgroundColor { get; set; }
+
+    public IList<GuideHeaderDto> Guides { get; set; }
 }

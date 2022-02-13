@@ -26,4 +26,12 @@ public class CategoryRepo : ICategoryRepo
         Category? existing = context.ViaLabData.Categories.FirstOrDefault(c => c.Title.Equals(categoryTitle) && c.Owner.Name.Equals(ownerName));
         return Task.FromResult(existing);
     }
+
+    public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId)
+    {
+        ICollection<Category> categories = context.ViaLabData.Categories.
+            Where(c => c.Owner.Name.Equals(teacherId)).
+            ToList();
+        return Task.FromResult(categories);
+    }
 }

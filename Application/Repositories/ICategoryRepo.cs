@@ -6,4 +6,5 @@ public interface ICategoryRepo
 {
     Task<Category> CreateAsync(Category category);
     Task<Category?> GetCategoryByTitleAndTeacherAsync(string categoryTitle, string ownerName);
+    Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId);
 }

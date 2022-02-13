@@ -1,30 +1,66 @@
 ﻿@using Entities
 @using System.Text.Json
+@using Application.DTOs
+@using Application.EntryContracts
+@inject ICategoryHome categoryHome
+
 <div class="guides-container">
 
     <GuidesHeader OnCategoryCreated="@CategoryAdded"/>
 
     <div class="column-container">
         <div class="guide-coloumn">
-            <CategoryCard/>
-            
+            <CategoryCard Title="Un-categorized"/>
+            @{
+                int idx = 0;
+                foreach (CategoryDto category in categoriesOverview.Categories)
+                {
+                    if (idx % 2 == 1)
+                    {
+                        <CategoryCard Title="@category.Title" BackgroundColor="@category.BackgroundColor"/>
+                    }
+                    idx++;
+                }
+            }
+
         </div>
         <div class="guide-coloumn">
-
+            @{
+                int idx2 = 0;
+                foreach (CategoryDto category in categoriesOverview.Categories)
+                {
+                    if (idx2 % 2 == 0)
+                    {
+                        <CategoryCard Title="@category.Title" BackgroundColor="@category.BackgroundColor"/>
+                    }
+                    idx2++;
+                }
+            }
         </div>
     </div>
 </div>
 
 @code {
 
-    
-    
-    private Task CategoryAdded(Category category)
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
+
+    private CategoriesWithGuidesOverviewDto categoriesOverview = new() { Categories = new List<CategoryDto>() };
+
+
+    protected override async Task OnInitializedAsync()
     {
-        Console.WriteLine(JsonSerializer.Serialize(category, new JsonSerializerOptions
-        {
-            WriteIndented = true
-        }));
+        AuthenticationState authState = await AuthState;
+        string teacherName = authState.User.Identity!.Name!;
+        categoriesOverview = await categoryHome.GetCategoriesWithGuidesOverviewByUserAsync(teacherName);
+    }
+
+
+    private Task CategoryAdded(CategoryDto category)
+    {
+        categoriesOverview.Categories.Add(category);
+        categoriesOverview.Categories = categoriesOverview.Categories.OrderByDescending(c => c.Title).ToList();
         return Task.CompletedTask;
     }
+
 }

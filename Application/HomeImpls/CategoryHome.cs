@@ -20,6 +20,32 @@ public class CategoryHome : ICategoryHome
         return await categoryRepo.CreateAsync(category);
     }
 
+    public async Task<CategoriesWithGuidesOverviewDto> GetCategoriesWithGuidesOverviewByUserAsync(string teacherName)
+    {
+        
+        // TODO all this, I should be able to ask a real database about it, with the correct join type. Will have to update later.
+        
+        
+        ICollection<Category> categories = await categoryRepo.GetCategoriesByTeacherAsync(teacherName);
+       /* foreach (Category category in categories)
+        {
+            // TODO collect guides
+        }*/
+
+        ICollection<CategoryDto> categoryDtos = categories.Select(c => new CategoryDto()
+        {
+            Id = c.Id,
+            Title = c.Title,
+            BackgroundColor = c.BackgroundColor
+        }).ToList();
+
+        CategoriesWithGuidesOverviewDto cwgod = new()
+        {
+            Categories = categoryDtos
+        };
+        return cwgod;
+    }
+
     private async Task ValidateNewCategoryAsync(Category category)
     {
         if (string.IsNullOrEmpty(category.Title)) throw new ArgumentException("Title cannot be empty");

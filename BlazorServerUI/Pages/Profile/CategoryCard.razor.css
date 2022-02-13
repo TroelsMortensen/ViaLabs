@@ -5,6 +5,7 @@
     text-align: center;
     margin: 5px;
     max-width: 400px;
+    border-radius: 15px;
 }
 
 .new-guide-icon:hover {
@@ -13,6 +14,15 @@
 .new-guide-icon {
     height:2em;
     cursor: pointer;
-    margin-top: 5px;
-    margin-left: 15px;
+}
+
+.card-title {
+    width: 100%;
+    display:flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.menu-icons {
+    align-self: center;
 }
