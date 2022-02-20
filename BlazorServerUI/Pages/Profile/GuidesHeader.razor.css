@@ -3,10 +3,12 @@
     cursor: pointer;
     margin-top: 10px;
     margin-left: 15px;
+    transition: 0.5s;
 }
 
 .new-category-icon:hover {
     height: 2.5em;
+    transition: 0.25s;
 }
 
 

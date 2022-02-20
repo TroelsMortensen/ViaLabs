@@ -1,12 +1,64 @@
-﻿<div class="category-card" style="background-color: @BackgroundColor">
-    <div class="card-title">
-        <nav style="margin:auto">
-            <h2 >@Title</h2>
-        </nav>
-        <nav class="menu-icons">
-            <img class="new-guide-icon" src="icons/AddGuide.svg" @onclick="@(NewGuide)" title="New Guide"/>
-        </nav>
+﻿<link rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
+      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
+      crossorigin="anonymous">
+
+<div class="category-card" style="background-color: @BackgroundColor">
+    <div class="navbarheader">
+        <div class="header-left">
+        </div>
+        <div class="header-title">
+            <h2 style="font-weight: bold">@Title</h2>
+        </div>
+        <div class="header-right">
+            <div style="position: relative; display: inline-block; ">
+                <div class="container">
+                    <div class="menu">
+                        <input class="toggle" id="menu" type="checkbox">
+                        <label class="radial-menu-button new-item-icon" for="menu">
+                            <img class="new-item-icon hover-enlarge" src="icons/Options.svg" title="Options"/>
+                        </label>
+                        <a class="radial-menu-item" href="#">
+                            <p>
+                                <img class="new-item-icon hover-enlarge" src="icons/EditCategory.svg" @onclick="@(EditCategory)" title="Edit Category"/>
+                            </p>
+                        </a>
+                        <a class="radial-menu-item" href="#">
+                            <p>
+                                <img class="new-item-icon hover-enlarge" src="icons/AddGuide.svg" @onclick="@(NewGuide)" title="New Guide"/>
+                            </p>
+                        </a>
+                        <a class="radial-menu-item" href="#">
+                            <p>
+                                <img class="new-item-icon hover-enlarge" src="icons/AddVideo.svg" @onclick="@(NewVideo)" title="New Video Link"/>
+                            </p>
+                        </a>
+                        <a class="radial-menu-item" href="#">
+                            <p>
+                                <img class="new-item-icon hover-enlarge" src="icons/DeleteCategory.svg" @onclick="@(RemoveCategory)" title="Remove Category"/>
+                            </p>
+                        </a>
+
+                    </div><!-- menu -->
+                </div><!-- container -->
+            </div>
+        </div>
     </div>
+    <h5 style="font-style: italic">Documentation</h5>
+    <div style="text-align: left">
+        <div class="guide-title">Tut1</div>
+        <div class="guide-title">Tut2</div>
+        <div class="guide-title">Tut3</div>
+    </div>
+    <h5 style="font-style: italic">Videos</h5>
+    <div style="text-align: left; padding: 15px">
+        <strong>
+            <a href="https://youtu.be/EX81bDA-mkA">Installing postgres and setting up DataGrip</a>
+        </strong>
+        <p style="text-align: left; padding: 5px">This video shows you how to install a postgres database, and afterwards use DataGrip to connect to it.</p>
+    </div>
+
+
 </div>
 
 @code {
@@ -17,7 +69,24 @@
     [Parameter]
     public string BackgroundColor { get; set; } = "#ffffff";
 
+    private bool showMenu = false;
+
     private Task NewGuide()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task NewVideo()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task RemoveCategory()
+    {
+        return Task.CompletedTask;
+    }
+
+    private Task EditCategory()
     {
         return Task.CompletedTask;
     }
