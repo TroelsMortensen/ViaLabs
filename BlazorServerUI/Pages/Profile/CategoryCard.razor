@@ -1,9 +1,4 @@
-﻿<link rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.0.13/css/all.css"
-      integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp"
-      crossorigin="anonymous">
-
-<div class="category-card" style="background-color: @BackgroundColor">
+﻿<div class="category-card" style="background-color: @BackgroundColor">
     <div class="navbarheader">
         <div class="header-left">
         </div>
@@ -13,34 +8,14 @@
         <div class="header-right">
             <div style="position: relative; display: inline-block; ">
                 <div class="container">
-                    <div class="menu">
-                        <input class="toggle" id="menu" type="checkbox">
-                        <label class="radial-menu-button new-item-icon" for="menu">
-                            <img class="new-item-icon hover-enlarge" src="icons/Options.svg" title="Options"/>
-                        </label>
-                        <a class="radial-menu-item" href="#">
-                            <p>
-                                <img class="new-item-icon hover-enlarge" src="icons/EditCategory.svg" @onclick="@(EditCategory)" title="Edit Category"/>
-                            </p>
-                        </a>
-                        <a class="radial-menu-item" href="#">
-                            <p>
-                                <img class="new-item-icon hover-enlarge" src="icons/AddGuide.svg" @onclick="@(NewGuide)" title="New Guide"/>
-                            </p>
-                        </a>
-                        <a class="radial-menu-item" href="#">
-                            <p>
-                                <img class="new-item-icon hover-enlarge" src="icons/AddVideo.svg" @onclick="@(NewVideo)" title="New Video Link"/>
-                            </p>
-                        </a>
-                        <a class="radial-menu-item" href="#">
-                            <p>
-                                <img class="new-item-icon hover-enlarge" src="icons/DeleteCategory.svg" @onclick="@(RemoveCategory)" title="Remove Category"/>
-                            </p>
-                        </a>
-
-                    </div><!-- menu -->
-                </div><!-- container -->
+                    <div class="radial-menu">
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-1" : "item-closed")" src="icons/EditCategory.svg" @onclick="@(EditCategory)" @onmouseover="SetIsInteractingWithMenu" title="Edit Category"/>
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-2" : "item-closed")" src="icons/AddGuide.svg" @onclick="@(NewGuide)" @onmouseover="SetIsInteractingWithMenu" title="New Guide"/>
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="@(NewVideo)" @onmouseover="SetIsInteractingWithMenu" title="New Video Link"/>
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-4" : "item-closed")" src="icons/DeleteCategory.svg" @onclick="@(RemoveCategory)" @onmouseover="SetIsInteractingWithMenu" title="Remove Category"/>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -70,25 +45,59 @@
     public string BackgroundColor { get; set; } = "#ffffff";
 
     private bool showMenu = false;
+    private bool isInteracting = false;
+    private bool delayedCloseIsActive = false;
 
     private Task NewGuide()
     {
+        showMenu = false;
         return Task.CompletedTask;
     }
 
     private Task NewVideo()
     {
+        showMenu = false;
         return Task.CompletedTask;
     }
 
     private Task RemoveCategory()
     {
+        showMenu = false;
         return Task.CompletedTask;
     }
 
     private Task EditCategory()
     {
+        showMenu = false;
         return Task.CompletedTask;
+    }
+
+    private async Task ToggleMenu()
+    {
+        showMenu = !showMenu;
+        if (showMenu && !delayedCloseIsActive)
+            await DelayedMenuClose();
+    }
+
+    private void SetIsInteractingWithMenu()
+    {
+        if (showMenu)
+            isInteracting = true;
+    }
+
+    private async Task DelayedMenuClose()
+    {
+        delayedCloseIsActive = true;
+        isInteracting = true;
+
+        while (isInteracting && showMenu)
+        {
+            isInteracting = false;
+            await Task.Delay(2500);
+        }
+
+        delayedCloseIsActive = false;
+        showMenu = false;
     }
 
 }
