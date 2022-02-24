@@ -1,7 +1,7 @@
 ﻿@using Application.EntryContracts
-@using BlazorServerUI.Pages.Components
+@using Application.Profile.DTOs
 @using Entities
-@using Application.DTOs
+@using BlazorServerUI.Pages.Components
 @inject ICategoryHome categoryHome
 
 <div style="display:flex; justify-content: center">
@@ -23,7 +23,7 @@
         <label style="font-weight: bold">Category title</label>
     </div>
     <div style="margin-bottom: 5px">
-        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@categoryTitle" max="15"/>
+        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@categoryTitle" max="25"/>
     </div>
     <div style="margin-bottom: 5px">
         <label>Background color:</label>
@@ -49,7 +49,7 @@
     public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
     [Parameter]
-    public EventCallback<CategoryDto> OnCategoryCreated { get; set; }
+    public EventCallback<CategoryCardDTO> OnCategoryCreated { get; set; }
 
     private string backgroundColor = "#ffffff";
     private bool showModal;
@@ -62,21 +62,20 @@
         string teacherName = authState.User.Identity!.Name!;
 
         errorLabel = string.Empty;
-        Category category = new(categoryTitle, new Teacher(teacherName), backgroundColor);
+        CategoryCardDTO category = new()
+        {
+            Title = categoryTitle, 
+            OwnerId = teacherName, 
+            BackgroundColor = backgroundColor
+        };
 
         try
         {
-            Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
+            CategoryCardDTO finishedCategory = await categoryHome.CreateCategoryAsync(category);
 
-            CategoryDto finishedCategoryDto = new CategoryDto()
-            {
-                Id = finishedCategory.Id,
-                Title = finishedCategory.Title,
-                BackgroundColor = finishedCategory.BackgroundColor
-            };
-            await OnCategoryCreated.InvokeAsync(finishedCategoryDto);
+            await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;
-            categoryTitle = String.Empty;
+            categoryTitle = string.Empty;
         }
         catch (Exception e)
         {

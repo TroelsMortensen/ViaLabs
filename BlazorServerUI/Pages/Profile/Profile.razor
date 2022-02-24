@@ -27,7 +27,6 @@
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name;
-        Console.WriteLine(userName);
         isViaTeacher = teacherHome.IsViaTeacher(userName);
         if (!isViaTeacher) return;
         approvedTeacher = await teacherHome.GetTeacherAsync(userName);

@@ -1,7 +1,5 @@
-﻿@using Entities
-@using System.Text.Json
-@using Application.DTOs
-@using Application.EntryContracts
+﻿@using Application.EntryContracts
+@using Application.Profile.DTOs
 @inject ICategoryHome categoryHome
 
 <div class="guides-container">
@@ -10,14 +8,15 @@
 
     <div class="column-container">
         <div class="guide-coloumn">
-            <CategoryCard Title="Un-categorized"/>
+            <CategoryCard/>
             @{
                 int idx = 0;
-                foreach (CategoryDto category in categoriesOverview.Categories)
+                foreach (CategoryCardDTO category in categoriesOverview.CategoryCards)
                 {
                     if (idx % 2 == 1)
                     {
-                        <CategoryCard Title="@category.Title" BackgroundColor="@category.BackgroundColor"/>
+                        CategoryCardDTO tmp = category;
+                        <CategoryCard CardDto="@tmp"/>
                     }
                     idx++;
                 }
@@ -27,11 +26,12 @@
         <div class="guide-coloumn">
             @{
                 int idx2 = 0;
-                foreach (CategoryDto category in categoriesOverview.Categories)
+                foreach (CategoryCardDTO category in categoriesOverview.CategoryCards)
                 {
                     if (idx2 % 2 == 0)
                     {
-                        <CategoryCard Title="@category.Title" BackgroundColor="@category.BackgroundColor"/>
+                        CategoryCardDTO tmp = category;
+                        <CategoryCard CardDto="@tmp"/>
                     }
                     idx2++;
                 }
@@ -45,21 +45,21 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
 
-    private CategoriesWithGuidesOverviewDto categoriesOverview = new() { Categories = new List<CategoryDto>() };
+    private CategoryCardsContainerDTO? categoriesOverview = null;
 
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
         string teacherName = authState.User.Identity!.Name!;
-        categoriesOverview = await categoryHome.GetCategoriesWithGuidesOverviewByUserAsync(teacherName);
+        categoriesOverview = await categoryHome.GetCategoryCardsDTOAsync(teacherName);
     }
 
 
-    private Task CategoryAdded(CategoryDto category)
+    private Task CategoryAdded(CategoryCardDTO category)
     {
-        categoriesOverview.Categories.Add(category);
-        categoriesOverview.Categories = categoriesOverview.Categories.OrderByDescending(c => c.Title).ToList();
+        categoriesOverview.CategoryCards.Add(category);
+        categoriesOverview.CategoryCards = categoriesOverview.CategoryCards.OrderByDescending(c => c.Title).ToList();
         return Task.CompletedTask;
     }
 

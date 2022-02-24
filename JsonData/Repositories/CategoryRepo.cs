@@ -1,4 +1,5 @@
-﻿using Application.Repositories;
+﻿using Application.Profile.DTOs;
+using Application.Repositories;
 using Entities;
 
 namespace JsonData.Repositories;
@@ -21,17 +22,25 @@ public class CategoryRepo : ICategoryRepo
         return Task.FromResult(toReturn);
     }
 
-    public Task<Category?> GetCategoryByTitleAndTeacherAsync(string categoryTitle, string ownerName)
-    {
-        Category? existing = context.ViaLabData.Categories.FirstOrDefault(c => c.Title.Equals(categoryTitle) && c.Owner.Name.Equals(ownerName));
-        return Task.FromResult(existing);
-    }
-
     public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId)
     {
         ICollection<Category> categories = context.ViaLabData.Categories.
-            Where(c => c.Owner.Name.Equals(teacherId)).
+            Where(c => c.OwnerId.Equals(teacherId)).
             ToList();
         return Task.FromResult(categories);
+    }
+
+    public Task UpdateAsync(Category categoryToUpdate)
+    {
+        Category? existing = context.ViaLabData.Categories.FirstOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
+        if (existing == null)
+        {
+            throw new Exception("Could not update non-existing category. Serious problem");
+        }
+
+        existing.Title = categoryToUpdate.Title;
+        existing.BackgroundColor = categoryToUpdate.BackgroundColor;
+        context.SaveChanges();
+        return Task.CompletedTask;
     }
 }

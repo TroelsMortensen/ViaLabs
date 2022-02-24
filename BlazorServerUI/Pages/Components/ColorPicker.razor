@@ -1,11 +1,13 @@
-﻿<input type="color" id="color-picker" value="@ColorValue" @onchange="@OnChange"/>
+﻿@namespace BlazorServerUI.Pages.Components
+<input type="color" id="color-picker" value="@ColorValue" @onchange="@OnChange"/>
 
 @code {
 
     [Parameter]
     public EventCallback<string> OnColorChange { get; set; }
-
-    private string ColorValue { get; set; } = "#ffffff";
+    
+    [Parameter]
+    public string ColorValue { get; set; } = "#ffffff";
 
     private Task OnChange(ChangeEventArgs arg)
     {

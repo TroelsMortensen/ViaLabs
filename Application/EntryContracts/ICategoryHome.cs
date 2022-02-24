@@ -1,10 +1,11 @@
-﻿using Application.DTOs;
+﻿using Application.Profile.DTOs;
 using Entities;
 
 namespace Application.EntryContracts;
 
 public interface ICategoryHome
 {
-    public Task<Category> CreateCategoryAsync(Category category);
-    Task<CategoriesWithGuidesOverviewDto> GetCategoriesWithGuidesOverviewByUserAsync(string teacherName);
+    public Task<CategoryCardDTO> CreateCategoryAsync(CategoryCardDTO category);
+    Task<CategoryCardsContainerDTO> GetCategoryCardsDTOAsync(string teacherName);
+    Task UpdateCategoryAsync(CategoryCardDTO toUpdate);
 }

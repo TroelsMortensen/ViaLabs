@@ -1,10 +1,11 @@
-﻿using Entities;
+﻿using Application.Profile.DTOs;
+using Entities;
 
 namespace Application.Repositories;
 
 public interface ICategoryRepo
 {
     Task<Category> CreateAsync(Category category);
-    Task<Category?> GetCategoryByTitleAndTeacherAsync(string categoryTitle, string ownerName);
     Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId);
+    Task UpdateAsync(Category categoryToUpdate);
 }

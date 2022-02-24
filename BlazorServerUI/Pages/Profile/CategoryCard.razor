@@ -1,19 +1,27 @@
-﻿<div class="category-card" style="background-color: @BackgroundColor">
+﻿@using Application.Profile.DTOs
+@using BlazorServerUI.Pages.Components
+@using Application.EntryContracts
+@inject ICategoryHome categoryHome
+
+<div class="category-card" style="background-color: @(CardDto == null ? "#fff" : CardDto.BackgroundColor)">
     <div class="navbarheader">
         <div class="header-left">
         </div>
         <div class="header-title">
-            <h2 style="font-weight: bold">@Title</h2>
+            <h2 style="font-weight: bold">@(CardDto == null ? "Un-Categorized" : CardDto.Title)</h2>
         </div>
         <div class="header-right">
             <div style="position: relative; display: inline-block; ">
                 <div class="container">
                     <div class="radial-menu">
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
-                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-1" : "item-closed")" src="icons/EditCategory.svg" @onclick="@(EditCategory)" @onmouseover="SetIsInteractingWithMenu" title="Edit Category"/>
-                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-2" : "item-closed")" src="icons/AddGuide.svg" @onclick="@(NewGuide)" @onmouseover="SetIsInteractingWithMenu" title="New Guide"/>
-                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="@(NewVideo)" @onmouseover="SetIsInteractingWithMenu" title="New Video Link"/>
-                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-4" : "item-closed")" src="icons/DeleteCategory.svg" @onclick="@(RemoveCategory)" @onmouseover="SetIsInteractingWithMenu" title="Remove Category"/>
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-2" : "item-closed")" src="icons/AddGuide.svg" @onclick="NewGuide" @onmouseover="SetIsInteractingWithMenu" title="New Guide"/>
+                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="NewVideo" @onmouseover="SetIsInteractingWithMenu" title="New Video Link"/>
+                        @if (CardDto != null)
+                        {
+                            <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-1" : "item-closed")" src="icons/EditCategory.svg" @onclick="EditCategory" @onmouseover="SetIsInteractingWithMenu" title="Edit Category"/>
+                            <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-4" : "item-closed")" src="icons/DeleteCategory.svg" @onclick="@(RemoveCategory)" @onmouseover="SetIsInteractingWithMenu" title="Remove Category"/>
+                        }
                     </div>
                 </div>
             </div>
@@ -32,21 +40,55 @@
         </strong>
         <p style="text-align: left; padding: 5px">This video shows you how to install a postgres database, and afterwards use DataGrip to connect to it.</p>
     </div>
-
-
 </div>
+
+<Modal ShowModal="@showEditCategoryModal">
+    <h3>Edit Category</h3>
+    <hr/>
+    <div style="margin-bottom: 5px">
+        <label style="font-weight: bold">Category title</label>
+    </div>
+    <div style="margin-bottom: 5px">
+        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@editedCategoryTitle" max="25"/>
+    </div>
+    <div style="margin-bottom: 5px">
+        <label>Background color:</label>
+    </div>
+    <div style="margin-bottom: 5px">
+        <ColorPicker ColorValue="@editedBackgroundColor" OnColorChange="@(args => editedBackgroundColor = args)"/>
+    </div>
+    @if (!string.IsNullOrEmpty(errorLabel))
+    {
+        <div>
+            <label style="color:red">@errorLabel</label>
+        </div>
+    }
+    <div style="margin-top: 5px">
+        <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="UpdateCategory">Accept</button>
+        <button class="negative-color vialab-button" style="margin-left: 10px" @onclick="@(() => showEditCategoryModal = false)">Cancel</button>
+    </div>
+</Modal>
 
 @code {
 
     [Parameter]
-    public string Title { get; set; } = "N/A";
+    public CategoryCardDTO? CardDto { get; set; }
 
-    [Parameter]
-    public string BackgroundColor { get; set; } = "#ffffff";
+    private string? editedCategoryTitle;
+    private string? editedBackgroundColor;
+    private string errorLabel = string.Empty;
+    private bool showEditCategoryModal;
 
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
+
+    protected override void OnInitialized()
+    {
+        if (CardDto == null) return;
+        editedCategoryTitle = CardDto.Title;
+        editedBackgroundColor = CardDto.BackgroundColor;
+    }
 
     private Task NewGuide()
     {
@@ -66,10 +108,10 @@
         return Task.CompletedTask;
     }
 
-    private Task EditCategory()
+    private void EditCategory()
     {
         showMenu = false;
-        return Task.CompletedTask;
+        showEditCategoryModal = true;
     }
 
     private async Task ToggleMenu()
@@ -98,6 +140,27 @@
 
         delayedCloseIsActive = false;
         showMenu = false;
+    }
+
+    private async Task UpdateCategory()
+    {
+        errorLabel = string.Empty;
+        CategoryCardDTO toUpdate = new()
+        {
+            Id = CardDto.Id,
+            Title = editedCategoryTitle,
+            BackgroundColor = editedBackgroundColor
+        };
+        try
+        {
+            await categoryHome.UpdateCategoryAsync(toUpdate);
+            CardDto = toUpdate;
+            showEditCategoryModal = false;
+        }
+        catch (Exception e)
+        {
+            errorLabel = e.Message;
+        }
     }
 
 }

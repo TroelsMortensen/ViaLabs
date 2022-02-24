@@ -1,5 +1,6 @@
 ﻿using Application.EntryContracts;
 using Application.HomeImpls;
+using Application.Profile;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
