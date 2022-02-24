@@ -3,11 +3,11 @@ using Application.Profile.DTOs;
 using Application.Repositories;
 using Entities;
 
-namespace Application.Profile;
+namespace Application.HomeImpls;
 
 public class CategoryHome : ICategoryHome
 {
-    private ICategoryRepo categoryRepo;
+    private readonly ICategoryRepo categoryRepo;
 
     public CategoryHome(ICategoryRepo categoryRepo)
     {
