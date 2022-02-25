@@ -5,7 +5,7 @@ namespace Application.EntryContracts;
 
 public interface ICategoryHome
 {
-    public Task<CategoryCardDTO> CreateCategoryAsync(CategoryCardDTO category);
+    public Task<Category> CreateCategoryAsync(Category category);
     Task<CategoryCardsContainerDTO> GetCategoryCardsDTOAsync(string teacherName);
-    Task UpdateCategoryAsync(CategoryCardDTO toUpdate);
+    Task UpdateCategoryAsync(Category toUpdate);
 }

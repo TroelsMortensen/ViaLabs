@@ -1,7 +1,6 @@
 ﻿@using Application.EntryContracts
-@using Application.Profile.DTOs
-@using Entities
 @using BlazorServerUI.Pages.Components
+@using Entities
 @inject ICategoryHome categoryHome
 
 <div style="display:flex; justify-content: center">
@@ -49,7 +48,7 @@
     public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
     [Parameter]
-    public EventCallback<CategoryCardDTO> OnCategoryCreated { get; set; }
+    public EventCallback<Category> OnCategoryCreated { get; set; }
 
     private string backgroundColor = "#ffffff";
     private bool showModal;
@@ -62,7 +61,7 @@
         string teacherName = authState.User.Identity!.Name!;
 
         errorLabel = string.Empty;
-        CategoryCardDTO category = new()
+        Category category = new()
         {
             Title = categoryTitle, 
             OwnerId = teacherName, 
@@ -71,7 +70,7 @@
 
         try
         {
-            CategoryCardDTO finishedCategory = await categoryHome.CreateCategoryAsync(category);
+            Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
 
             await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;

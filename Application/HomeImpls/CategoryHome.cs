@@ -14,7 +14,7 @@ public class CategoryHome : ICategoryHome
         this.categoryRepo = categoryRepo;
     }
 
-    public async Task<CategoryCardDTO> CreateCategoryAsync(CategoryCardDTO category)
+    public async Task<Category> CreateCategoryAsync(Category category)
     {
         Category newCat = new()
         {
@@ -34,13 +34,13 @@ public class CategoryHome : ICategoryHome
     {
         ICollection<Category> categories = await categoryRepo.GetCategoriesByTeacherAsync(teacherName);
 
-        List<CategoryCardDTO> categoryCards = new();
+        List<Category> categoryCards = new();
 
         // TODO get associated guide headers
         foreach (Category c in categories)
         {
             categoryCards.Add(
-                new CategoryCardDTO
+                new Category
                 {
                     Id = c.Id,
                     Title = c.Title,
@@ -53,7 +53,7 @@ public class CategoryHome : ICategoryHome
         return ccdto;
     }
 
-    public Task UpdateCategoryAsync(CategoryCardDTO toUpdate)
+    public Task UpdateCategoryAsync(Category toUpdate)
     {
         Category categoryToUpdate = new()
         {

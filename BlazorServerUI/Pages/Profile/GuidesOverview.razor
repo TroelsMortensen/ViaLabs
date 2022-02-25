@@ -1,5 +1,8 @@
 ﻿@using Application.EntryContracts
 @using Application.Profile.DTOs
+@using BlazorServerUI.Pages.Components
+
+@using Entities
 @inject ICategoryHome categoryHome
 
 <div class="guides-container">
@@ -11,11 +14,11 @@
             <CategoryCard/>
             @{
                 int idx = 0;
-                foreach (CategoryCardDTO category in categoriesOverview.CategoryCards)
+                foreach (Category category in categoriesOverview.CategoryCards)
                 {
                     if (idx % 2 == 1)
                     {
-                        CategoryCardDTO tmp = category;
+                        Category tmp = category;
                         <CategoryCard CardDto="@tmp"/>
                     }
                     idx++;
@@ -26,11 +29,11 @@
         <div class="guide-coloumn">
             @{
                 int idx2 = 0;
-                foreach (CategoryCardDTO category in categoriesOverview.CategoryCards)
+                foreach (Category category in categoriesOverview.CategoryCards)
                 {
                     if (idx2 % 2 == 0)
                     {
-                        CategoryCardDTO tmp = category;
+                        Category tmp = category;
                         <CategoryCard CardDto="@tmp"/>
                     }
                     idx2++;
@@ -56,7 +59,7 @@
     }
 
 
-    private Task CategoryAdded(CategoryCardDTO category)
+    private Task CategoryAdded(Category category)
     {
         categoriesOverview.CategoryCards.Add(category);
         categoriesOverview.CategoryCards = categoriesOverview.CategoryCards.OrderByDescending(c => c.Title).ToList();

@@ -7,7 +7,7 @@
 }
 
 .neutral-color {
-    background-color: #88e3ff;
+    background-color: #c2edff;
 }
 
 .warning-color {
@@ -17,12 +17,16 @@
 .vialab-button{
     border-radius: 10px;
     padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border: solid 1px #0c4128;
+    padding-left: 15px;
+    padding-right: 15px;
+    border: solid 2px #0c4128;
+    transform: scale(1);
+    font-weight: bold;
+    transition:0.3s;
 }
 
 .vialab-button:hover{
-    opacity: 0.8;
+    transition:0.3s;
+    transform: scale(1.3) rotate(2deg);
     box-shadow: 0 2px 10px 2px #3f3f3f;
 }
