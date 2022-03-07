@@ -1,6 +1,5 @@
 ﻿using Application.EntryContracts;
 using Application.HomeImpls;
-using Application.Profile;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -11,5 +10,6 @@ public static class ServiceExtensions
     {
         services.AddScoped<ITeacherHome, TeacherHome>();
         services.AddScoped<ICategoryHome, CategoryHome>();
+        services.AddScoped<IGuideHome, GuideHome>();
     }
 }
