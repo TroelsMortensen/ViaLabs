@@ -20,6 +20,7 @@ public class GuideRepo : IGuideRepo
 
     public Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId)
     {
-        throw new NotImplementedException();
+        ICollection<Guide> result = new List<Guide>();
+        return Task.FromResult(result);
     }
 }
