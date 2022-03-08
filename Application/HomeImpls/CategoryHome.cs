@@ -14,7 +14,7 @@ public class CategoryHome : ICategoryHome
         this.categoryRepo = categoryRepo;
     }
 
-    public async Task<Category> CreateCategoryAsync(Category category)
+    public async Task<Category> CreateAsync(Category category)
     {
         Category newCat = new()
         {
@@ -53,7 +53,7 @@ public class CategoryHome : ICategoryHome
         return ccdto;
     }
 
-    public Task UpdateCategoryAsync(Category toUpdate)
+    public Task UpdateAsync(Category toUpdate)
     {
         Category categoryToUpdate = new()
         {
@@ -64,6 +64,11 @@ public class CategoryHome : ICategoryHome
         };
         ValidateNewCategoryData(categoryToUpdate);
         return categoryRepo.UpdateAsync(categoryToUpdate);
+    }
+
+    public Task DeleteAsync(Guid categoryId)
+    {
+        throw new NotImplementedException();
     }
 
     private void ValidateNewCategoryData(Category category)

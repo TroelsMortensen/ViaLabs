@@ -72,7 +72,7 @@
         };
         try
         {
-            await categoryHome.UpdateCategoryAsync(toUpdate);
+            await categoryHome.UpdateAsync(toUpdate);
             Category = toUpdate;
             showEditCategoryModal = false;
             await OnChange.InvokeAsync(Category);

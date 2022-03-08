@@ -70,7 +70,7 @@
 
         try
         {
-            Category finishedCategory = await categoryHome.CreateCategoryAsync(category);
+            Category finishedCategory = await categoryHome.CreateAsync(category);
 
             await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;
