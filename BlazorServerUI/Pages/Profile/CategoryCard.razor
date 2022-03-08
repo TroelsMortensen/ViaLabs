@@ -1,7 +1,5 @@
-﻿@using Application.Profile.DTOs
-@using BlazorServerUI.Pages.Components
-@using Application.EntryContracts
-@using Entities
+﻿@using BlazorServerUI.Pages.Profile.RadialMenuItems
+
 @inject ICategoryHome categoryHome
 @inject IGuideHome guideHome
 
@@ -18,11 +16,11 @@
                     <div class="radial-menu" >
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
-                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-2" : "item-closed")" src="icons/AddGuide.svg" @onclick="NewGuide"  title="New Guide"/>
+                        <NewGuideMenuItem ShowMenu="@showMenu" Category="Category"/>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="NewVideo"  title="New Video Link"/>
                         @if (Category != null)
                         {
-                            <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-1" : "item-closed")" src="icons/EditCategory.svg" @onclick="ShowEditCategory"  title="Edit Category"/>
+                            <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@OnCategoryUpdated"/>
                             <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-4" : "item-closed")" src="icons/DeleteCategory.svg" @onclick="@(ShowRemoveCategory)"  title="Remove Category"/>
                         }
                     </div>
@@ -55,32 +53,7 @@
     </div>
 </div>
 
-<Modal ShowModal="@showEditCategoryModal">
-    <h3>Edit Category</h3>
-    <hr/>
-    <div style="margin-bottom: 5px">
-        <label style="font-weight: bold">Category title</label>
-    </div>
-    <div style="margin-bottom: 5px">
-        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@editedCategoryTitle" max="25"/>
-    </div>
-    <div style="margin-bottom: 5px">
-        <label>Background color:</label>
-    </div>
-    <div style="margin-bottom: 5px">
-        <ColorPicker ColorValue="@editedBackgroundColor" OnColorChange="@(args => editedBackgroundColor = args)"/>
-    </div>
-    @if (!string.IsNullOrEmpty(errorLabel))
-    {
-        <div>
-            <label style="color:red">@errorLabel</label>
-        </div>
-    }
-    <div style="margin-top: 5px">
-        <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="UpdateCategory">Accept</button>
-        <button class="negative-color vialab-button" style="margin-left: 10px" @onclick="@(() => showEditCategoryModal = false)">Cancel</button>
-    </div>
-</Modal>
+
 
 <Modal ShowModal="@showDeleteConfirmationModal">
     <h3>Delete Category?</h3>
@@ -91,51 +64,21 @@
     </div>
 </Modal>
 
-<Modal ShowModal="@showAddGuideModal">
-    <h3>Create New Guide</h3>
-    <hr/>
-    <div style="margin-bottom: 5px">
-        <label style="font-weight: bold">Guide Title</label>
-    </div>
-    <div style="margin-bottom: 5px">
-        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@newGuideTitle" max="25"/>
-    </div>
-    @if (!string.IsNullOrEmpty(createGuideErrorLabel))
-    {
-        <div>
-            <label style="color:red">@createGuideErrorLabel</label>
-        </div>
-    }
-    <div style="margin-top: 5px">
-        <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="CreateNewGuide">Accept</button>
-        <button class="negative-color vialab-button" style="margin-left: 10px" @onclick="@(() => showAddGuideModal = false)">Cancel</button>
-    </div>
-</Modal>
+
 
 @code {
 
     [Parameter]
     public Category? Category { get; set; }
 
-    [CascadingParameter]
-    public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
-
     private ICollection<Guide> guides = new List<Guide>();
 
-    // edit
-    private string? editedCategoryTitle;
-    private string? editedBackgroundColor;
-    private string errorLabel = string.Empty;
-    private bool showEditCategoryModal;
+
 
 
     // delete category
     private bool showDeleteConfirmationModal;
 
-    // add guide
-    private bool showAddGuideModal;
-    private string createGuideErrorLabel = String.Empty;
-    private string newGuideTitle = String.Empty;
 
     //
     private bool showMenu = false;
@@ -145,15 +88,8 @@
     protected override async Task OnInitializedAsync()
     {
         if (Category == null) return;
-        editedCategoryTitle = Category.Title;
-        editedBackgroundColor = Category.BackgroundColor;
+        
         guides = await guideHome.GetGuidesByCategoryIdAsync(Category.Id);
-    }
-
-    private Task NewGuide()
-    {
-        showMenu = false;
-        return Task.CompletedTask;
     }
 
     private Task NewVideo()
@@ -168,11 +104,7 @@
         showDeleteConfirmationModal = true;
     }
 
-    private void ShowEditCategory()
-    {
-        showMenu = false;
-        showEditCategoryModal = true;
-    }
+
 
     private async Task ToggleMenu()
     {
@@ -203,43 +135,14 @@
         showMenu = false;
     }
 
-    private async Task UpdateCategory()
-    {
-        errorLabel = string.Empty;
-        Category toUpdate = new()
-        {
-            Id = Category.Id,
-            Title = editedCategoryTitle,
-            BackgroundColor = editedBackgroundColor
-        };
-        try
-        {
-            await categoryHome.UpdateCategoryAsync(toUpdate);
-            Category = toUpdate;
-            showEditCategoryModal = false;
-        }
-        catch (Exception e)
-        {
-            errorLabel = e.Message;
-        }
-    }
-
     private Task DeleteCategory()
     {
         return Task.CompletedTask;
     }
 
-    private async Task CreateNewGuide()
+    private async Task OnCategoryUpdated(Category cat)
     {
-        AuthenticationState authState = await AuthStateTask;
-        string? teacher = authState.User.Identity!.Name;
-        Guide guide = new()
-        {
-            Title = newGuideTitle,
-            OwnerId = teacher!,
-            CategoryId = Category?.Id
-        };
-        await guideHome.CreateGuideAsync(guide);
+        Category = cat;
+        await InvokeAsync(StateHasChanged);
     }
-
 }

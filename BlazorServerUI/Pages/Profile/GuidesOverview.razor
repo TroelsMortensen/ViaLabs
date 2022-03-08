@@ -1,6 +1,5 @@
 ﻿@using Application.EntryContracts
 @using Application.Profile.DTOs
-@using BlazorServerUI.Pages.Components
 
 @using Entities
 @inject ICategoryHome categoryHome
@@ -11,7 +10,7 @@
 
     <div class="column-container">
         <div class="guide-coloumn">
-            <CategoryCard/> <!-- This is for the un-categorized guides -->
+            <CategoryCard/>
             @{
                 int idx = 0;
                 foreach (Category category in categoriesOverview.CategoryCards)
