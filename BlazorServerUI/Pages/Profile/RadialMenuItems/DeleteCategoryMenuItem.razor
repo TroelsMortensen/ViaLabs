@@ -1,0 +1,40 @@
+﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+
+<img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
+     src="icons/DeleteCategory.svg"
+     @onclick="@(ShowRemoveCategory)"
+     title="Remove Category"/>
+
+<Modal ShowModal="@showDeleteConfirmationModal">
+    <h3>Delete Category?</h3>
+    <hr/>
+    <div style="margin-top: 5px">
+        <button class="negative-color vialab-button" style="margin-right: 10px" @onclick="DeleteCategory">Delete</button>
+        <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="@(() => showDeleteConfirmationModal = false)">Cancel</button>
+    </div>
+</Modal>
+
+
+@code {
+
+    [Parameter]
+    public bool ShowMenu { get; set; }
+
+    [Parameter]
+    public Category Category { get; set; } = null!;
+
+    // delete category
+    private bool showDeleteConfirmationModal;
+
+    private void ShowRemoveCategory()
+    {
+        showDeleteConfirmationModal = true;
+    }
+
+    private Task DeleteCategory()
+    {
+        // TODO finish this
+        return Task.CompletedTask;
+    }
+
+}

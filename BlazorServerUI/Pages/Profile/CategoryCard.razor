@@ -20,8 +20,8 @@
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="NewVideo"  title="New Video Link"/>
                         @if (Category != null)
                         {
-                            <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@OnCategoryUpdated"/>
-                            <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-4" : "item-closed")" src="icons/DeleteCategory.svg" @onclick="@(ShowRemoveCategory)"  title="Remove Category"/>
+                            <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@((cat) => Category = cat)"/>
+                            <DeleteCategoryMenuItem ShowMenu="showMenu" Category="Category"/>
                         }
                     </div>
                 </div>
@@ -55,14 +55,6 @@
 
 
 
-<Modal ShowModal="@showDeleteConfirmationModal">
-    <h3>Delete Category?</h3>
-    <hr/>
-    <div style="margin-top: 5px">
-        <button class="negative-color vialab-button" style="margin-right: 10px" @onclick="DeleteCategory">Delete</button>
-        <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="@(() => showDeleteConfirmationModal = false)">Cancel</button>
-    </div>
-</Modal>
 
 
 
@@ -73,14 +65,6 @@
 
     private ICollection<Guide> guides = new List<Guide>();
 
-
-
-
-    // delete category
-    private bool showDeleteConfirmationModal;
-
-
-    //
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
@@ -96,12 +80,6 @@
     {
         showMenu = false;
         return Task.CompletedTask;
-    }
-
-    private void ShowRemoveCategory()
-    {
-        showMenu = false;
-        showDeleteConfirmationModal = true;
     }
 
 
@@ -133,16 +111,5 @@
 
         delayedCloseIsActive = false;
         showMenu = false;
-    }
-
-    private Task DeleteCategory()
-    {
-        return Task.CompletedTask;
-    }
-
-    private async Task OnCategoryUpdated(Category cat)
-    {
-        Category = cat;
-        await InvokeAsync(StateHasChanged);
     }
 }
