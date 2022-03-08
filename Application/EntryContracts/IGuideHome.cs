@@ -4,5 +4,6 @@ namespace Application.EntryContracts;
 
 public interface IGuideHome
 {
-    public Task CreateGuide(Guide guide);
+    public Task CreateGuideAsync(Guide guide);
+    Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId);
 }

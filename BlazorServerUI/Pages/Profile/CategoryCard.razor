@@ -5,12 +5,12 @@
 @inject ICategoryHome categoryHome
 @inject IGuideHome guideHome
 
-<div class="category-card" style="background-color: @(CardDto == null ? "#fff" : CardDto.BackgroundColor)">
+<div class="category-card" style="background-color: @(Category == null ? "#fff" : Category.BackgroundColor)">
     <div class="navbarheader">
         <div class="header-left">
         </div>
         <div class="header-title">
-            <h2 style="font-weight: bold">@(CardDto == null ? "Un-Categorized" : CardDto.Title)</h2>
+            <h2 style="font-weight: bold">@(Category == null ? "Un-Categorized" : Category.Title)</h2>
         </div>
         <div class="header-right">
             <div style="position: relative; display: inline-block; ">
@@ -20,7 +20,7 @@
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-2" : "item-closed")" src="icons/AddGuide.svg" @onclick="NewGuide" @onmouseover="SetIsInteractingWithMenu" title="New Guide"/>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="NewVideo" @onmouseover="SetIsInteractingWithMenu" title="New Video Link"/>
-                        @if (CardDto != null)
+                        @if (Category != null)
                         {
                             <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-1" : "item-closed")" src="icons/EditCategory.svg" @onclick="ShowEditCategory" @onmouseover="SetIsInteractingWithMenu" title="Edit Category"/>
                             <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-4" : "item-closed")" src="icons/DeleteCategory.svg" @onclick="@(ShowRemoveCategory)" @onmouseover="SetIsInteractingWithMenu" title="Remove Category"/>
@@ -32,9 +32,19 @@
     </div>
     <h5 style="font-style: italic">Documentation</h5>
     <div style="text-align: left">
-        <div class="guide-title">Tut1</div>
-        <div class="guide-title">Tut2</div>
-        <div class="guide-title">Tut3</div>
+        @if (!guides.Any())
+        {
+            <p>
+                No guides yet..
+            </p>
+        }
+        else
+        {
+            foreach (Guide guide in guides)
+            {
+                <div class="guide-title">@guide.Title</div>
+            }
+        }
     </div>
     <h5 style="font-style: italic">Videos</h5>
     <div style="text-align: left; padding: 15px">
@@ -105,7 +115,12 @@
 @code {
 
     [Parameter]
-    public Category? CardDto { get; set; }
+    public Category? Category { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
+
+    private ICollection<Guide> guides = new List<Guide>();
 
     // edit
     private string? editedCategoryTitle;
@@ -121,17 +136,18 @@
     private bool showAddGuideModal;
     private string createGuideErrorLabel = String.Empty;
     private string newGuideTitle = String.Empty;
-    
+
     //
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        if (CardDto == null) return;
-        editedCategoryTitle = CardDto.Title;
-        editedBackgroundColor = CardDto.BackgroundColor;
+        if (Category == null) return;
+        editedCategoryTitle = Category.Title;
+        editedBackgroundColor = Category.BackgroundColor;
+        guides = await guideHome.GetGuidesByCategoryIdAsync(Category.Id);
     }
 
     private Task NewGuide()
@@ -192,14 +208,14 @@
         errorLabel = string.Empty;
         Category toUpdate = new()
         {
-            Id = CardDto.Id,
+            Id = Category.Id,
             Title = editedCategoryTitle,
             BackgroundColor = editedBackgroundColor
         };
         try
         {
             await categoryHome.UpdateCategoryAsync(toUpdate);
-            CardDto = toUpdate;
+            Category = toUpdate;
             showEditCategoryModal = false;
         }
         catch (Exception e)
@@ -215,11 +231,15 @@
 
     private async Task CreateNewGuide()
     {
+        AuthenticationState authState = await AuthStateTask;
+        string? teacher = authState.User.Identity!.Name;
         Guide guide = new()
         {
-            Title = newGuideTitle
+            Title = newGuideTitle,
+            OwnerId = teacher!,
+            CategoryId = Category?.Id
         };
-        
+        await guideHome.CreateGuideAsync(guide);
     }
 
 }

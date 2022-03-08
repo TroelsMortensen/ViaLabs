@@ -6,15 +6,29 @@ namespace Application.HomeImpls;
 
 public class GuideHome : IGuideHome
 {
-    private IGuideRepo guideRepo;
+    private readonly IGuideRepo guideRepo;
 
     public GuideHome(IGuideRepo guideRepo)
     {
         this.guideRepo = guideRepo;
     }
 
-    public Task CreateGuide(Guide guide)
+    public Task CreateGuideAsync(Guide guide)
     {
-        throw new NotImplementedException();
+        ValidateGuide(guide);
+        guide.Id = Guid.NewGuid();
+        return guideRepo.CreateAsync(guide);
+    }
+
+    public Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId)
+    {
+        return guideRepo.GetGuidesByCategoryIdAsync(categoryId);
+    }
+
+    private void ValidateGuide(Guide guide)
+    {
+        if (guide.Title.Length < 3) throw new Exception("Guide title must be more than 3 characters");
+        if (guide.Title.Length > 75) throw new Exception("Guide title must be less than 75 characters");
+        if (string.IsNullOrEmpty(guide.OwnerId)) throw new Exception("Something went terribly wrong, and there was no recovery");
     }
 }
