@@ -1,5 +1,4 @@
-﻿@using Entities
-@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject IGuideHome guideHome
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
@@ -32,7 +31,7 @@
 
     [Parameter]
     public bool ShowMenu { get; set; }
-    
+
     [Parameter]
     public Category? Category { get; set; }
 

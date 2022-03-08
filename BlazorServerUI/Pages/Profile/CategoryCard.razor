@@ -17,7 +17,7 @@
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
                         <NewGuideMenuItem ShowMenu="@showMenu" Category="Category"/>
-                        <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "item-open-3" : "item-closed")" src="icons/AddVideo.svg" @onclick="NewVideo"  title="New Video Link"/>
+                        <NewVideoLinkMenuItem ShowMenu="@showMenu"/>
                         @if (Category != null)
                         {
                             <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@((cat) => Category = cat)"/>
@@ -75,14 +75,6 @@
         
         guides = await guideHome.GetGuidesByCategoryIdAsync(Category.Id);
     }
-
-    private Task NewVideo()
-    {
-        showMenu = false;
-        return Task.CompletedTask;
-    }
-
-
 
     private async Task ToggleMenu()
     {

@@ -1,0 +1,20 @@
+﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+<img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-3" : "item-closed")" 
+     src="icons/AddVideo.svg" 
+     @onclick="NewVideo" 
+     title="New Video Link"/>
+
+@code {
+
+    [Parameter]
+    public bool ShowMenu { get; set; }
+
+    [Parameter]
+    public Category? Category { get; set; }
+
+    private Task NewVideo()
+    {
+        ShowMenu = false;
+        return Task.CompletedTask;
+    }
+}
