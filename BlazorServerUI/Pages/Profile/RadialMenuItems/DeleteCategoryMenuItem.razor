@@ -9,7 +9,29 @@
     <h3>Delete Category?</h3>
     <hr/>
     <div style="margin-top: 5px">
-        <button class="negative-color vialab-button" style="margin-right: 10px" @onclick="DeleteCategory">Delete</button>
+        @* <button class="negative-color vialab-button" style="margin-right: 10px" @onclick="DeleteCategory"> *@
+        @*     <span style="background-color: #0dcaf0"> *@
+        @*         Hold to Delete *@
+        @*     </span> *@
+        @* </button> *@
+
+        @*         <span style="background-color: red; padding:5px; border-radius: 10px; border: solid 2px #0c4128;     padding-left: 15px; *@
+        @*                                                                                                      padding-right: 15px; font-weight: bold"> *@
+        @*                 Hold to Delete *@
+        @*         </span> *@
+        @if(!string.IsNullOrEmpty(errorLabel)){
+            <div>
+                <label style="color:red">@errorLabel</label>
+            </div>
+        }
+        <button class="progress-button vialab-button"
+                @onmousedown="DeleteButtonDown"
+                @onmouseup="() => isHolding = false"
+                @onmouseout="() => isHolding = false">
+            <div class="button__progress" style="width:@progress%"></div>
+            <span class="button__text">Hold to Delete</span>
+        </button>
+        <span style="padding: 5px"></span>
         <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="@(() => showDeleteConfirmationModal = false)">Cancel</button>
     </div>
 </Modal>
@@ -23,18 +45,55 @@
     [Parameter]
     public Category Category { get; set; } = null!;
 
+    private int progress;
+    private bool isHolding;
+    private string errorLabel = string.Empty;
     // delete category
     private bool showDeleteConfirmationModal;
 
     private void ShowRemoveCategory()
     {
+        progress = 0;
         showDeleteConfirmationModal = true;
     }
 
-    private Task DeleteCategory()
+    private async Task DeleteCategory()
     {
-        // TODO finish this
-        return Task.CompletedTask;
+    }
+
+    private async Task DeleteButtonDown()
+    {
+        isHolding = true;
+        await UpdateProgressBar();
+    }
+
+    private async Task UpdateProgressBar()
+    {
+        int stepTimeInterval = 1000 / 100;
+        while (progress < 100 && isHolding)
+        {
+            await Task.Delay(10);
+            progress++;
+            StateHasChanged();
+        }
+        if (progress == 100)
+        {
+            Console.WriteLine("Delete");
+            try
+            {
+                await DeleteCategory();
+                showDeleteConfirmationModal = false;
+                progress = 0;
+            }
+            catch (Exception e)
+            {
+                errorLabel = e.Message;
+            }
+        }
+        if (!isHolding)
+        {
+            progress = 0;
+        }
     }
 
 }
