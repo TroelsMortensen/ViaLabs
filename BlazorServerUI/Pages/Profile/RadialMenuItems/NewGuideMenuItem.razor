@@ -35,6 +35,9 @@
     [Parameter]
     public Category? Category { get; set; }
 
+    [Parameter]
+    public EventCallback<Guide> OnGuideCreated { get; set; }
+
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
 
@@ -61,8 +64,9 @@
         };
         try
         {
-            await guideHome.CreateGuideAsync(guide);
-            ShowMenu = false;
+            Guide created = await guideHome.CreateGuideAsync(guide);
+            showAddGuideModal = false;
+            await OnGuideCreated.InvokeAsync(created);
         }
         catch (Exception e)
         {

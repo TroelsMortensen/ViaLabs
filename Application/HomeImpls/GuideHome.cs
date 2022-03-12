@@ -13,11 +13,12 @@ public class GuideHome : IGuideHome
         this.guideRepo = guideRepo;
     }
 
-    public Task CreateGuideAsync(Guide guide)
+    public async Task<Guide> CreateGuideAsync(Guide guide)
     {
         ValidateGuide(guide);
         guide.Id = Guid.NewGuid();
-        return guideRepo.CreateAsync(guide);
+        await guideRepo.CreateAsync(guide);
+        return guide;
     }
 
     public Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId)
