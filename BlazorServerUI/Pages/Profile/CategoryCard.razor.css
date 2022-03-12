@@ -2,7 +2,8 @@
     border: solid;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     margin: 5px;
-    max-width: 400px;
+    max-width: 600px;
+    min-width: 400px;
     border-radius: 25px;
     margin-bottom: 15px;
 }

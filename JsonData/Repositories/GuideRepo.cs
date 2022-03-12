@@ -6,7 +6,7 @@ namespace JsonData.Repositories;
 public class GuideRepo : IGuideRepo
 {
 
-    private JsonDataContext context;
+    private readonly JsonDataContext context;
 
     public GuideRepo(JsonDataContext context)
     {
@@ -15,12 +15,20 @@ public class GuideRepo : IGuideRepo
 
     public Task CreateAsync(Guide guide)
     {
-        throw new NotImplementedException();
+        context.ViaLabData.Guides.Add(guide);
+        context.SaveChanges();
+        return Task.CompletedTask;
     }
 
     public Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId)
     {
-        ICollection<Guide> result = new List<Guide>();
+        ICollection<Guide> result = context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList();
+        return Task.FromResult(result);
+    }
+
+    public Task<ICollection<Guide>> GetUnCategorizedGuidesByUserId(string teacherName)
+    {
+        ICollection<Guide> result = context.ViaLabData.Guides.Where(g => g.CategoryId == null && g.OwnerId.Equals(teacherName)).ToList();
         return Task.FromResult(result);
     }
 }

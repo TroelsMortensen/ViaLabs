@@ -8,10 +8,12 @@ namespace Application.HomeImpls;
 public class CategoryHome : ICategoryHome
 {
     private readonly ICategoryRepo categoryRepo;
+    private readonly IGuideRepo guideRepo;
 
-    public CategoryHome(ICategoryRepo categoryRepo)
+    public CategoryHome(ICategoryRepo categoryRepo, IGuideRepo guideRepo)
     {
         this.categoryRepo = categoryRepo;
+        this.guideRepo = guideRepo;
     }
 
     public async Task<Category> CreateAsync(Category category)
@@ -24,7 +26,7 @@ public class CategoryHome : ICategoryHome
             OwnerId = category.OwnerId
         };
         ValidateNewCategoryData(newCat);
-        await ValitedateTitleIsFree(newCat);
+        await ValidateTitleIsFree(newCat);
         Category created = await categoryRepo.CreateAsync(newCat);
         category.Id = created.Id;
         return category;
@@ -36,7 +38,6 @@ public class CategoryHome : ICategoryHome
 
         List<Category> categoryCards = new();
 
-        // TODO get associated guide headers
         foreach (Category c in categories)
         {
             categoryCards.Add(
@@ -68,17 +69,17 @@ public class CategoryHome : ICategoryHome
 
     public Task DeleteAsync(Guid categoryId)
     {
-        throw new NotImplementedException();
+        return categoryRepo.DeleteAsync(categoryId);
     }
 
-    private void ValidateNewCategoryData(Category category)
+    private static void ValidateNewCategoryData(Category category)
     {
         if (string.IsNullOrEmpty(category.Title)) throw new ArgumentException("Title cannot be empty");
         if (category.Title.Length < 3) throw new ArgumentException("Title must be 3 or more characters");
         if (category.Title.Length > 25) throw new ArgumentException("Title must be 25 or fewer characters");
     }
 
-    private async Task ValitedateTitleIsFree(Category category)
+    private async Task ValidateTitleIsFree(Category category)
     {
         ICollection<Category> existing = await categoryRepo.GetCategoriesByTeacherAsync(category.OwnerId);
         Category? existingCategory = existing.FirstOrDefault(c => c.Title.Equals(category.Title, StringComparison.OrdinalIgnoreCase));

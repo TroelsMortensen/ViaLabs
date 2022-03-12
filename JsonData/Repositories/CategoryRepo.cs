@@ -43,4 +43,18 @@ public class CategoryRepo : ICategoryRepo
         context.SaveChanges();
         return Task.CompletedTask;
     }
+
+    public Task DeleteAsync(Guid categoryId)
+    {
+        List<Guide> guides = context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList();
+        guides.ForEach(g => g.CategoryId = null);
+        
+        int removed = context.ViaLabData.Categories.ToList().RemoveAll(c => c.Id.Equals(categoryId));
+        if (removed == 0)
+        {
+            throw new Exception("Removed nothing, something went wrong");
+        }
+        context.SaveChanges();
+        return Task.CompletedTask;
+    }
 }

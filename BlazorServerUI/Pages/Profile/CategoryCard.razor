@@ -68,6 +68,7 @@
     {
         if (Category == null) return;
         
+        // TODO should these just be loaded together with all the categories?
         guides = await guideHome.GetGuidesByCategoryIdAsync(Category.Id);
     }
 
