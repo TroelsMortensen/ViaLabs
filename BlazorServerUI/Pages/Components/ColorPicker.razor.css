@@ -2,11 +2,11 @@
     border-radius: 25px;
     height: 30px;
     width: 15ch;
-    border: none;
+    /*border: none;*/
     outline: none;
     -webkit-appearance: none;
     cursor: pointer;
-    /*border: 2px solid #000000;*/
+    border: 2px solid #000000;
 }
 
 #color-picker::-webkit-color-swatch-wrapper {
