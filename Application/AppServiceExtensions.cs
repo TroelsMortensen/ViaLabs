@@ -8,8 +8,8 @@ public static class ServiceExtensions
 {
     public static void AddAppServices(this IServiceCollection services)
     {
-        services.AddScoped<ITeacherHome, TeacherHome>();
-        services.AddScoped<ICategoryHome, CategoryHome>();
-        services.AddScoped<IGuideHome, GuideHome>();
+        services.AddScoped<ITeacherService, TeacherService>();
+        services.AddScoped<ICategoryService, CategoryService>();
+        services.AddScoped<IGuideService, GuideService>();
     }
 }

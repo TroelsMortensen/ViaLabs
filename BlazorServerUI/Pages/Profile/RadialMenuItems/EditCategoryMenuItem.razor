@@ -1,5 +1,5 @@
 ﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICategoryHome categoryHome
+@inject ICategoryService categoryService
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
      src="icons/EditCategory.svg"
@@ -73,7 +73,7 @@
         };
         try
         {
-            await categoryHome.UpdateAsync(toUpdate);
+            await categoryService.UpdateAsync(toUpdate);
             Category = toUpdate;
             showEditCategoryModal = false;
             await OnChange.InvokeAsync(Category);

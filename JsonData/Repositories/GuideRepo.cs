@@ -16,7 +16,6 @@ public class GuideRepo : IGuideRepo
     public Task CreateAsync(Guide guide)
     {
         context.ViaLabData.Guides.Add(guide);
-        context.SaveChanges();
         return Task.CompletedTask;
     }
 

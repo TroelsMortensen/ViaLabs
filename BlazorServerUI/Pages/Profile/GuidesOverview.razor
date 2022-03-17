@@ -2,7 +2,7 @@
 @using Application.Profile.DTOs
 
 @using Entities
-@inject ICategoryHome categoryHome
+@inject ICategoryService categoryService
 
 <div class="guides-container">
 
@@ -18,7 +18,7 @@
                     if (idx % 2 == 1)
                     {
                         Category tmp = category;
-                        <CategoryCard Category="@tmp"/>
+                        <CategoryCard Category="@tmp" />
                     }
                     idx++;
                 }
@@ -33,7 +33,7 @@
                     if (idx2 % 2 == 0)
                     {
                         Category tmp = category;
-                        <CategoryCard Category="@tmp"/>
+                        <CategoryCard Category="@tmp" />
                     }
                     idx2++;
                 }
@@ -54,7 +54,7 @@
     {
         AuthenticationState authState = await AuthState;
         string teacherName = authState.User.Identity!.Name!;
-        categoriesOverview = await categoryHome.GetCategoryCardsDTOAsync(teacherName);
+        categoriesOverview = await categoryService.GetCategoryCardsDTOAsync(teacherName);
     }
 
 

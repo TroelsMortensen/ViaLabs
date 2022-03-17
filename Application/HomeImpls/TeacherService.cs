@@ -4,13 +4,13 @@ using Entities;
 
 namespace Application.HomeImpls;
 
-public class TeacherHome : ITeacherHome
+public class TeacherService : ITeacherService
 {
-    private ITeacherRepo teacherRepo;
+    private readonly IRepoManager repoManager;
 
-    public TeacherHome(ITeacherRepo teacherRepo)
+    public TeacherService(IRepoManager repoManager)
     {
-        this.teacherRepo = teacherRepo;
+        this.repoManager = repoManager;
     }
 
     public bool IsViaTeacher(string userName)
@@ -24,6 +24,6 @@ public class TeacherHome : ITeacherHome
 
     public Task<Teacher?> GetTeacherAsync(string userName)
     {
-        return teacherRepo.GetApprovedTeacher(userName);
+        return repoManager.TeacherRepo.GetApprovedTeacher(userName);
     }
 }

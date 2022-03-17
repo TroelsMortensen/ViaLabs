@@ -3,7 +3,7 @@ using Entities;
 
 namespace Application.EntryContracts;
 
-public interface ICategoryHome
+public interface ICategoryService
 {
     public Task<Category> CreateAsync(Category category);
     Task<CategoryCardsContainerDTO> GetCategoryCardsDTOAsync(string teacherName);

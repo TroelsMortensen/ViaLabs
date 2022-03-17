@@ -1,7 +1,7 @@
 ﻿@page "/Profile"
 @using Application.EntryContracts
 @using Entities
-@inject ITeacherHome teacherHome
+@inject ITeacherService teacherService
 
 <div style="display:flex; justify-content: space-evenly">
     @if (approvedTeacher is not null)
@@ -27,9 +27,9 @@
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name;
-        isViaTeacher = teacherHome.IsViaTeacher(userName);
+        isViaTeacher = teacherService.IsViaTeacher(userName);
         if (!isViaTeacher) return;
-        approvedTeacher = await teacherHome.GetTeacherAsync(userName);
+        approvedTeacher = await teacherService.GetTeacherAsync(userName);
 
     // TODO catch exceptions here, and show toast error message
     }

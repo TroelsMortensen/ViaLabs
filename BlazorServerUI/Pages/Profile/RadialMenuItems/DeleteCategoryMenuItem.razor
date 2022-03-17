@@ -1,5 +1,5 @@
 ﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICategoryHome categoryHome
+@inject ICategoryService categoryService
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
      src="icons/DeleteCategory.svg"
@@ -46,6 +46,9 @@
     [Parameter]
     public Category Category { get; set; } = null!;
 
+    [Parameter]
+    public EventCallback OnDeleted { get; set; }
+    
     private int progress;
     private bool isHolding;
     private string errorLabel = string.Empty;
@@ -61,7 +64,8 @@
 
     private async Task DeleteCategory()
     {
-        await categoryHome.DeleteAsync(Category.Id);
+        await categoryService.DeleteAsync(Category.Id);
+        await OnDeleted.InvokeAsync();
     }
 
     private async Task DeleteButtonDown()
@@ -72,7 +76,7 @@
 
     private async Task UpdateProgressBar()
     {
-        int stepTimeInterval = 1000 / 100;
+        
         while (progress < 100 && isHolding)
         {
             await Task.Delay(10);

@@ -5,15 +5,13 @@ using Entities;
 
 namespace Application.HomeImpls;
 
-public class CategoryHome : ICategoryHome
+public class CategoryService : ICategoryService
 {
-    private readonly ICategoryRepo categoryRepo;
-    private readonly IGuideRepo guideRepo;
+    private readonly IRepoManager repoManager;
 
-    public CategoryHome(ICategoryRepo categoryRepo, IGuideRepo guideRepo)
+    public CategoryService(IRepoManager repoManager)
     {
-        this.categoryRepo = categoryRepo;
-        this.guideRepo = guideRepo;
+        this.repoManager = repoManager;
     }
 
     public async Task<Category> CreateAsync(Category category)
@@ -27,14 +25,16 @@ public class CategoryHome : ICategoryHome
         };
         ValidateNewCategoryData(newCat);
         await ValidateTitleIsFree(newCat);
-        Category created = await categoryRepo.CreateAsync(newCat);
+        Category created = await repoManager.CategoryRepo.CreateAsync(newCat);
+        await repoManager.SaveChangesAsync();
         category.Id = created.Id;
+        
         return category;
     }
 
     public async Task<CategoryCardsContainerDTO> GetCategoryCardsDTOAsync(string teacherName)
     {
-        ICollection<Category> categories = await categoryRepo.GetCategoriesByTeacherAsync(teacherName);
+        ICollection<Category> categories = await repoManager.CategoryRepo.GetCategoriesByTeacherAsync(teacherName);
 
         List<Category> categoryCards = new();
 
@@ -54,7 +54,7 @@ public class CategoryHome : ICategoryHome
         return ccdto;
     }
 
-    public Task UpdateAsync(Category toUpdate)
+    public async Task UpdateAsync(Category toUpdate)
     {
         Category categoryToUpdate = new()
         {
@@ -64,12 +64,14 @@ public class CategoryHome : ICategoryHome
             OwnerId = toUpdate.OwnerId
         };
         ValidateNewCategoryData(categoryToUpdate);
-        return categoryRepo.UpdateAsync(categoryToUpdate);
+        await repoManager.CategoryRepo.UpdateAsync(categoryToUpdate);
+        await repoManager.SaveChangesAsync();
     }
 
-    public Task DeleteAsync(Guid categoryId)
+    public async Task DeleteAsync(Guid categoryId)
     {
-        return categoryRepo.DeleteAsync(categoryId);
+        await repoManager.CategoryRepo.DeleteAsync(categoryId);
+        await repoManager.SaveChangesAsync();
     }
 
     private static void ValidateNewCategoryData(Category category)
@@ -81,7 +83,7 @@ public class CategoryHome : ICategoryHome
 
     private async Task ValidateTitleIsFree(Category category)
     {
-        ICollection<Category> existing = await categoryRepo.GetCategoriesByTeacherAsync(category.OwnerId);
+        ICollection<Category> existing = await repoManager.CategoryRepo.GetCategoriesByTeacherAsync(category.OwnerId);
         Category? existingCategory = existing.FirstOrDefault(c => c.Title.Equals(category.Title, StringComparison.OrdinalIgnoreCase));
         if (existingCategory != null)
         {

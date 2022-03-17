@@ -1,7 +1,8 @@
 ﻿@using BlazorServerUI.Pages.Profile.RadialMenuItems
 
-@inject ICategoryHome categoryHome
-@inject IGuideHome guideHome
+@inject ICategoryService categoryService
+@inject IGuideService guideService
+@inject NavigationManager navMgr
 
 
 <div class="category-card" style="background-color: @(Category == null ? "#fff" : Category.BackgroundColor)">
@@ -14,7 +15,7 @@
         <div class="header-right">
             <div style="position: relative; display: inline-block; ">
                 <div class="container">
-                    <div class="radial-menu" >
+                    <div class="radial-menu">
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
                         <NewGuideMenuItem ShowMenu="@showMenu" Category="Category" OnGuideCreated="OnGuideCreated"/>
@@ -22,7 +23,7 @@
                         @if (Category != null)
                         {
                             <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@((cat) => Category = cat)"/>
-                            <DeleteCategoryMenuItem ShowMenu="showMenu" Category="Category"/>
+                            <DeleteCategoryMenuItem ShowMenu="showMenu" Category="Category" OnDeleted="OnStateChanged"/>
                         }
                     </div>
                 </div>
@@ -41,7 +42,13 @@
         {
             foreach (Guide guide in guides)
             {
-                <div class="guide-title">@guide.Title</div>
+                <div class="guide-title">
+                    <img class="new-item-icon "
+                         src="icons/EditGuide.svg"
+                         @onclick='() => navMgr.NavigateTo("/EditGuide/" + guide.Id)'
+                         title="Edit Guide"/>
+                    <a href="/Guide/@guide.Id" title="View Guide">@guide.Title</a>
+                </div>
             }
         }
     </div>
@@ -55,6 +62,12 @@
 </div>
 
 @code {
+    
+    [Parameter]
+    public EventCallback OnStateChanged { get; set; }
+
+    [CascadingParameter]
+    public Task<AuthenticationState> AuthState { get; set; } = null!;
 
     [Parameter]
     public Category? Category { get; set; }
@@ -67,10 +80,16 @@
 
     protected override async Task OnInitializedAsync()
     {
-        if (Category == null) return;
-        
-        // TODO should these just be loaded together with all the categories?
-        guides = await guideHome.GetGuidesByCategoryIdAsync(Category.Id);
+        if (Category != null)
+        {
+            guides = await guideService.GetGuidesByCategoryIdAsync(Category.Id);
+        }
+        else
+        {
+            AuthenticationState authState = await AuthState;
+            string teacher = authState.User.Identity!.Name!;
+            guides = await guideService.GetUnCategorizedByTeacherAsync(teacher);
+        }
     }
 
     private async Task ToggleMenu()
@@ -106,4 +125,5 @@
     {
         guides.Add(guide);
     }
+
 }

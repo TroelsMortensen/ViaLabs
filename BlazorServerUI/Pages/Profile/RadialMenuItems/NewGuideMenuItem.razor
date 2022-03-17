@@ -1,5 +1,5 @@
 ﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject IGuideHome guideHome
+@inject IGuideService guideService
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
      src="icons/AddGuide.svg"
@@ -64,7 +64,7 @@
         };
         try
         {
-            Guide created = await guideHome.CreateGuideAsync(guide);
+            Guide created = await guideService.CreateGuideAsync(guide);
             showAddGuideModal = false;
             await OnGuideCreated.InvokeAsync(created);
         }

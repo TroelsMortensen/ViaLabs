@@ -1,7 +1,7 @@
 ﻿@using Application.EntryContracts
 @using BlazorServerUI.Pages.Components
 @using Entities
-@inject ICategoryHome categoryHome
+@inject ICategoryService categoryService
 
 <div style="display:flex; justify-content: center">
     <div>
@@ -70,7 +70,7 @@
 
         try
         {
-            Category finishedCategory = await categoryHome.CreateAsync(category);
+            Category finishedCategory = await categoryService.CreateAsync(category);
 
             await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;

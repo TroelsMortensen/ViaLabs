@@ -4,26 +4,32 @@ using Entities;
 
 namespace Application.HomeImpls;
 
-public class GuideHome : IGuideHome
+public class GuideService : IGuideService
 {
-    private readonly IGuideRepo guideRepo;
+    private readonly IRepoManager repoManager;
 
-    public GuideHome(IGuideRepo guideRepo)
+    public GuideService(IRepoManager repoManager)
     {
-        this.guideRepo = guideRepo;
+        this.repoManager = repoManager;
     }
 
     public async Task<Guide> CreateGuideAsync(Guide guide)
     {
         ValidateGuide(guide);
         guide.Id = Guid.NewGuid();
-        await guideRepo.CreateAsync(guide);
+        await repoManager.GuideRepo.CreateAsync(guide);
+        await repoManager.SaveChangesAsync();
         return guide;
     }
 
     public Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId)
     {
-        return guideRepo.GetGuidesByCategoryIdAsync(categoryId);
+        return repoManager.GuideRepo.GetGuidesByCategoryIdAsync(categoryId);
+    }
+
+    public Task<ICollection<Guide>> GetUnCategorizedByTeacherAsync(string teacher)
+    {
+        return repoManager.GuideRepo.GetUnCategorizedGuidesByUserId(teacher);
     }
 
     private void ValidateGuide(Guide guide)

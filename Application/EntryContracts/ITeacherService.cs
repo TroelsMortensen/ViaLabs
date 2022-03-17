@@ -2,7 +2,7 @@
 
 namespace Application.EntryContracts;
 
-public interface ITeacherHome
+public interface ITeacherService
 {
     // public Task<User> GetUser(string userName);
     public bool IsViaTeacher(string userName);

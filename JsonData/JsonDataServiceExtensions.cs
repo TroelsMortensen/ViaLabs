@@ -12,5 +12,7 @@ public static class JsonDataServiceExtensions
         services.AddScoped<ITeacherRepo, TeacherRepo>();
         services.AddScoped<ICategoryRepo, CategoryRepo>();
         services.AddScoped<IGuideRepo, GuideRepo>();
+        services.AddScoped<IDbContext, JsonDataContext>();
+        services.AddScoped<IRepoManager, JsonRepoManagerImpl>();
     }
 }

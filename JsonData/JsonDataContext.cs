@@ -1,9 +1,10 @@
 ﻿using System.Text.Json;
+using Application.Repositories;
 using Entities;
 
 namespace JsonData;
 
-public class JsonDataContext
+public class JsonDataContext : IDbContext
 {
     private string path = "vialabs.json";
 
@@ -46,7 +47,7 @@ public class JsonDataContext
         viaLabData = JsonSerializer.Deserialize<ViaLabData>(vldAsJson);
     }
 
-    public void SaveChanges()
+    public Task SaveChangesAsync()
     {
         string vldAsJson = JsonSerializer.Serialize(viaLabData, new JsonSerializerOptions
         {
@@ -54,5 +55,6 @@ public class JsonDataContext
         });
         File.WriteAllText(path, vldAsJson);
         viaLabData = null;
+        return Task.CompletedTask;
     }
 }

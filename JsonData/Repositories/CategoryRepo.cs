@@ -17,16 +17,13 @@ public class CategoryRepo : ICategoryRepo
     {
         category.Id = Guid.NewGuid();
         context.ViaLabData.Categories.Add(category);
-        context.SaveChanges();
         Category toReturn = context.ViaLabData.Categories.First(c => c.Id.Equals(category.Id));
         return Task.FromResult(toReturn);
     }
 
     public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId)
     {
-        ICollection<Category> categories = context.ViaLabData.Categories.
-            Where(c => c.OwnerId.Equals(teacherId)).
-            ToList();
+        ICollection<Category> categories = context.ViaLabData.Categories.Where(c => c.OwnerId.Equals(teacherId)).ToList();
         return Task.FromResult(categories);
     }
 
@@ -40,7 +37,6 @@ public class CategoryRepo : ICategoryRepo
 
         existing.Title = categoryToUpdate.Title;
         existing.BackgroundColor = categoryToUpdate.BackgroundColor;
-        context.SaveChanges();
         return Task.CompletedTask;
     }
 
@@ -49,12 +45,12 @@ public class CategoryRepo : ICategoryRepo
         List<Guide> guides = context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList();
         guides.ForEach(g => g.CategoryId = null);
         
-        int removed = context.ViaLabData.Categories.ToList().RemoveAll(c => c.Id.Equals(categoryId));
-        if (removed == 0)
+        Category toRemove = context.ViaLabData.Categories.First(c => c.Id.Equals(categoryId));
+        if (!context.ViaLabData.Categories.Remove(toRemove))
         {
             throw new Exception("Removed nothing, something went wrong");
         }
-        context.SaveChanges();
+
         return Task.CompletedTask;
     }
 }
