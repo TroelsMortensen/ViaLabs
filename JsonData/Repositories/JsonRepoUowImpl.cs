@@ -1,16 +1,16 @@
-﻿using Application.Repositories;
+﻿using Application.RepositoryContracts;
 
 namespace JsonData.Repositories;
 
-public class JsonRepoManagerImpl : IRepoManager
+public class JsonRepoUowImpl : IRepoUOW
 {
     public ICategoryRepo CategoryRepo { get; set; }
     public IGuideRepo GuideRepo { get; set; }
     public ITeacherRepo TeacherRepo { get; set; }
 
-    private IDbContext context;
+    private readonly IDbContext context;
 
-    public JsonRepoManagerImpl(ICategoryRepo categoryRepo, IGuideRepo guideRepo, ITeacherRepo teacherRepo, IDbContext context)
+    public JsonRepoUowImpl(ICategoryRepo categoryRepo, IGuideRepo guideRepo, ITeacherRepo teacherRepo, IDbContext context)
     {
         CategoryRepo = categoryRepo;
         GuideRepo = guideRepo;

@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace JsonData;
+namespace JsonData.DataAccess;
 
 public class ViaLabData
 {

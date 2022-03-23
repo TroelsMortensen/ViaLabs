@@ -1,4 +1,4 @@
-﻿namespace Application.Repositories;
+﻿namespace Application.RepositoryContracts;
 
 public interface IDbContext
 {

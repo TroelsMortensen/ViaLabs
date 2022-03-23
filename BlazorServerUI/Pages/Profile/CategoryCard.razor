@@ -1,7 +1,11 @@
 ﻿@using BlazorServerUI.Pages.Profile.RadialMenuItems
+@using Application.DTOs.CategoryDTOs
+@using Application.DTOs.GuideDTOs
+@using Application.Providers
+@using Application.ServiceContracts
 
 @inject ICategoryService categoryService
-@inject IGuideService guideService
+@inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
 
 
@@ -40,7 +44,7 @@
         }
         else
         {
-            foreach (Guide guide in guides)
+            foreach (GuideHeaderDto guide in guides)
             {
                 <div class="guide-title">
                     <img class="new-item-icon "
@@ -70,9 +74,9 @@
     public Task<AuthenticationState> AuthState { get; set; } = null!;
 
     [Parameter]
-    public Category? Category { get; set; }
+    public CategoryDto? Category { get; set; }
 
-    private ICollection<Guide> guides = new List<Guide>();
+    private ICollection<GuideHeaderDto> guides = new List<GuideHeaderDto>();
 
     private bool showMenu = false;
     private bool isInteracting = false;
@@ -82,13 +86,13 @@
     {
         if (Category != null)
         {
-            guides = await guideService.GetGuidesByCategoryIdAsync(Category.Id);
+            guides = await guideProvider.GetGuidesByCategoryIdAsync(Category.Id);
         }
         else
         {
             AuthenticationState authState = await AuthState;
             string teacher = authState.User.Identity!.Name!;
-            guides = await guideService.GetUnCategorizedByTeacherAsync(teacher);
+            guides = await guideProvider.GetUnCategorizedByTeacherAsync(teacher);
         }
     }
 
@@ -121,7 +125,7 @@
         showMenu = false;
     }
 
-    private void OnGuideCreated(Guide guide)
+    private void OnGuideCreated(GuideHeaderDto guide)
     {
         guides.Add(guide);
     }

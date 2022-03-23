@@ -1,6 +1,6 @@
-﻿using Application.Profile.DTOs;
-using Application.Repositories;
+﻿using Application.RepositoryContracts;
 using Entities;
+using JsonData.DataAccess;
 
 namespace JsonData.Repositories;
 

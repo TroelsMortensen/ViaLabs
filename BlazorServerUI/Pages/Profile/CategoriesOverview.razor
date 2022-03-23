@@ -1,8 +1,6 @@
-﻿@using Application.EntryContracts
-@using Application.Profile.DTOs
-
-@using Entities
-@inject ICategoryService categoryService
+﻿@using Application.DTOs.CategoryDTOs
+@using Application.Providers
+@inject ICategoryProvider categoryProvider
 
 <div class="guides-container">
 
@@ -13,11 +11,11 @@
             <CategoryCard/>
             @{
                 int idx = 0;
-                foreach (Category category in categoriesOverview.CategoryCards)
+                foreach (CategoryDto category in categories)
                 {
                     if (idx % 2 == 1)
                     {
-                        Category tmp = category;
+                        CategoryDto tmp = category;
                         <CategoryCard Category="@tmp" />
                     }
                     idx++;
@@ -28,11 +26,11 @@
         <div class="guide-coloumn">
             @{
                 int idx2 = 0;
-                foreach (Category category in categoriesOverview.CategoryCards)
+                foreach (CategoryDto category in categories)
                 {
                     if (idx2 % 2 == 0)
                     {
-                        Category tmp = category;
+                        CategoryDto tmp = category;
                         <CategoryCard Category="@tmp" />
                     }
                     idx2++;
@@ -47,21 +45,21 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
 
-    private CategoryCardsContainerDTO? categoriesOverview = null;
+    private ICollection<CategoryDto> categories = null;
 
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthState;
         string teacherName = authState.User.Identity!.Name!;
-        categoriesOverview = await categoryService.GetCategoryCardsDTOAsync(teacherName);
+        categories = await categoryProvider.GetCategoryCardsDTOAsync(teacherName);
     }
 
 
-    private Task CategoryAdded(Category category)
+    private Task CategoryAdded(CategoryDto category)
     {
-        categoriesOverview.CategoryCards.Add(category);
-        categoriesOverview.CategoryCards = categoriesOverview.CategoryCards.OrderByDescending(c => c.Title).ToList();
+        categories.Add(category);
+        categories = categories.OrderByDescending(c => c.Title).ToList();
         return Task.CompletedTask;
     }
 

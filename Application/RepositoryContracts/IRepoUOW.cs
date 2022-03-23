@@ -1,6 +1,6 @@
-﻿namespace Application.Repositories;
+﻿namespace Application.RepositoryContracts;
 
-public interface IRepoManager
+public interface IRepoUOW
 {
     public ICategoryRepo CategoryRepo { get; set; }
     public IGuideRepo GuideRepo { get; set; }

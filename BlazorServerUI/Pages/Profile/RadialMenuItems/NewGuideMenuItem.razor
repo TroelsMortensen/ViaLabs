@@ -1,4 +1,6 @@
-﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+﻿@using Application.ServiceContracts
+@using Application.DTOs.GuideDTOs
+@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject IGuideService guideService
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
@@ -36,7 +38,7 @@
     public Category? Category { get; set; }
 
     [Parameter]
-    public EventCallback<Guide> OnGuideCreated { get; set; }
+    public EventCallback<GuideHeaderDto> OnGuideCreated { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -56,7 +58,7 @@
     {
         AuthenticationState authState = await AuthStateTask;
         string? teacher = authState.User.Identity!.Name;
-        Guide guide = new()
+        GuideCreationDto guide = new()
         {
             Title = newGuideTitle,
             OwnerId = teacher!,
@@ -64,7 +66,7 @@
         };
         try
         {
-            Guide created = await guideService.CreateGuideAsync(guide);
+            GuideHeaderDto created = await guideService.CreateGuideAsync(guide);
             showAddGuideModal = false;
             await OnGuideCreated.InvokeAsync(created);
         }

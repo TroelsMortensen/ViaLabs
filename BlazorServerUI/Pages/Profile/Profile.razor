@@ -1,7 +1,8 @@
 ﻿@page "/Profile"
-@using Application.EntryContracts
-@using Entities
+@using Application.ServiceContracts
+@using Application.Providers
 @inject ITeacherService teacherService
+@inject ITeacherProvider teacherProvider
 
 <div style="display:flex; justify-content: space-evenly">
     @if (approvedTeacher is not null)
@@ -15,7 +16,7 @@
 @code {
 
     [CascadingParameter]
-    public Task<AuthenticationState> AuthStateTask { get; set; }
+    public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
 
     private string userName = String.Empty;
     private bool isViaTeacher;
@@ -26,10 +27,11 @@
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthStateTask;
-        userName = authState.User.Identity?.Name;
+        userName = authState.User.Identity?.Name!;
         isViaTeacher = teacherService.IsViaTeacher(userName);
         if (!isViaTeacher) return;
-        approvedTeacher = await teacherService.GetTeacherAsync(userName);
+        
+        approvedTeacher = await teacherProvider.GetTeacherAsync(userName);
 
     // TODO catch exceptions here, and show toast error message
     }

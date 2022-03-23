@@ -19,7 +19,7 @@ builder.Services.AddServerSideBlazor();
 
 // Add custom services
 builder.Services.AddAppServices();
-builder.Services.AddJsonDataServices();
+builder.Services.AddJsonDataAccess();
 
 // End custom services
 

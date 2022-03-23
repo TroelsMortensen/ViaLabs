@@ -1,5 +1,5 @@
-﻿using Application.EntryContracts;
-using Application.HomeImpls;
+﻿using Application.ServiceContracts;
+using Application.ServiceImpls;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;

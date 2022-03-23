@@ -1,6 +1,6 @@
 ﻿using Entities;
 
-namespace Application.Repositories;
+namespace Application.RepositoryContracts;
 
 public interface IGuideRepo
 {

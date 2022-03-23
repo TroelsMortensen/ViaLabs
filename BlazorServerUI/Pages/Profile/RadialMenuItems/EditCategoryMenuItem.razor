@@ -1,4 +1,6 @@
-﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+﻿@using Application.ServiceContracts
+@using Application.DTOs.CategoryDTOs
+@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject ICategoryService categoryService
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -39,10 +41,10 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public Category Category { get; set; } = null!;
+    public CategoryDto Category { get; set; } = null!;
 
     [Parameter]
-    public EventCallback<Category> OnChange { get; set; }
+    public EventCallback<CategoryDto> OnChange { get; set; }
     // edit
     private string? editedCategoryTitle;
 
@@ -65,11 +67,11 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        Category toUpdate = new()
+        CategoryDto toUpdate = new()
         {
             Id = Category.Id,
-            Title = editedCategoryTitle,
-            BackgroundColor = editedBackgroundColor
+            Title = editedCategoryTitle!,
+            BackgroundColor = editedBackgroundColor!
         };
         try
         {

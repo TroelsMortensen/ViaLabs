@@ -1,6 +1,7 @@
-﻿@using Application.EntryContracts
+﻿@using Application.ServiceContracts
 @using BlazorServerUI.Pages.Components
 @using Entities
+@using Application.DTOs.CategoryDTOs
 @inject ICategoryService categoryService
 
 <div style="display:flex; justify-content: center">
@@ -48,7 +49,7 @@
     public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
     [Parameter]
-    public EventCallback<Category> OnCategoryCreated { get; set; }
+    public EventCallback<CategoryDto> OnCategoryCreated { get; set; }
 
     private string backgroundColor = "#ffffff";
     private bool showModal;
@@ -61,7 +62,7 @@
         string teacherName = authState.User.Identity!.Name!;
 
         errorLabel = string.Empty;
-        Category category = new()
+        CategoryCreationDto category = new()
         {
             Title = categoryTitle, 
             OwnerId = teacherName, 
@@ -70,7 +71,7 @@
 
         try
         {
-            Category finishedCategory = await categoryService.CreateAsync(category);
+            CategoryDto finishedCategory = await categoryService.CreateAsync(category);
 
             await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;

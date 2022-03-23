@@ -1,10 +1,10 @@
 ﻿using System.Text.Json;
-using Application.Repositories;
+using Application.RepositoryContracts;
 using Entities;
 
-namespace JsonData;
+namespace JsonData.DataAccess;
 
-public class JsonDataContext : IDbContext
+public class JsonDataContext : IDbContext, IDisposable
 {
     private string path = "vialabs.json";
 
@@ -56,5 +56,11 @@ public class JsonDataContext : IDbContext
         File.WriteAllText(path, vldAsJson);
         viaLabData = null;
         return Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        viaLabData = null;
+        Console.WriteLine("Disposed of JsonDataContext");
     }
 }

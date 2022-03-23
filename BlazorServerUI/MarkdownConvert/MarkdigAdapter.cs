@@ -1,11 +1,10 @@
 ﻿using System.Text;
 using System.Text.RegularExpressions;
-using Application.EntryContracts;
 using Markdig;
 
 namespace Application.MarkdownConvert;
 
-public class MarkdigAdapter : IMarkdownConverter
+public class MarkdigAdapter 
 {
     public string ConvertMdToHtml(string mdContent)
     {

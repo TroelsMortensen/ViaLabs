@@ -1,12 +1,10 @@
-﻿using Entities;
+﻿namespace Application.DTOs.CategoryDTOs;
 
-namespace Application.Profile.DTOs;
-
-public class CategoryCardsContainerDTO
+public class CategoryCardsContainerDto
 {
-    public List<Category> CategoryCards { get; set; }
+    public IEnumerable<CategoryDto> CategoryCards { get; set; }
 
-    public CategoryCardsContainerDTO(List<Category> categoryCards)
+    public CategoryCardsContainerDto(List<CategoryDto> categoryCards)
     {
         CategoryCards = categoryCards;
     }
