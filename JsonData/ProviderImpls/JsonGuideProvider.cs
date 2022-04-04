@@ -29,6 +29,11 @@ public class JsonGuideProvider : IGuideProvider
 
     public Task<ICollection<GuideHeaderDto>> GetUnCategorizedByTeacherAsync(string teacher)
     {
-        throw new NotImplementedException();
+        ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.
+            Where(g => g.CategoryId is null).
+            Select(g => new GuideHeaderDto(g.Id, g.Title)).
+            ToList();
+        
+        return Task.FromResult(list); 
     }
 }
