@@ -30,7 +30,7 @@ public class JsonGuideProvider : IGuideProvider
     public Task<ICollection<GuideHeaderDto>> GetUnCategorizedByTeacherAsync(string teacher)
     {
         ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.
-            Where(g => g.CategoryId is null).
+            Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher)).
             Select(g => new GuideHeaderDto(g.Id, g.Title)).
             ToList();
         
