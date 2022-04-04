@@ -4,7 +4,7 @@
 
 <div class="guides-container">
 
-    <GuidesHeader OnCategoryCreated="@CategoryAdded"/>
+    <CategoriesHeader OnCategoryCreated="@CategoryAdded"/>
 
     <div class="column-container">
         <div class="guide-coloumn">
@@ -45,7 +45,7 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
 
-    private ICollection<CategoryDto> categories = null;
+    private ICollection<CategoryDto> categories = null!;
 
 
     protected override async Task OnInitializedAsync()

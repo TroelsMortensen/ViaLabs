@@ -67,12 +67,7 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        CategoryDto toUpdate = new()
-        {
-            Id = Category.Id,
-            Title = editedCategoryTitle!,
-            BackgroundColor = editedBackgroundColor!
-        };
+        CategoryDto toUpdate = new(Category.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
             await categoryService.UpdateAsync(toUpdate);

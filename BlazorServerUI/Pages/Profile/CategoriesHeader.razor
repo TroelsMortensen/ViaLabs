@@ -62,12 +62,7 @@
         string teacherName = authState.User.Identity!.Name!;
 
         errorLabel = string.Empty;
-        CategoryCreationDto category = new()
-        {
-            Title = categoryTitle, 
-            OwnerId = teacherName, 
-            BackgroundColor = backgroundColor
-        };
+        CategoryCreationDto category = new(categoryTitle, teacherName, backgroundColor);
 
         try
         {

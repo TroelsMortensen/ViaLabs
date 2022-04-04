@@ -4,6 +4,6 @@ namespace Application.Providers;
 
 public interface ICategoryProvider
 {
-    Task<List<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName);
+    Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName);
 
 }

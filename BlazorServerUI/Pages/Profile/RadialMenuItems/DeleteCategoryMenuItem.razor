@@ -1,4 +1,5 @@
 ﻿@using Application.ServiceContracts
+@using Application.DTOs.CategoryDTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject ICategoryService categoryService
 
@@ -45,7 +46,7 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public Category Category { get; set; } = null!;
+    public CategoryDto Category { get; set; } = null!;
 
     [Parameter]
     public EventCallback OnDeleted { get; set; }

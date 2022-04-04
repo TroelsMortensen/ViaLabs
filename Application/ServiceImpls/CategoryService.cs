@@ -29,12 +29,7 @@ public class CategoryService : ICategoryService
         Category created = await repoUow.CategoryRepo.CreateAsync(newCat);
         await repoUow.SaveChangesAsync();
         
-        return new CategoryDto
-        {
-            Id = created.Id,
-            Title = created.Title,
-            BackgroundColor = created.BackgroundColor
-        };
+        return new CategoryDto(created.Id, created.Title, created.BackgroundColor);
     }
 
     public async Task UpdateAsync(CategoryDto toUpdate)

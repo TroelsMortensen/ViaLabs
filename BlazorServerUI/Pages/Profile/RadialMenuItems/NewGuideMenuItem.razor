@@ -1,5 +1,6 @@
 ﻿@using Application.ServiceContracts
 @using Application.DTOs.GuideDTOs
+@using Application.DTOs.CategoryDTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject IGuideService guideService
 
@@ -35,7 +36,7 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public Category? Category { get; set; }
+    public CategoryDto? Category { get; set; }
 
     [Parameter]
     public EventCallback<GuideHeaderDto> OnGuideCreated { get; set; }
@@ -58,12 +59,8 @@
     {
         AuthenticationState authState = await AuthStateTask;
         string? teacher = authState.User.Identity!.Name;
-        GuideCreationDto guide = new()
-        {
-            Title = newGuideTitle,
-            OwnerId = teacher!,
-            CategoryId = Category?.Id
-        };
+        GuideCreationDto guide = new(newGuideTitle,teacher!,Category?.Id);
+        
         try
         {
             GuideHeaderDto created = await guideService.CreateGuideAsync(guide);

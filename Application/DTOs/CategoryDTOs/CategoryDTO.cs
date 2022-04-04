@@ -6,4 +6,11 @@ public class CategoryDto
     public string Title { get; set; }
 
     public string BackgroundColor { get; set; }
+
+    public CategoryDto(Guid id, string title, string backgroundColor)
+    {
+        Id = id;
+        Title = title;
+        BackgroundColor = backgroundColor;
+    }
 }

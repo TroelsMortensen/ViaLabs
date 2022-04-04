@@ -28,11 +28,7 @@ public class GuideService : IGuideService
         await repoUow.GuideRepo.CreateAsync(guideToCreate);
         await repoUow.SaveChangesAsync();
         
-        return new GuideHeaderDto
-        {
-            Id = guideToCreate.Id,
-            Title = guideToCreate.Title
-        };
+        return new GuideHeaderDto(guideToCreate.Id, guideToCreate.Title);
     }
 
 

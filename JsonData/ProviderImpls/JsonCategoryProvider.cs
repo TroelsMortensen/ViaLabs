@@ -6,21 +6,19 @@ namespace JsonData.ProviderImpls;
 
 public class JsonCategoryProvider : ICategoryProvider
 {
-    private JsonDataContext context;
+    private readonly JsonDataContext context;
 
     public JsonCategoryProvider(JsonDataContext context)
     {
         this.context = context;
     }
 
-    public Task<List<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
+    public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
     {
-        List<CategoryDto> categoryDtos = context.ViaLabData.Categories.Where(c => c.OwnerId.Equals(teacherName)).Select(c => new CategoryDto
-        {
-            Id = c.Id,
-            Title = c.Title,
-            BackgroundColor = c.BackgroundColor
-        }).ToList();
+        ICollection<CategoryDto> categoryDtos = context.ViaLabData.Categories.
+            Where(c => c.OwnerId.Equals(teacherName)).
+            Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).
+            ToList();
         return Task.FromResult(categoryDtos);
     }
 }

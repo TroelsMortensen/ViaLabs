@@ -61,6 +61,5 @@ public class JsonDataContext : IDbContext, IDisposable
     public void Dispose()
     {
         viaLabData = null;
-        Console.WriteLine("Disposed of JsonDataContext");
     }
 }
