@@ -1,7 +1,6 @@
 ﻿using Application.DTOs.GuideDTOs;
-using Entities;
 
-namespace Application.Providers;
+namespace Application.ProviderContracts;
 
 public interface IGuideProvider
 {

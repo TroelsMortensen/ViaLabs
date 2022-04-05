@@ -1,6 +1,6 @@
 ﻿using Application.DTOs.CategoryDTOs;
 
-namespace Application.Providers;
+namespace Application.ProviderContracts;
 
 public interface ICategoryProvider
 {

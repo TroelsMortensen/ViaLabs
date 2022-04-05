@@ -1,5 +1,5 @@
 ﻿using Application.DTOs.CategoryDTOs;
-using Application.Providers;
+using Application.ProviderContracts;
 using JsonData.DataAccess;
 
 namespace JsonData.ProviderImpls;

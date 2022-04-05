@@ -1,9 +1,8 @@
 ﻿using Entities;
 
-namespace Application.Providers;
+namespace Application.ProviderContracts;
 
 public interface ITeacherProvider
 {
     Task<Teacher> GetTeacherAsync(string userName);
-
 }

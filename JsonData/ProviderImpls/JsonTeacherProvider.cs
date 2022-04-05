@@ -1,4 +1,4 @@
-﻿using Application.Providers;
+﻿using Application.ProviderContracts;
 using Entities;
 using JsonData.DataAccess;
 

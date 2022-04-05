@@ -1,7 +1,5 @@
-﻿using System.Collections.ObjectModel;
-using Application.DTOs.GuideDTOs;
-using Application.Providers;
-using Entities;
+﻿using Application.DTOs.GuideDTOs;
+using Application.ProviderContracts;
 using JsonData.DataAccess;
 
 namespace JsonData.ProviderImpls;

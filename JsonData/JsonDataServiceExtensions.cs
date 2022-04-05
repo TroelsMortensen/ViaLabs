@@ -1,4 +1,5 @@
-﻿using Application.Providers;
+﻿using Application.ProviderContracts;
+using Application.ProviderContracts;
 using Application.RepositoryContracts;
 using JsonData.DataAccess;
 using JsonData.ProviderImpls;
