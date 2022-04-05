@@ -26,9 +26,16 @@ public class GuideRepo : IGuideRepo
         return Task.FromResult(result);
     }
 
-    public Task<ICollection<Guide>> GetUnCategorizedGuidesByUserId(string teacherName)
+    public Task UpdateAsync(Guide guide)
     {
-        ICollection<Guide> result = context.ViaLabData.Guides.Where(g => g.CategoryId == null && g.OwnerId.Equals(teacherName)).ToList();
-        return Task.FromResult(result);
+        Guide first = context.ViaLabData.Guides.First(g => g.Id.Equals(guide.Id));
+        first.Update(guide);
+        return Task.CompletedTask;
     }
+
+    // public Task<ICollection<Guide>> GetUnCategorizedGuidesByUserId(string teacherName)
+    // {
+    //     ICollection<Guide> result = context.ViaLabData.Guides.Where(g => g.CategoryId == null && g.OwnerId.Equals(teacherName)).ToList();
+    //     return Task.FromResult(result);
+    // }
 }

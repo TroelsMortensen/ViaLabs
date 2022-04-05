@@ -10,4 +10,11 @@ public class Guide
 
     public Guid? CategoryId { get; set; }
 
+    public void Update(Guide guide)
+    {
+        Title = guide.Title;
+        IsPublished = guide.IsPublished;
+        DisplayStepNums = guide.DisplayStepNums;
+        CategoryId = guide.CategoryId;
+    }
 }
