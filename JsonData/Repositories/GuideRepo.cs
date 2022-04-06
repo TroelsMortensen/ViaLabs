@@ -6,24 +6,17 @@ namespace JsonData.Repositories;
 
 public class GuideRepo : IGuideRepo
 {
-
     private readonly JsonDataContext context;
 
-    public GuideRepo(JsonDataContext context)
+    public GuideRepo(IDbContext context)
     {
-        this.context = context;
+        this.context = (JsonDataContext)context;
     }
 
     public Task CreateAsync(Guide guide)
     {
         context.ViaLabData.Guides.Add(guide);
         return Task.CompletedTask;
-    }
-
-    public Task<ICollection<Guide>> GetGuidesByCategoryIdAsync(Guid categoryId)
-    {
-        ICollection<Guide> result = context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList();
-        return Task.FromResult(result);
     }
 
     public Task UpdateAsync(Guide guide)
@@ -33,9 +26,21 @@ public class GuideRepo : IGuideRepo
         return Task.CompletedTask;
     }
 
-    // public Task<ICollection<Guide>> GetUnCategorizedGuidesByUserId(string teacherName)
-    // {
-    //     ICollection<Guide> result = context.ViaLabData.Guides.Where(g => g.CategoryId == null && g.OwnerId.Equals(teacherName)).ToList();
-    //     return Task.FromResult(result);
-    // }
+    public Task DeleteGuide(Guid id)
+    {
+        int removedCount = context.ViaLabData.Guides.ToList().RemoveAll(g => g.Id.Equals(id));
+        if (removedCount == 0)
+        {
+            throw new Exception("Nothing was removed, due to some error");
+        }
+        return Task.CompletedTask;
+    }
+
+    public Task UnParentGuidesFromCategory(Guid categoryId)
+    {
+        context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList().ForEach(guide => guide.CategoryId = null);
+
+        return Task.CompletedTask;
+    }
+
 }

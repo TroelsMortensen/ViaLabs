@@ -8,9 +8,9 @@ public class CategoryRepo : ICategoryRepo
 {
     private JsonDataContext context;
 
-    public CategoryRepo(JsonDataContext context)
+    public CategoryRepo(IDbContext context)
     {
-        this.context = context;
+        this.context = (JsonDataContext) context;
     }
 
     public Task<Category> CreateAsync(Category category)
@@ -42,9 +42,6 @@ public class CategoryRepo : ICategoryRepo
 
     public Task DeleteAsync(Guid categoryId)
     {
-        List<Guide> guides = context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList();
-        guides.ForEach(g => g.CategoryId = null);
-        
         Category toRemove = context.ViaLabData.Categories.First(c => c.Id.Equals(categoryId));
         if (!context.ViaLabData.Categories.Remove(toRemove))
         {

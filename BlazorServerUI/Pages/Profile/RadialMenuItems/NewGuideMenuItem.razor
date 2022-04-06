@@ -66,6 +66,7 @@
             GuideHeaderDto created = await guideService.CreateGuideAsync(guide);
             showAddGuideModal = false;
             await OnGuideCreated.InvokeAsync(created);
+            newGuideTitle = String.Empty;
         }
         catch (Exception e)
         {

@@ -4,7 +4,7 @@ using Entities;
 
 namespace JsonData.DataAccess;
 
-public class JsonDataContext : IDbContext, IDisposable
+public class JsonDataContext : IDbContext
 {
     private string path = "vialabs.json";
 
@@ -34,9 +34,13 @@ public class JsonDataContext : IDbContext, IDisposable
                     new Teacher("VIA\\TRMO")
                 },
                 UnApprovedTeachers = new List<Teacher>(),
-                Categories = new List<Category>()
+                Categories = new List<Category>(),
+                Guides = new List<Guide>()
             };
-            string vldAsJson = JsonSerializer.Serialize(vld);
+            string vldAsJson = JsonSerializer.Serialize(vld, new JsonSerializerOptions
+            {
+                WriteIndented = true
+            });
             File.WriteAllText(path, vldAsJson);
         }
     }
@@ -49,6 +53,7 @@ public class JsonDataContext : IDbContext, IDisposable
 
     public Task SaveChangesAsync()
     {
+        Console.WriteLine("Saving changes!");
         string vldAsJson = JsonSerializer.Serialize(viaLabData, new JsonSerializerOptions
         {
             WriteIndented = true
@@ -56,10 +61,5 @@ public class JsonDataContext : IDbContext, IDisposable
         File.WriteAllText(path, vldAsJson);
         viaLabData = null;
         return Task.CompletedTask;
-    }
-
-    public void Dispose()
-    {
-        viaLabData = null;
     }
 }

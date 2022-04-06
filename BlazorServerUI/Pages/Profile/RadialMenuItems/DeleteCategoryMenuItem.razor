@@ -87,12 +87,11 @@
         }
         if (progress == 100)
         {
-            Console.WriteLine("Delete");
             try
             {
-                await DeleteCategory();
                 showDeleteConfirmationModal = false;
                 progress = 0;
+                await DeleteCategory();
             }
             catch (Exception e)
             {
@@ -104,5 +103,4 @@
             progress = 0;
         }
     }
-
 }

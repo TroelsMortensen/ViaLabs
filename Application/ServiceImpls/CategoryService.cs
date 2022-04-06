@@ -47,12 +47,7 @@ public class CategoryService : ICategoryService
 
     public async Task DeleteAsync(Guid categoryId)
     {
-        ICollection<Guide> guides = await repoUow.GuideRepo.GetGuidesByCategoryIdAsync(categoryId);
-        foreach (Guide guide in guides)
-        {
-            guide.CategoryId = null;
-            await repoUow.GuideRepo.UpdateAsync(guide);
-        }
+        await repoUow.GuideRepo.UnParentGuidesFromCategory(categoryId);
         await repoUow.CategoryRepo.DeleteAsync(categoryId);
         await repoUow.SaveChangesAsync();
     }

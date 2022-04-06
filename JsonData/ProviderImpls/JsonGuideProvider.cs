@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.GuideDTOs;
 using Application.ProviderContracts;
+using Application.RepositoryContracts;
 using JsonData.DataAccess;
 
 namespace JsonData.ProviderImpls;
@@ -10,9 +11,9 @@ public class JsonGuideProvider : IGuideProvider
     private readonly JsonDataContext context;
 
 
-    public JsonGuideProvider(JsonDataContext context)
+    public JsonGuideProvider(IDbContext context)
     {
-        this.context = context;
+        this.context = (JsonDataContext)context;
     }
 
     public Task<ICollection<GuideHeaderDto>> GetGuidesByCategoryIdAsync(Guid categoryId)

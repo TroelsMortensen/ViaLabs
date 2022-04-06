@@ -1,5 +1,6 @@
 ﻿using Application.DTOs.CategoryDTOs;
 using Application.ProviderContracts;
+using Application.RepositoryContracts;
 using JsonData.DataAccess;
 
 namespace JsonData.ProviderImpls;
@@ -8,9 +9,9 @@ public class JsonCategoryProvider : ICategoryProvider
 {
     private readonly JsonDataContext context;
 
-    public JsonCategoryProvider(JsonDataContext context)
+    public JsonCategoryProvider(IDbContext context)
     {
-        this.context = context;
+        this.context = (JsonDataContext)context;
     }
 
     public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)

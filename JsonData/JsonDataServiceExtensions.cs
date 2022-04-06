@@ -1,5 +1,4 @@
 ﻿using Application.ProviderContracts;
-using Application.ProviderContracts;
 using Application.RepositoryContracts;
 using JsonData.DataAccess;
 using JsonData.ProviderImpls;
@@ -34,7 +33,6 @@ public static class JsonDataServiceExtensions
 
     private static void AddDataAccess(IServiceCollection services)
     {
-        services.AddScoped<JsonDataContext>();
         services.AddScoped<IDbContext, JsonDataContext>();
     }
 }
