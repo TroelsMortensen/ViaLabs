@@ -1,17 +1,9 @@
-﻿using Application.RepositoryContracts;
-using Application.ServiceContracts;
-using Entities;
+﻿using Application.ServiceContracts;
 
 namespace Application.ServiceImpls;
 
 public class TeacherService : ITeacherService
 {
-    private readonly IRepoUOW repoUow;
-
-    public TeacherService(IRepoUOW repoUow)
-    {
-        this.repoUow = repoUow;
-    }
 
     public bool IsViaTeacher(string userName)
     {
@@ -22,8 +14,4 @@ public class TeacherService : ITeacherService
         return true;
     }
 
-    public Task<Teacher?> GetTeacherAsync(string userName)
-    {
-        return repoUow.TeacherRepo.GetApprovedTeacher(userName);
-    }
 }

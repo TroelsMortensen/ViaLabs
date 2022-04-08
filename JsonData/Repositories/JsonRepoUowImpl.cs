@@ -19,8 +19,19 @@ public class JsonRepoUowImpl : IRepoUOW
         this.context = context;
     }
 
+    public Task BeginAsync()
+    {
+        return Task.CompletedTask;
+    }
+
     public async Task SaveChangesAsync()
     {
         await context.SaveChangesAsync();
+    }
+
+    public Task RollbackAsync()
+    {
+        context.Clear();
+        return Task.CompletedTask;
     }
 }

@@ -25,11 +25,19 @@ public class CategoryService : ICategoryService
         };
         ValidateNewCategoryData(newCat);
         await ValidateTitleIsFree(newCat);
-        
-        Category created = await repoUow.CategoryRepo.CreateAsync(newCat);
-        await repoUow.SaveChangesAsync();
-        
-        return new CategoryDto(created.Id, created.Title, created.BackgroundColor);
+
+        try
+        {
+            await repoUow.BeginAsync();
+            Category created = await repoUow.CategoryRepo.CreateAsync(newCat);
+            await repoUow.SaveChangesAsync();
+            return new CategoryDto(created.Id, created.Title, created.BackgroundColor);
+        }
+        catch (Exception e)
+        {
+            await repoUow.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task UpdateAsync(CategoryDto toUpdate)
@@ -41,15 +49,33 @@ public class CategoryService : ICategoryService
             BackgroundColor = toUpdate.BackgroundColor,
         };
         ValidateNewCategoryData(categoryToUpdate);
-        await repoUow.CategoryRepo.UpdateAsync(categoryToUpdate);
-        await repoUow.SaveChangesAsync();
+        try
+        {
+            await repoUow.BeginAsync();
+            await repoUow.CategoryRepo.UpdateAsync(categoryToUpdate);
+            await repoUow.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            await repoUow.RollbackAsync();
+            throw;
+        }
     }
 
     public async Task DeleteAsync(Guid categoryId)
     {
-        await repoUow.GuideRepo.UnParentGuidesFromCategory(categoryId);
-        await repoUow.CategoryRepo.DeleteAsync(categoryId);
-        await repoUow.SaveChangesAsync();
+        try
+        {
+            await repoUow.BeginAsync();
+            await repoUow.GuideRepo.UnParentGuidesFromCategory(categoryId);
+            await repoUow.CategoryRepo.DeleteAsync(categoryId);
+            await repoUow.SaveChangesAsync();
+        }
+        catch (Exception e)
+        {
+            await repoUow.RollbackAsync();
+            throw;
+        }
     }
 
     private static void ValidateNewCategoryData(Category category)
@@ -61,6 +87,8 @@ public class CategoryService : ICategoryService
 
     private async Task ValidateTitleIsFree(Category category)
     {
+        // TODO should probably change this? Currently multiple teachers can have the same category.
+
         ICollection<Category> existing = await repoUow.CategoryRepo.GetCategoriesByTeacherAsync(category.OwnerId);
         Category? existingCategory = existing.FirstOrDefault(c => c.Title.Equals(category.Title, StringComparison.OrdinalIgnoreCase));
         if (existingCategory != null)

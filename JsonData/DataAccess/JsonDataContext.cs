@@ -62,4 +62,9 @@ public class JsonDataContext
         viaLabData = null;
         return Task.CompletedTask;
     }
+
+    public void Clear()
+    {
+        viaLabData = null;
+    }
 }
