@@ -11,9 +11,9 @@ public class JsonGuideProvider : IGuideProvider
     private readonly JsonDataContext context;
 
 
-    public JsonGuideProvider(IDbContext context)
+    public JsonGuideProvider(JsonDataContext context)
     {
-        this.context = (JsonDataContext)context;
+        this.context = context;
     }
 
     public Task<ICollection<GuideHeaderDto>> GetGuidesByCategoryIdAsync(Guid categoryId)

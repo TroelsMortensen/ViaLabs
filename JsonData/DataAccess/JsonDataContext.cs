@@ -4,7 +4,7 @@ using Entities;
 
 namespace JsonData.DataAccess;
 
-public class JsonDataContext : IDbContext
+public class JsonDataContext 
 {
     private string path = "vialabs.json";
 

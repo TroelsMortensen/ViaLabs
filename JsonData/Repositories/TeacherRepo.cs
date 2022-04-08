@@ -8,9 +8,9 @@ public class TeacherRepo : ITeacherRepo
 {
     private JsonDataContext context;
 
-    public TeacherRepo(IDbContext context)
+    public TeacherRepo(JsonDataContext context)
     {
-        this.context = (JsonDataContext)context;
+        this.context = context;
     }
 
     public Task<Teacher?> GetApprovedTeacher(string name)

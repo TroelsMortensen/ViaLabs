@@ -9,9 +9,9 @@ public class JsonCategoryProvider : ICategoryProvider
 {
     private readonly JsonDataContext context;
 
-    public JsonCategoryProvider(IDbContext context)
+    public JsonCategoryProvider(JsonDataContext context)
     {
-        this.context = (JsonDataContext)context;
+        this.context =context;
     }
 
     public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)

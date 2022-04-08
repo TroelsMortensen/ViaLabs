@@ -8,9 +8,9 @@ public class GuideRepo : IGuideRepo
 {
     private readonly JsonDataContext context;
 
-    public GuideRepo(IDbContext context)
+    public GuideRepo(JsonDataContext context)
     {
-        this.context = (JsonDataContext)context;
+        this.context = context;
     }
 
     public Task CreateAsync(Guide guide)

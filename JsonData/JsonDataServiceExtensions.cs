@@ -33,6 +33,6 @@ public static class JsonDataServiceExtensions
 
     private static void AddDataAccess(IServiceCollection services)
     {
-        services.AddScoped<IDbContext, JsonDataContext>();
+        services.AddScoped<JsonDataContext>();
     }
 }

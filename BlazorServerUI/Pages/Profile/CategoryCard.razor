@@ -23,7 +23,7 @@
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
                         <NewGuideMenuItem ShowMenu="@showMenu" Category="Category" OnGuideCreated="OnGuideCreated"/>
-                        <NewVideoLinkMenuItem ShowMenu="@showMenu"/>
+                        <NewExResourceMenuItem ShowMenu="@showMenu"/>
                         @if (Category != null)
                         {
                             <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@((cat) => Category = cat)"/>
@@ -44,19 +44,23 @@
         }
         else
         {
-            foreach (GuideHeaderDto guide in guides)
-            {
-                <div class="guide-title">
-                    <img class="new-item-icon hidable"
-                         src="icons/edit.gif"
-                         @onclick='() => navMgr.NavigateTo("/EditGuide/" + guide.Id)'
-                         title="Edit Guide"/>
-                    <a href="/Guide/@guide.Id" title="View Guide" class="movable-title">@guide.Title</a>
-                </div>
-            }
+            <ul style="list-style: none; margin-left: -20px">
+                @foreach (GuideHeaderDto guide in guides)
+                {
+                    <li>
+                        <div class="guide-title">
+                            <img class="new-item-icon hidable"
+                                 src="icons/edit.gif"
+                                 @onclick='() => navMgr.NavigateTo("/EditGuide/" + guide.Id)'
+                                 title="Edit Guide"/>
+                            <a href="/Guide/@guide.Id" title="View Guide" class="movable-title">@guide.Title</a>
+                        </div>
+                    </li>
+                }
+            </ul>
         }
     </div>
-    <h5 style="font-style: italic">Videos</h5>
+    <h5 style="font-style: italic">External Resources</h5>
     <div style="text-align: left; padding: 15px">
         <strong>
             <a href="https://youtu.be/EX81bDA-mkA">Installing postgres and setting up DataGrip</a>
@@ -66,7 +70,7 @@
 </div>
 
 @code {
-    
+
     [Parameter]
     public EventCallback OnStateChanged { get; set; }
 

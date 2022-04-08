@@ -9,9 +9,9 @@ public class JsonTeacherProvider : ITeacherProvider
 {
     private readonly JsonDataContext context;
 
-    public JsonTeacherProvider(IDbContext context)
+    public JsonTeacherProvider(JsonDataContext context)
     {
-        this.context = (JsonDataContext)context;
+        this.context = context;
     }
 
     public Task<Teacher> GetTeacherAsync(string userName)

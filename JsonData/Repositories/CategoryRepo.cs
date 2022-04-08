@@ -8,9 +8,9 @@ public class CategoryRepo : ICategoryRepo
 {
     private JsonDataContext context;
 
-    public CategoryRepo(IDbContext context)
+    public CategoryRepo(JsonDataContext context)
     {
-        this.context = (JsonDataContext) context;
+        this.context =  context;
     }
 
     public Task<Category> CreateAsync(Category category)
