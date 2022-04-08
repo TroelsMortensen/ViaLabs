@@ -47,11 +47,11 @@
             foreach (GuideHeaderDto guide in guides)
             {
                 <div class="guide-title">
-                    <img class="new-item-icon "
+                    <img class="new-item-icon hidable"
                          src="icons/edit.gif"
                          @onclick='() => navMgr.NavigateTo("/EditGuide/" + guide.Id)'
                          title="Edit Guide"/>
-                    <a href="/Guide/@guide.Id" title="View Guide">@guide.Title</a>
+                    <a href="/Guide/@guide.Id" title="View Guide" class="movable-title">@guide.Title</a>
                 </div>
             }
         }

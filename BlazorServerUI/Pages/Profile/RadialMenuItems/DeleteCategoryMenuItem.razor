@@ -12,16 +12,6 @@
     <h3>Delete Category?</h3>
     <hr/>
     <div style="margin-top: 5px">
-        @* <button class="negative-color vialab-button" style="margin-right: 10px" @onclick="DeleteCategory"> *@
-        @*     <span style="background-color: #0dcaf0"> *@
-        @*         Hold to Delete *@
-        @*     </span> *@
-        @* </button> *@
-
-        @*         <span style="background-color: red; padding:5px; border-radius: 10px; border: solid 2px #0c4128;     padding-left: 15px; *@
-        @*                                                                                                      padding-right: 15px; font-weight: bold"> *@
-        @*                 Hold to Delete *@
-        @*         </span> *@
         @if(!string.IsNullOrEmpty(errorLabel)){
             <div>
                 <label style="color:red">@errorLabel</label>
@@ -54,7 +44,7 @@
     private int progress;
     private bool isHolding;
     private string errorLabel = string.Empty;
-    // delete category
+    
     private bool showDeleteConfirmationModal;
 
     private void ShowRemoveCategory()
