@@ -62,7 +62,7 @@
     {
         categories.Add(category);
         categories = categories.OrderByDescending(c => c.Title).ToList();
-        SnackBarHandler.ShowSnackMessage("Category created");
+        SnackBarHandler.ShowSnackMessage($"Category \"{category.Title}\" created");
         return Task.CompletedTask;
     }
 

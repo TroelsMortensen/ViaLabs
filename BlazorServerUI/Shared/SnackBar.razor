@@ -2,7 +2,7 @@
 @implements IDisposable
 
 <div class="snackbar @showClass">@snackMsg</div>
-<button @onclick="() => Test()"></button>
+
 @code {
 
     private string showClass = string.Empty;
@@ -45,12 +45,6 @@
     public void Dispose()
     {
         SnackBarHandler.OnSnackMsg -= OnMessage;
-    }
-
-
-    private void Test()
-    {
-        SnackBarHandler.ShowSnackMessage("hello");
     }
 
 }

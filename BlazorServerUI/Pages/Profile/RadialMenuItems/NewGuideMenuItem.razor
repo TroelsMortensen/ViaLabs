@@ -68,7 +68,7 @@
             showAddGuideModal = false;
             await OnGuideCreated.InvokeAsync(created);
             newGuideTitle = String.Empty;
-            SnackBarHandler.ShowSnackMessage("Guide created!");
+            SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
         }
         catch (Exception e)
         {
