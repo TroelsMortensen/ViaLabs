@@ -1,6 +1,7 @@
 ﻿@using Application.ServiceContracts
 @using Application.DTOs.GuideDTOs
 @using Application.DTOs.CategoryDTOs
+@using BlazorServerUI.Handlers
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject IGuideService guideService
 
@@ -67,6 +68,7 @@
             showAddGuideModal = false;
             await OnGuideCreated.InvokeAsync(created);
             newGuideTitle = String.Empty;
+            SnackBarHandler.ShowSnackMessage("Guide created!");
         }
         catch (Exception e)
         {

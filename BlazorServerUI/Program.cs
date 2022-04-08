@@ -1,4 +1,5 @@
 using Application;
+using BlazorServerUI.Handlers;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 
@@ -20,6 +21,7 @@ builder.Services.AddServerSideBlazor();
 // Add custom services
 builder.Services.AddAppServices();
 builder.Services.AddJsonDataAccess();
+builder.Services.AddScoped<SnackBarHandler>();
 
 // End custom services
 

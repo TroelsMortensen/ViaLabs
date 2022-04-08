@@ -1,0 +1,56 @@
+﻿@using BlazorServerUI.Handlers
+@implements IDisposable
+
+<div class="snackbar @showClass">@snackMsg</div>
+<button @onclick="() => Test()"></button>
+@code {
+
+    private string showClass = string.Empty;
+    private string snackMsg = string.Empty;
+
+    private bool isShowing;
+    private Queue<string> msgs = new();
+
+    protected override void OnInitialized()
+    {
+        SnackBarHandler.OnSnackMsg += OnMessage;
+    }
+
+    private void OnMessage(string msg)
+    {
+        msgs.Enqueue(msg);
+        Console.WriteLine($"Queue size {msgs.Count}");
+        if (!isShowing)
+            ShowHideMsg(msg);
+
+    }
+
+    private async Task ShowHideMsg(string msg)
+    {
+        isShowing = true;
+        while (msgs.Any())
+        {
+            string dequeue = msgs.Dequeue();
+            snackMsg = dequeue;
+            showClass = "show";
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(4900);
+            showClass = "";
+            await InvokeAsync(StateHasChanged);
+            await Task.Delay(500);
+        }
+        isShowing = false;
+    }
+
+    public void Dispose()
+    {
+        SnackBarHandler.OnSnackMsg -= OnMessage;
+    }
+
+
+    private void Test()
+    {
+        SnackBarHandler.ShowSnackMessage("hello");
+    }
+
+}
