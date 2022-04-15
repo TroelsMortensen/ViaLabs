@@ -30,6 +30,15 @@ public class JsonCategoryProvider : ICategoryProvider
             CategoriesWithGuides = new List<CategoryWithGuidesDto>()
         };
         
+        // get all uncategorized guides for teacher
+        CategoryWithGuidesDto unCatCwg = new();
+        ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.
+            Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher)).
+            Select(g => new GuideHeaderDto(g.Id, g.Title)).
+            ToList();
+        unCatCwg.Guides = list;
+        result.CategoriesWithGuides.Add(unCatCwg);
+        
         // get all categories for teacher
         ICollection<CategoryDto> categoryDtos = context.ViaLabData.Categories.
             Where(c => c.OwnerId.Equals(teacher)).
@@ -47,15 +56,6 @@ public class JsonCategoryProvider : ICategoryProvider
             cwg.Guides = guideHeaderDtos;
             result.CategoriesWithGuides.Add(cwg);
         }
-        
-        // get all uncategorized guides for teacher
-        CategoryWithGuidesDto unCatCwg = new();
-        ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.
-            Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher)).
-            Select(g => new GuideHeaderDto(g.Id, g.Title)).
-            ToList();
-        unCatCwg.Guides = list;
-        result.CategoriesWithGuides.Add(unCatCwg);
 
         return Task.FromResult(result);
     }

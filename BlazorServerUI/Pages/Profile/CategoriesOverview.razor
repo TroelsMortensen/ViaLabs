@@ -10,44 +10,34 @@
     <CategoriesHeader/>
 
     <div class="column-container">
-        @if (profileDataHandler.Categories != null)
-        {
-            <div class="guide-coloumn">
-                <CategoryCard/>
-                @{
-                    int idx = 0;
-                    foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
+        <div class="guide-coloumn">
+            @{
+                int idx = 0;
+                foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
+                {
+                    if (idx % 2 == 0)
                     {
-                        if (idx % 2 == 1)
-                        {
-                            CategoryDto? tmp = cwg.Category;
-                            if (tmp != null)
-                            {
-                                <CategoryCard Category="@tmp" OnStateChanged="SomethingChanged"/>
-                            }
-                        }
-                        idx++;
+                        CategoryDto? tmp = cwg.Category;
+                        <CategoryCard Category="@tmp" OnStateChanged="SomethingChanged"/>
                     }
+                    idx++;
                 }
-
-            </div>
-            <div class="guide-coloumn">
-                @{
-                    int idx2 = 0;
-                    foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
+            }
+        </div>
+        <div class="guide-coloumn">
+            @{
+                int idx2 = 0;
+                foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
+                {
+                    if (idx2 % 2 == 1)
                     {
-                        if (idx2 % 2 == 0)
-                        {
-                            CategoryDto? tmp = cwg.Category;
-                            if (tmp != null){
-                                <CategoryCard Category="@tmp" OnStateChanged="SomethingChanged"/>
-                            }
-                        }
-                        idx2++;
+                        CategoryDto? tmp = cwg.Category;
+                        <CategoryCard Category="@tmp" OnStateChanged="SomethingChanged"/>
                     }
+                    idx2++;
                 }
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>
 
