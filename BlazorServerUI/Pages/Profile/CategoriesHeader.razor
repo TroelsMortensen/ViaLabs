@@ -2,7 +2,9 @@
 @using BlazorServerUI.Pages.Components
 @using Entities
 @using Application.DTOs.CategoryDTOs
+@using BlazorServerUI.Handlers
 @inject ICategoryService categoryService
+@inject ProfileDataHandler profileDataHandler
 
 <div style="display:flex; justify-content: center">
     <div>
@@ -48,8 +50,8 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
-    [Parameter]
-    public EventCallback<CategoryDto> OnCategoryCreated { get; set; }
+    // [Parameter]
+    // public EventCallback<CategoryDto> OnCategoryCreated { get; set; }
 
     private string backgroundColor = "#ffffff";
     private bool showModal;
@@ -68,7 +70,8 @@
         {
             CategoryDto finishedCategory = await categoryService.CreateAsync(category);
 
-            await OnCategoryCreated.InvokeAsync(finishedCategory);
+            profileDataHandler.AddCategory(finishedCategory);
+            // await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;
             categoryTitle = string.Empty;
         }

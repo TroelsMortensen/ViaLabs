@@ -1,8 +1,10 @@
 ﻿@page "/Profile"
 @using Application.ServiceContracts
 @using Application.ProviderContracts
+@using BlazorServerUI.Handlers
 @inject ITeacherService teacherService
 @inject ITeacherProvider teacherProvider
+@inject ProfileDataHandler profileDataHandler
 
 <div style="display:flex; justify-content: space-evenly">
     @if (approvedTeacher is not null)
@@ -22,28 +24,19 @@
     private bool isViaTeacher;
     private Teacher? approvedTeacher;
 
-    private ICollection<Category> categories = new List<Category>();
-
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name!;
         isViaTeacher = teacherService.IsViaTeacher(userName);
         if (!isViaTeacher) return;
-        
+
         approvedTeacher = await teacherProvider.GetTeacherAsync(userName);
-
+        if (approvedTeacher != null)
+        {
+           await profileDataHandler.PopulateAsync(approvedTeacher.Name);
+        }
     // TODO catch exceptions here, and show toast error message
-    }
-
-    private Task CreateNewGuide()
-    {
-        return Task.CompletedTask;
-    }
-
-    private Task CreateNewCategory()
-    {
-        throw new NotImplementedException();
     }
 
 }
