@@ -18,7 +18,7 @@
                     if (idx % 2 == 0)
                     {
                         CategoryDto? tmp = cwg.Category;
-                        <CategoryCard Category="@tmp" OnStateChanged="SomethingChanged"/>
+                        <CategoryCard CategoryId="@tmp?.Id" OnStateChanged="SomethingChanged"/>
                     }
                     idx++;
                 }
@@ -32,7 +32,7 @@
                     if (idx2 % 2 == 1)
                     {
                         CategoryDto? tmp = cwg.Category;
-                        <CategoryCard Category="@tmp" OnStateChanged="SomethingChanged"/>
+                        <CategoryCard CategoryId="@tmp?.Id" OnStateChanged="SomethingChanged"/>
                     }
                     idx2++;
                 }

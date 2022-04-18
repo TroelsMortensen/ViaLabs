@@ -3,10 +3,12 @@
 @using Application.DTOs.GuideDTOs
 @using Application.ProviderContracts
 @using Application.ServiceContracts
+@using BlazorServerUI.Handlers
 
 @inject ICategoryService categoryService
 @inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
+@inject ProfileDataHandler profileDataHandler
 
 
 <div class="category-card" style="background-color: @(Category == null ? "#fff" : Category.BackgroundColor)">
@@ -22,7 +24,7 @@
                     <div class="radial-menu">
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
-                        <NewGuideMenuItem ShowMenu="@showMenu" Category="Category" OnGuideCreated="OnGuideCreated"/>
+                        <NewGuideMenuItem ShowMenu="@showMenu" Category="Category"/>
                         <NewExResourceMenuItem ShowMenu="@showMenu"/>
                         @if (Category != null)
                         {
@@ -36,7 +38,7 @@
     </div>
     <h5 style="font-style: italic">Documentation</h5>
     <div style="text-align: left">
-        @if (!guides.Any())
+        @if (guides == null || !guides.Any())
         {
             <div style="margin-left: 15px;">
                 No guides yet..
@@ -78,17 +80,24 @@
     public Task<AuthenticationState> AuthState { get; set; } = null!;
 
     [Parameter]
-    public CategoryDto? Category { get; set; }
+    public Guid? CategoryId { get; set; }
 
-    private ICollection<GuideHeaderDto> guides = new List<GuideHeaderDto>();
+    private CategoryDto? Category { get; set; }
+
+    private ICollection<GuideHeaderDto> guides = null!;
 
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        if (Category != null)
+        CategoryWithGuidesDto categoryWithGuidesDto = profileDataHandler.Categories.CategoriesWithGuides.First(c =>
+            (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
+        Category = categoryWithGuidesDto.Category;
+        guides = categoryWithGuidesDto.Guides;
+
+    /*  if (Category != null)
         {
             guides = await guideProvider.GetGuidesByCategoryIdAsync(Category.Id);
         }
@@ -97,7 +106,9 @@
             AuthenticationState authState = await AuthState;
             string teacher = authState.User.Identity!.Name!;
             guides = await guideProvider.GetUnCategorizedByTeacherAsync(teacher);
-        }
+        }*/
+        profileDataHandler.OnGuideAdded += StateHasChanged;
+        profileDataHandler.OnCategoryUpdated += StateHasChanged;
     }
 
     private async Task ToggleMenu()
@@ -127,11 +138,6 @@
 
         delayedCloseIsActive = false;
         showMenu = false;
-    }
-
-    private void OnGuideCreated(GuideHeaderDto guide)
-    {
-        guides.Add(guide);
     }
 
 }

@@ -4,6 +4,7 @@
 @using BlazorServerUI.Handlers
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject IGuideService guideService
+@inject ProfileDataHandler profileDataHandler
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
      src="icons/AddGuide.svg"
@@ -39,8 +40,8 @@
     [Parameter]
     public CategoryDto? Category { get; set; }
 
-    [Parameter]
-    public EventCallback<GuideHeaderDto> OnGuideCreated { get; set; }
+    // [Parameter]
+    // public EventCallback<GuideHeaderDto> OnGuideCreated { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -65,10 +66,11 @@
         try
         {
             GuideHeaderDto created = await guideService.CreateGuideAsync(guide);
-            showAddGuideModal = false;
-            await OnGuideCreated.InvokeAsync(created);
+            Console.WriteLine("Adding to handler");
+            profileDataHandler.AddGuideToCategory(created, Category);
             newGuideTitle = String.Empty;
             SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
+            showAddGuideModal = false;
         }
         catch (Exception e)
         {

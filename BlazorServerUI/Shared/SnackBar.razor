@@ -19,7 +19,7 @@
     private void OnMessage(string msg)
     {
         msgs.Enqueue(msg);
-        Console.WriteLine($"Queue size {msgs.Count}");
+       
         if (!isShowing)
             ShowHideMsg(msg);
 
