@@ -1,6 +1,6 @@
 ﻿namespace Entities;
 
-public class VideoLink
+public class ExternalResource
 {
     
 }

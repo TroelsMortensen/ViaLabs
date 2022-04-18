@@ -4,11 +4,11 @@ using JsonData.DataAccess;
 
 namespace JsonData.Repositories;
 
-public class TeacherRepo : ITeacherRepo
+public class TeacherJsonRepo : ITeacherRepo
 {
     private JsonDataContext context;
 
-    public TeacherRepo(JsonDataContext context)
+    public TeacherJsonRepo(JsonDataContext context)
     {
         this.context = context;
     }

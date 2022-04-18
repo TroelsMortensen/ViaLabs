@@ -92,7 +92,7 @@
 
     protected override void OnInitialized()
     {
-        CategoryWithGuidesDto categoryWithGuidesDto = profileDataHandler.Categories.CategoriesWithGuides.First(c =>
+        CategoryWithGuidesDto categoryWithGuidesDto = profileDataHandler.CategoriesWithGuides.First(c =>
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
         Category = categoryWithGuidesDto.Category;
         guides = categoryWithGuidesDto.Guides;

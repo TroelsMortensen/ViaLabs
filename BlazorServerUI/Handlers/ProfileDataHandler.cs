@@ -6,7 +6,7 @@ namespace BlazorServerUI.Handlers;
 
 public class ProfileDataHandler
 {
-    public CategoriesWithGuideHeadersDto Categories { get; set; } = null!;
+    public ICollection<CategoryWithGuidesDto> CategoriesWithGuides { get; set; }
 
     public Action OnCategoryAdded { get; set; } = null!;
     public Action<Guid> OnCategoryDeleted { get; set; } = null!;
@@ -24,7 +24,7 @@ public class ProfileDataHandler
 
     public async Task PopulateAsync(string teacher)
     {
-        Categories = await categoryProvider.GetCategoriesWithGuideHeadersAsync(teacher);
+        CategoriesWithGuides = await categoryProvider.GetCategoriesWithGuideHeadersAsync(teacher);
     }
 
     public void AddCategory(CategoryDto categoryDto)
@@ -33,7 +33,7 @@ public class ProfileDataHandler
         {
             Category = categoryDto
         };
-        Categories.CategoriesWithGuides.Add(c);
+        CategoriesWithGuides.Add(c);
         OnCategoryAdded?.Invoke();
     }
 
@@ -42,11 +42,11 @@ public class ProfileDataHandler
         CategoryWithGuidesDto? cwgw;
         if (category != null)
         {
-            cwgw = Categories!.CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id));
+            cwgw = CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id));
         }
         else
         {
-            cwgw = Categories!.CategoriesWithGuides.First(c => c.Category == null);
+            cwgw = CategoriesWithGuides.First(c => c.Category == null);
         }
 
         cwgw.Guides.Add(created);

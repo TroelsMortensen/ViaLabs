@@ -1,7 +1,10 @@
 ﻿@using Application.ServiceContracts
 @using Application.DTOs.CategoryDTOs
+@using BlazorServerUI.Handlers
+@using JsonData.Repositories
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject ICategoryService categoryService
+@inject ProfileDataHandler profileDataHandler
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
      src="icons/EditCategory.svg"
@@ -41,21 +44,24 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public CategoryDto Category { get; set; } = null!;
+    public Guid CategoryId { get; set; }
 
     [Parameter]
     public EventCallback<CategoryDto> OnChange { get; set; }
     // edit
     private string? editedCategoryTitle;
 
+    private CategoryDto categoryDto;
     private string? editedBackgroundColor;
     private string errorLabel = string.Empty;
     private bool showEditCategoryModal;
 
     protected override void OnInitialized()
     {
-        editedCategoryTitle = Category.Title;
-        editedBackgroundColor = Category.BackgroundColor;
+        CategoryWithGuidesDto categoryWithGuidesDto = profileDataHandler.CategoriesWithGuides.First(c => c.Category.Id.Equals(CategoryId));
+        categoryDto = categoryWithGuidesDto.Category;
+        editedCategoryTitle = categoryDto.Title;
+        editedBackgroundColor = categoryDto.BackgroundColor;
     }
 
     private void ShowEditCategory()
@@ -67,13 +73,14 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        CategoryDto toUpdate = new(Category.Id, editedCategoryTitle!, editedBackgroundColor!);
+        CategoryDto toUpdate = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
             await categoryService.UpdateAsync(toUpdate);
-            Category = toUpdate;
+            
             showEditCategoryModal = false;
-            await OnChange.InvokeAsync(Category);
+            
+            await OnChange.InvokeAsync(toUpdate);
         }
         catch (Exception e)
         {

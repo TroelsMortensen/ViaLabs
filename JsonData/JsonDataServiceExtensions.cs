@@ -25,9 +25,9 @@ public static class JsonDataServiceExtensions
 
     private static void AddRepositories(IServiceCollection services)
     {
-        services.AddScoped<ITeacherRepo, TeacherRepo>();
-        services.AddScoped<ICategoryRepo, CategoryRepo>();
-        services.AddScoped<IGuideRepo, GuideRepo>();
+        services.AddScoped<ITeacherRepo, TeacherJsonRepo>();
+        services.AddScoped<ICategoryRepo, CategoryJsonRepo>();
+        services.AddScoped<IGuideRepo, GuideJsonRepo>();
         services.AddScoped<IRepoUOW, JsonRepoUowImpl>();
     }
 
