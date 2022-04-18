@@ -10,35 +10,25 @@
     <CategoriesHeader/>
 
     <div class="column-container">
-        <div class="guide-coloumn">
-            @{
-                int idx = 0;
-                foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
-                {
-                    if (idx % 2 == 0)
+        @for (int i = 0; i < 2; i++)
+        {
+            <div class="guide-coloumn">
+                @{
+                    int idx = 0;
+                    foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
                     {
-                        CategoryDto? tmp = cwg.Category;
-                        <CategoryCard CategoryId="@tmp?.Id" OnStateChanged="SomethingChanged"/>
+                        if (idx % 2 == i)
+                        {
+                            CategoryDto? tmp = cwg.Category;
+                            <CategoryCard CategoryId="@tmp?.Id" OnStateChanged="SomethingChanged"/>
+                        }
+                        idx++;
                     }
-                    idx++;
                 }
-            }
-        </div>
-        <div class="guide-coloumn">
-            @{
-                int idx2 = 0;
-                foreach (CategoryWithGuidesDto cwg in profileDataHandler.Categories.CategoriesWithGuides)
-                {
-                    if (idx2 % 2 == 1)
-                    {
-                        CategoryDto? tmp = cwg.Category;
-                        <CategoryCard CategoryId="@tmp?.Id" OnStateChanged="SomethingChanged"/>
-                    }
-                    idx2++;
-                }
-            }
-        </div>
+            </div>
+        }
     </div>
+
 </div>
 
 @code {
