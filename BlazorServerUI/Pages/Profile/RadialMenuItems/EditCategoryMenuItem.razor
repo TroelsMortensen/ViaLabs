@@ -19,7 +19,7 @@
         <label style="font-weight: bold">Category title</label>
     </div>
     <div style="margin-bottom: 5px">
-        <input type="text" style="width: 20ch; border-radius: 10px; padding: 3px; text-align: center" @bind="@editedCategoryTitle" max="25"/>
+        <input type="text" style="width: 20ch; border-radius: 15px; padding: 3px; text-align: center" @bind="@editedCategoryTitle" max="25"/>
     </div>
     <div style="margin-bottom: 5px">
         <label>Background color:</label>
@@ -46,11 +46,6 @@
 
     [Parameter]
     public Guid CategoryId { get; set; }
-    //
-    // [Parameter]
-    // public EventCallback<CategoryDto> OnChange { get; set; }
-
-    // edit
    
     private string? editedCategoryTitle;
 
@@ -83,12 +78,11 @@
             
             showEditCategoryModal = false;
             SnackBarHandler.ShowSnackMessage("Category edited");
-            profileStateContainer.OnCategoryUpdated.Invoke(categoryDto);
+            profileStateContainer.OnCategoryUpdated.Invoke(categoryDto); // TODO Shouldn't call here. Ask pSC to raise event. Some day
         }
         catch (Exception e)
         {
             errorLabel = e.Message;
         }
     }
-
 }

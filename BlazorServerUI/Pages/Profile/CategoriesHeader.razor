@@ -47,9 +47,6 @@
     [CascadingParameter]
     public Task<AuthenticationState> AuthenticationState { get; set; } = null!;
 
-    // [Parameter]
-    // public EventCallback<CategoryDto> OnCategoryCreated { get; set; }
-
     private string backgroundColor = "#ffffff";
     private bool showModal;
     private string errorLabel = String.Empty;
@@ -68,7 +65,6 @@
             CategoryDto finishedCategory = await categoryService.CreateAsync(category);
 
             profileStateContainer.AddCategory(finishedCategory);
-            // await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;
             categoryTitle = string.Empty;
         }

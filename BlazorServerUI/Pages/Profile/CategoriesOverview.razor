@@ -2,10 +2,12 @@
 @using Application.ProviderContracts
 @using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
+
 @inject ICategoryProvider categoryProvider
 @inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
 
+@implements IDisposable
 <div class="guides-container">
 
     <CategoriesHeader/>
@@ -21,7 +23,7 @@
                         if (idx % 2 == i)
                         {
                             CategoryDto? tmp = cwg.Category;
-                            <CategoryCard CategoryId="@tmp?.Id" OnStateChanged="SomethingChanged"/>
+                            <CategoryCard CategoryId="@tmp?.Id" />
                         }
                         idx++;
                     }
@@ -34,32 +36,22 @@
 
 @code {
 
-    // [CascadingParameter]
-    // public Task<AuthenticationState> AuthState { get; set; } = null!;
-
-    // private ICollection<CategoryDto> categories = null!;
-
-
     protected override void OnInitialized()
     {
-        // profileStateContainer.OnCategoryAdded += () => StateHasChanged();
+        profileStateContainer.OnCategoryAdded += ReactToCategoryAdded;
+        profileStateContainer.OnCategoryDeleted += StateHasChanged;
     }
 
-
-    private Task CategoryAdded(CategoryDto category)
+    private void ReactToCategoryAdded()
     {
-    // categories.Add(category);
-    // categories = categories.OrderByDescending(c => c.Title).ToList();
-    // SnackBarHandler.ShowSnackMessage($"Category \"{category.Title}\" created");
-        return Task.CompletedTask;
+        StateHasChanged();
+        SnackBarHandler.ShowSnackMessage("Category created!");
     }
-
-    private void SomethingChanged()
+    
+    public void Dispose()
     {
-    // TODO this is currently used to refresh after a category is deleted.
-    // feels hacky, but would have to update categories and guides around. Much work. 
-        Console.WriteLine("Update...");
-    // navMgr.NavigateTo("/Profile", true);
+        profileStateContainer.OnCategoryAdded -= ReactToCategoryAdded;
+        profileStateContainer.OnCategoryDeleted -= StateHasChanged;
     }
 
 }

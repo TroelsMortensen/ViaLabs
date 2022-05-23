@@ -6,11 +6,11 @@
 @using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
 
-@inject ICategoryService categoryService
 @inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
 
+@implements IDisposable
 
 <div class="category-card" style="background-color: @(Category == null ? "#fff" : Category.BackgroundColor)">
     <div class="navbarheader">
@@ -30,7 +30,7 @@
                         @if (Category != null)
                         {
                             <EditCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
-                            <DeleteCategoryMenuItem ShowMenu="showMenu" Category="Category" OnDeleted="OnStateChanged"/>
+                            <DeleteCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
                         }
                     </div>
                 </div>
@@ -74,8 +74,8 @@
 
 @code {
 
-    [Parameter]
-    public EventCallback OnStateChanged { get; set; }
+    // [Parameter]
+    // public EventCallback OnStateChanged { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthState { get; set; } = null!;
@@ -97,26 +97,11 @@
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
         Category = categoryWithGuidesDto.Category;
         guides = categoryWithGuidesDto.Guides;
-        profileStateContainer.OnCategoryUpdated += (cDto) =>
+        profileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
+        if (Category == null)
         {
-            if (cDto.Id.Equals(CategoryId))
-            {
-                InvokeAsync(StateHasChanged);
-            }
-        };
-        
-    /*  if (Category != null)
-        {
-            guides = await guideProvider.GetGuidesByCategoryIdAsync(Category.Id);
+            profileStateContainer.OnCategoryDeleted += StateHasChanged;
         }
-        else
-        {
-            AuthenticationState authState = await AuthState;
-            string teacher = authState.User.Identity!.Name!;
-            guides = await guideProvider.GetUnCategorizedByTeacherAsync(teacher);
-        }*/
-    // profileStateContainer.OnGuideAdded += StateHasChanged;
-    // profileStateContainer.OnCategoryUpdated += StateHasChanged;
     }
 
     private async Task ToggleMenu()
@@ -127,6 +112,15 @@
             await DelayedMenuClose();
     }
 
+    private void ReactToCategoryUpdated(CategoryDto cDto)
+    {
+        if (cDto.Id.Equals(CategoryId))
+        {
+            InvokeAsync(StateHasChanged);
+        } 
+    }
+    
+    // below methods are used to automatically keep open or close the pop-out radial menu.
     private void SetIsInteractingWithMenu()
     {
         if (showMenu)
@@ -146,6 +140,14 @@
 
         delayedCloseIsActive = false;
         showMenu = false;
+    }
+
+    public void Dispose()
+    {
+        if (Category == null)
+        {
+            profileStateContainer.OnCategoryDeleted -= StateHasChanged;
+        }
     }
 
 }

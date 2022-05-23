@@ -1,7 +1,11 @@
-﻿@using Application.ServiceContracts
+﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+
+@using Application.ServiceContracts
 @using Application.DTOs.CategoryDTOs
-@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
+@using BlazorServerUI.StateContainers.Profile
+
 @inject ICategoryService categoryService
+@inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
      src="icons/DeleteCategory.svg"
@@ -36,10 +40,7 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public CategoryDto Category { get; set; } = null!;
-
-    [Parameter]
-    public EventCallback OnDeleted { get; set; }
+    public Guid CategoryId { get; set; } 
     
     private int progress;
     private bool isHolding;
@@ -56,8 +57,9 @@
 
     private async Task DeleteCategory()
     {
-        await categoryService.DeleteAsync(Category.Id);
-        await OnDeleted.InvokeAsync();
+        await categoryService.DeleteAsync(CategoryId);
+        profileStateContainer.DeleteCategory(CategoryId);
+        SnackBarHandler.ShowSnackMessage("Category deleted");
     }
 
     private async Task DeleteButtonDown()
