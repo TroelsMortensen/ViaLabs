@@ -2,22 +2,22 @@
 using Application.DTOs.GuideDTOs;
 using Application.ProviderContracts;
 
-namespace BlazorServerUI.Handlers;
+namespace BlazorServerUI.StateContainers.Profile;
 
-public class ProfileDataHandler
+public class ProfileStateContainer
 {
-    public ICollection<CategoryWithGuidesDto> CategoriesWithGuides { get; set; }
+    public ICollection<CategoryWithGuidesDto> CategoriesWithGuides { get; set; } = null!;
 
     public Action OnCategoryAdded { get; set; } = null!;
     public Action<Guid> OnCategoryDeleted { get; set; } = null!;
     public Action OnGuideAdded { get; set; } = null!;
-    public Action OnCategoryUpdated { get; set; } = null!;
+    public Action<CategoryDto> OnCategoryUpdated { get; set; } = null!;
 
     // TODO public Action< Type { get; set; }  external resource added
 
     private readonly ICategoryProvider categoryProvider;
 
-    public ProfileDataHandler(ICategoryProvider categoryProvider)
+    public ProfileStateContainer(ICategoryProvider categoryProvider)
     {
         this.categoryProvider = categoryProvider;
     }
@@ -34,7 +34,7 @@ public class ProfileDataHandler
             Category = categoryDto
         };
         CategoriesWithGuides.Add(c);
-        OnCategoryAdded?.Invoke();
+        // OnCategoryAdded?.Invoke();
     }
 
     public void AddGuideToCategory(GuideHeaderDto created, CategoryDto? category)
@@ -51,6 +51,6 @@ public class ProfileDataHandler
 
         cwgw.Guides.Add(created);
         Console.WriteLine("Added, now invoking");
-        OnGuideAdded?.Invoke();
+        // OnGuideAdded?.Invoke();
     }
 }

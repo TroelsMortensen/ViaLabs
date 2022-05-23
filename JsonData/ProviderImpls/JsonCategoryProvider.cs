@@ -30,6 +30,7 @@ public class JsonCategoryProvider : ICategoryProvider
         ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
             .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
         unCatCwg.Guides = list;
+        
         categoriesWithGuides.Add(unCatCwg);
 
         // get all categories for teacher

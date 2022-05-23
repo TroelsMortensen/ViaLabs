@@ -1,10 +1,11 @@
 ﻿@using Application.ServiceContracts
 @using Application.DTOs.CategoryDTOs
 @using BlazorServerUI.Handlers
+@using BlazorServerUI.StateContainers.Profile
 @using JsonData.Repositories
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject ICategoryService categoryService
-@inject ProfileDataHandler profileDataHandler
+@inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
      src="icons/EditCategory.svg"
@@ -45,10 +46,12 @@
 
     [Parameter]
     public Guid CategoryId { get; set; }
+    //
+    // [Parameter]
+    // public EventCallback<CategoryDto> OnChange { get; set; }
 
-    [Parameter]
-    public EventCallback<CategoryDto> OnChange { get; set; }
     // edit
+   
     private string? editedCategoryTitle;
 
     private CategoryDto categoryDto;
@@ -56,16 +59,14 @@
     private string errorLabel = string.Empty;
     private bool showEditCategoryModal;
 
-    protected override void OnInitialized()
-    {
-        CategoryWithGuidesDto categoryWithGuidesDto = profileDataHandler.CategoriesWithGuides.First(c => c.Category.Id.Equals(CategoryId));
-        categoryDto = categoryWithGuidesDto.Category;
-        editedCategoryTitle = categoryDto.Title;
-        editedBackgroundColor = categoryDto.BackgroundColor;
-    }
 
     private void ShowEditCategory()
     {
+        CategoryWithGuidesDto categoryWithGuidesDto = profileStateContainer.CategoriesWithGuides.First(c => c.Category != null && c.Category.Id.Equals(CategoryId));
+        categoryDto = categoryWithGuidesDto.Category;
+        editedCategoryTitle = categoryDto.Title;
+        editedBackgroundColor = categoryDto.BackgroundColor;
+        
         showEditCategoryModal = true;
         errorLabel = string.Empty;
     }
@@ -77,10 +78,12 @@
         try
         {
             await categoryService.UpdateAsync(toUpdate);
+            categoryDto.Title = editedCategoryTitle!;
+            categoryDto.BackgroundColor = editedBackgroundColor!;
             
             showEditCategoryModal = false;
-            
-            await OnChange.InvokeAsync(toUpdate);
+            SnackBarHandler.ShowSnackMessage("Category edited");
+            profileStateContainer.OnCategoryUpdated.Invoke(categoryDto);
         }
         catch (Exception e)
         {

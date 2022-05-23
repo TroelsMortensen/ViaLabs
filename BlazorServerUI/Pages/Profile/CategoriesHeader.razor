@@ -1,10 +1,7 @@
-﻿@using Application.ServiceContracts
-@using BlazorServerUI.Pages.Components
-@using Entities
-@using Application.DTOs.CategoryDTOs
-@using BlazorServerUI.Handlers
+﻿@using Application.DTOs.CategoryDTOs
+@using BlazorServerUI.StateContainers.Profile
 @inject ICategoryService categoryService
-@inject ProfileDataHandler profileDataHandler
+@inject ProfileStateContainer profileStateContainer
 
 <div style="display:flex; justify-content: center">
     <div>
@@ -70,7 +67,7 @@
         {
             CategoryDto finishedCategory = await categoryService.CreateAsync(category);
 
-            profileDataHandler.AddCategory(finishedCategory);
+            profileStateContainer.AddCategory(finishedCategory);
             // await OnCategoryCreated.InvokeAsync(finishedCategory);
             showModal = false;
             categoryTitle = string.Empty;

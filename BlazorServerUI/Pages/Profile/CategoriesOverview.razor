@@ -1,9 +1,10 @@
 ﻿@using Application.DTOs.CategoryDTOs
 @using Application.ProviderContracts
 @using BlazorServerUI.Handlers
+@using BlazorServerUI.StateContainers.Profile
 @inject ICategoryProvider categoryProvider
 @inject NavigationManager navMgr
-@inject ProfileDataHandler profileDataHandler
+@inject ProfileStateContainer profileStateContainer
 
 <div class="guides-container">
 
@@ -15,7 +16,7 @@
             <div class="guide-coloumn">
                 @{
                     int idx = 0;
-                    foreach (CategoryWithGuidesDto cwg in profileDataHandler.CategoriesWithGuides)
+                    foreach (CategoryWithGuidesDto cwg in profileStateContainer.CategoriesWithGuides)
                     {
                         if (idx % 2 == i)
                         {
@@ -39,9 +40,9 @@
     // private ICollection<CategoryDto> categories = null!;
 
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
-        profileDataHandler.OnCategoryAdded += () => StateHasChanged();
+        // profileStateContainer.OnCategoryAdded += () => StateHasChanged();
     }
 
 

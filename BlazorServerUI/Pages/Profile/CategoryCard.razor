@@ -4,11 +4,12 @@
 @using Application.ProviderContracts
 @using Application.ServiceContracts
 @using BlazorServerUI.Handlers
+@using BlazorServerUI.StateContainers.Profile
 
 @inject ICategoryService categoryService
 @inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
-@inject ProfileDataHandler profileDataHandler
+@inject ProfileStateContainer profileStateContainer
 
 
 <div class="category-card" style="background-color: @(Category == null ? "#fff" : Category.BackgroundColor)">
@@ -28,7 +29,7 @@
                         <NewExResourceMenuItem ShowMenu="@showMenu"/>
                         @if (Category != null)
                         {
-                            <EditCategoryMenuItem ShowMenu="showMenu" Category="Category" OnChange="@((cat) => Category = cat)"/>
+                            <EditCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
                             <DeleteCategoryMenuItem ShowMenu="showMenu" Category="Category" OnDeleted="OnStateChanged"/>
                         }
                     </div>
@@ -92,11 +93,18 @@
 
     protected override void OnInitialized()
     {
-        CategoryWithGuidesDto categoryWithGuidesDto = profileDataHandler.CategoriesWithGuides.First(c =>
+        CategoryWithGuidesDto categoryWithGuidesDto = profileStateContainer.CategoriesWithGuides.First(c =>
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
         Category = categoryWithGuidesDto.Category;
         guides = categoryWithGuidesDto.Guides;
-
+        profileStateContainer.OnCategoryUpdated += (cDto) =>
+        {
+            if (cDto.Id.Equals(CategoryId))
+            {
+                InvokeAsync(StateHasChanged);
+            }
+        };
+        
     /*  if (Category != null)
         {
             guides = await guideProvider.GetGuidesByCategoryIdAsync(Category.Id);
@@ -107,8 +115,8 @@
             string teacher = authState.User.Identity!.Name!;
             guides = await guideProvider.GetUnCategorizedByTeacherAsync(teacher);
         }*/
-        profileDataHandler.OnGuideAdded += StateHasChanged;
-        profileDataHandler.OnCategoryUpdated += StateHasChanged;
+    // profileStateContainer.OnGuideAdded += StateHasChanged;
+    // profileStateContainer.OnCategoryUpdated += StateHasChanged;
     }
 
     private async Task ToggleMenu()

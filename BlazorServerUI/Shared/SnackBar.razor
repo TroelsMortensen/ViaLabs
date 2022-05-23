@@ -19,10 +19,11 @@
     private void OnMessage(string msg)
     {
         msgs.Enqueue(msg);
-       
-        if (!isShowing)
-            ShowHideMsg(msg);
 
+        if (!isShowing)
+        {
+            ShowHideMsg(msg);
+        }
     }
 
     private async Task ShowHideMsg(string msg)

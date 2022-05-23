@@ -2,9 +2,10 @@
 @using Application.ServiceContracts
 @using Application.ProviderContracts
 @using BlazorServerUI.Handlers
+@using BlazorServerUI.StateContainers.Profile
 @inject ITeacherService teacherService
 @inject ITeacherProvider teacherProvider
-@inject ProfileDataHandler profileDataHandler
+@inject ProfileStateContainer profileStateContainer
 
 <div style="display:flex; justify-content: space-evenly">
     @if (approvedTeacher is not null)
@@ -34,7 +35,7 @@
         approvedTeacher = await teacherProvider.GetTeacherAsync(userName);
         if (approvedTeacher != null)
         {
-           await profileDataHandler.PopulateAsync(approvedTeacher.Name);
+           await profileStateContainer.PopulateAsync(approvedTeacher.Name);
         }
     // TODO catch exceptions here, and show toast error message
     }
