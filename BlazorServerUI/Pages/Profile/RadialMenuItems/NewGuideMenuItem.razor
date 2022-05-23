@@ -1,15 +1,13 @@
-﻿@using Application.ServiceContracts
-@using Application.DTOs.GuideDTOs
+﻿@using BlazorServerUI.StateContainers.Profile
 @using Application.DTOs.CategoryDTOs
-@using BlazorServerUI.Handlers
-@using BlazorServerUI.StateContainers.Profile
+@using Application.DTOs.GuideDTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @inject IGuideService guideService
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
      src="icons/AddGuide.svg"
-     @onclick="NewGuide"
+     @onclick="OpenNewGuideDialog"
      title="New Guide"/>
 
 <Modal ShowModal="@showAddGuideModal">
@@ -41,8 +39,6 @@
     [Parameter]
     public CategoryDto? Category { get; set; }
 
-    // [Parameter]
-    // public EventCallback<GuideHeaderDto> OnGuideCreated { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -51,19 +47,18 @@
     private string createGuideErrorLabel = String.Empty;
     private string newGuideTitle = String.Empty;
 
-    private Task NewGuide()
+    private async Task OpenNewGuideDialog()
     {
         showAddGuideModal = true;
         createGuideErrorLabel = string.Empty;
-        return Task.CompletedTask;
     }
 
     private async Task CreateNewGuide()
     {
         AuthenticationState authState = await AuthStateTask;
         string? teacher = authState.User.Identity!.Name;
-        GuideCreationDto guide = new(newGuideTitle,teacher!,Category?.Id);
-        
+        GuideCreationDto guide = new(newGuideTitle, teacher!, Category?.Id);
+
         try
         {
             GuideHeaderDto created = await guideService.CreateGuideAsync(guide);

@@ -51,7 +51,7 @@ public class ProfileStateContainer
 
         cwgw.Guides.Add(created);
         Console.WriteLine("Added, now invoking");
-        // OnGuideAdded?.Invoke();
+        OnGuideAdded?.Invoke();
     }
 
     public void DeleteCategory(Guid categoryId)

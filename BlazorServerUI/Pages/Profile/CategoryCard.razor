@@ -26,7 +26,7 @@
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
                         <NewGuideMenuItem ShowMenu="@showMenu" Category="Category"/>
-                        <NewExResourceMenuItem ShowMenu="@showMenu"/>
+                        <NewExResourceMenuItem ShowMenu="@showMenu" Category="Category"/>
                         @if (Category != null)
                         {
                             <EditCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
@@ -97,7 +97,10 @@
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
         Category = categoryWithGuidesDto.Category;
         guides = categoryWithGuidesDto.Guides;
+        
         profileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
+        profileStateContainer.OnGuideAdded += StateHasChanged;
+
         if (Category == null)
         {
             profileStateContainer.OnCategoryDeleted += StateHasChanged;
@@ -144,6 +147,9 @@
 
     public void Dispose()
     {
+        profileStateContainer.OnGuideAdded -= StateHasChanged;
+        profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
+
         if (Category == null)
         {
             profileStateContainer.OnCategoryDeleted -= StateHasChanged;
