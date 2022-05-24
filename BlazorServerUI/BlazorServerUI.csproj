@@ -4,7 +4,6 @@
         <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-<!--        <UseRazorSourceGenerator>false</UseRazorSourceGenerator>-->
     </PropertyGroup>
 
     <ItemGroup>
@@ -21,14 +20,5 @@
       <Folder Include="Data" />
     </ItemGroup>
 
-<!--    <ItemGroup>-->
-<!--      <_ContentIncludedByDefault Remove="Components\ColorPicker.razor" />-->
-<!--      <_ContentIncludedByDefault Remove="Components\Modal.razor" />-->
-<!--    </ItemGroup>-->
-
-<!--    <ItemGroup>-->
-<!--      <AdditionalFiles Include="Pages\Components\ColorPicker.razor" />-->
-<!--      <AdditionalFiles Include="Pages\Components\Modal.razor" />-->
-<!--    </ItemGroup>-->
 
 </Project>
