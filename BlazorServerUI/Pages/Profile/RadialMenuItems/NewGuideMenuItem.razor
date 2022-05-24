@@ -17,7 +17,7 @@
         <label style="font-weight: bold">Guide Title</label>
     </div>
     <div style="margin-bottom: 5px">
-        <input type="text" class="popout-modal-input" style="width: 75ch" @bind="@newGuideTitle" max="75"/>
+        <input type="text" class="popout-modal-input" style="width: 75ch" @bind="@newGuideTitle" maxlength="75"/>
     </div>
     @if (!string.IsNullOrEmpty(createGuideErrorLabel))
     {
@@ -27,7 +27,7 @@
     }
     <div style="margin-top: 15px">
         <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="CreateNewGuide">Accept</button>
-        <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="@(() => showAddGuideModal = false)">Cancel</button>
+        <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="Close">Cancel</button>
     </div>
 </Modal>
 
@@ -61,7 +61,7 @@
         try
         {
             GuideHeaderDto created = await guideService.CreateGuideAsync(guide);
-            Console.WriteLine("Adding to handler");
+            
             profileStateContainer.AddGuideToCategory(created, Category);
             newGuideTitle = String.Empty;
             SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
@@ -71,6 +71,13 @@
         {
             createGuideErrorLabel = e.Message;
         }
+    }
+
+    private void Close()
+    {
+        showAddGuideModal = false;
+        createGuideErrorLabel = String.Empty;
+        newGuideTitle = String.Empty;
     }
 
 }

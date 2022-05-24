@@ -26,7 +26,7 @@ public class GuideJsonRepo : IGuideRepo
         return Task.CompletedTask;
     }
 
-    public Task DeleteGuide(Guid id)
+    public Task DeleteAsync(Guid id)
     {
         int removedCount = context.ViaLabData.Guides.ToList().RemoveAll(g => g.Id.Equals(id));
         if (removedCount == 0)

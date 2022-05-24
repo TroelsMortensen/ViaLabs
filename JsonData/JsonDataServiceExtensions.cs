@@ -14,6 +14,7 @@ public static class JsonDataServiceExtensions
         AddDataAccess(services);
         AddRepositories(services);
         AddProviders(services);
+        
     }
 
     private static void AddProviders(IServiceCollection services)
@@ -28,6 +29,7 @@ public static class JsonDataServiceExtensions
         services.AddScoped<ITeacherRepo, TeacherJsonRepo>();
         services.AddScoped<ICategoryRepo, CategoryJsonRepo>();
         services.AddScoped<IGuideRepo, GuideJsonRepo>();
+        services.AddScoped<IExternalResourceRepo, ExternalResourceJsonRepo>();
         services.AddScoped<IRepoUOW, JsonRepoUowImpl>();
     }
 

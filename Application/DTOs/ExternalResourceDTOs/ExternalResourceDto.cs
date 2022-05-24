@@ -1,6 +1,6 @@
-﻿namespace Entities;
+﻿namespace Application.DTOs.ExternalResourceDTOs;
 
-public class ExternalResource
+public class ExternalResourceDto
 {
     public Guid Id { get; set; }
     public string OwnerId { get; set; }

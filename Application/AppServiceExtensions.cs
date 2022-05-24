@@ -11,5 +11,6 @@ public static class ServiceExtensions
         services.AddScoped<ITeacherService, TeacherService>();
         services.AddScoped<ICategoryService, CategoryService>();
         services.AddScoped<IGuideService, GuideService>();
+        services.AddScoped<IExternalResourceService, ExternalResourceService>();
     }
 }

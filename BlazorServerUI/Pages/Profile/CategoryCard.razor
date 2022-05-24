@@ -99,8 +99,9 @@
         guides = categoryWithGuidesDto.Guides;
         
         profileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
-        profileStateContainer.OnGuideAdded += StateHasChanged;
-
+        profileStateContainer.OnGuideAdded += ReactToCategoryUpdated; 
+        profileStateContainer.OnExtResourceAdded += ReactToCategoryUpdated;
+        
         if (Category == null)
         {
             profileStateContainer.OnCategoryDeleted += StateHasChanged;
@@ -112,22 +113,31 @@
         showMenu = !showMenu;
         isInteracting = true;
         if (showMenu && !delayedCloseIsActive)
+        {
             await DelayedMenuClose();
+        }
     }
 
-    private void ReactToCategoryUpdated(CategoryDto cDto)
+    private void ReactToCategoryUpdated(Guid? categoryId)
     {
-        if (cDto.Id.Equals(CategoryId))
+        if (categoryId == null && Category == null)
         {
-            InvokeAsync(StateHasChanged);
-        } 
+            StateHasChanged();
+        }
+        if (categoryId != null && categoryId.Equals(Category?.Id))
+        {
+            StateHasChanged();
+        }
     }
+
     
     // below methods are used to automatically keep open or close the pop-out radial menu.
     private void SetIsInteractingWithMenu()
     {
         if (showMenu)
+        {
             isInteracting = true;
+        }
     }
 
     private async Task DelayedMenuClose()
@@ -147,8 +157,9 @@
 
     public void Dispose()
     {
-        profileStateContainer.OnGuideAdded -= StateHasChanged;
+        profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
         profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
+        profileStateContainer.OnExtResourceAdded -= ReactToCategoryUpdated;
 
         if (Category == null)
         {
