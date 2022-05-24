@@ -1,0 +1,73 @@
+﻿.floating-label-group {
+    position: relative;
+    margin-top: 15px;
+    margin-bottom: 25px;
+    display:inline-block;
+}
+.floating-label {
+    font-size: 13px;
+    color: #cccccc;
+    position: absolute;
+    pointer-events: none;
+    top: 9px;
+    left: 12px;
+    transition: all 0.1s ease;
+}
+
+input:focus ~ .floating-label,
+input:not(:focus):valid ~ .floating-label {
+    top: -18px;
+    left: 15px;
+    font-size:  medium;
+    color: #000000;
+    background-color: #ffffff;
+    padding:0 5px 0 5px;
+    border-radius: 15px;
+}
+
+/**/
+/**/
+
+
+.text-field {
+    position: relative;
+    /*margin-top:25px;*/
+    padding: 3px;
+
+    /*margin: 10px 2.5px 20px 2.5px;*/
+    display:inline-block;
+}
+
+.float-input {
+    border-radius: 20px;
+    text-align: center;
+    /*display: inline-block;*/
+    color: #444;
+}
+
+.float-input:focus {
+    border: 5px solid #c2edff;
+    outline:none;
+    /*border-bottom: solid medium #32cd32;*/
+    /*background-color:#fff;*/
+}
+
+.float-label {
+    color: #6b6b6b;
+    position: absolute;
+    pointer-events: none;
+    left: 10px;
+    top: 0px;
+    transition: 0.2s;
+}
+
+input:focus ~ .float-label, input:valid ~ .float-label {
+    top: -18px;
+    left: 15px;
+    font-size:  medium;
+    color: #000000;
+    background-color: #ffffff;
+    padding:0 5px 0 5px;
+    border-radius: 15px;
+    
+}

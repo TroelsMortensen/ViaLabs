@@ -17,11 +17,12 @@
 <Modal ShowModal="@showAddExtResModal">
     <h3 >Create External Resource</h3>
     <hr/>
+    @* <div style="margin-bottom: 5px"> *@
+    @*     <label style="font-weight: bold">Resource Title</label> *@
+    @* </div> *@
     <div style="margin-bottom: 5px">
-        <label style="font-weight: bold">Resource Title</label>
-    </div>
-    <div style="margin-bottom: 5px">
-        <input type="text" class="popout-modal-input" style="width: 50ch" @bind="@extRes.Title"/>
+        <ReactiveInputField/>
+        @* <input type="text" class="popout-modal-input" style="width: 50ch" @bind="@extRes.Title"/> *@
     </div>
     <div style="margin-bottom: 5px">
         <label style="font-weight: bold">Url</label>
