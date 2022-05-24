@@ -9,14 +9,17 @@ public class JsonRepoUowImpl : IRepoUOW
     public IGuideRepo GuideRepo { get; set; }
     public ITeacherRepo TeacherRepo { get; set; }
 
+    public IExternalResourceRepo ExternalResourceRepo { get; set; }
+
     private readonly JsonDataContext context;
 
-    public JsonRepoUowImpl(ICategoryRepo categoryRepo, IGuideRepo guideRepo, ITeacherRepo teacherRepo, JsonDataContext context)
+    public JsonRepoUowImpl(ICategoryRepo categoryRepo, IGuideRepo guideRepo, ITeacherRepo teacherRepo, JsonDataContext context, IExternalResourceRepo externalResourceRepo)
     {
+        this.context = context;
         CategoryRepo = categoryRepo;
         GuideRepo = guideRepo;
         TeacherRepo = teacherRepo;
-        this.context = context;
+        ExternalResourceRepo = externalResourceRepo;
     }
 
     public Task BeginAsync()

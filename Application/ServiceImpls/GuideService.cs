@@ -17,7 +17,7 @@ public class GuideService : IGuideService
     public async Task<GuideHeaderDto> CreateGuideAsync(GuideCreationDto guide)
     {
         ValidateGuide(guide);
-        Guide guideToCreate = new Guide
+        Guide guideToCreate = new ()
         {
             Id = Guid.NewGuid(),
             Title = guide.Title,

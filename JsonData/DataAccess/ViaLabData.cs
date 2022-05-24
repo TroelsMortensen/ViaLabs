@@ -9,4 +9,6 @@ public class ViaLabData
     public ICollection<Category> Categories { get; set; } = new List<Category>();
 
     public ICollection<Guide> Guides { get; set; } = new List<Guide>();
+
+    public ICollection<ExternalResource> ExternalResources { get; set; } = new List<ExternalResource>();
 }

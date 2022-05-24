@@ -6,6 +6,8 @@ public interface IRepoUOW
     public IGuideRepo GuideRepo { get; set; }
     public ITeacherRepo TeacherRepo { get; set; }
 
+    public IExternalResourceRepo ExternalResourceRepo { get; set; }
+
     Task BeginAsync();
     Task SaveChangesAsync();
     Task RollbackAsync();
