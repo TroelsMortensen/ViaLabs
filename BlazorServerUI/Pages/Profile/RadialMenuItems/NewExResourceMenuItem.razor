@@ -18,27 +18,14 @@
 <Modal ShowModal="@showAddExtResModal">
     <h3 >Create External Resource</h3>
     <hr/>
-    @* <div style="margin-bottom: 5px"> *@
-    @*     <label style="font-weight: bold">Resource Title</label> *@
-    @* </div> *@
     <div style="margin-bottom: 15px">
         <ReactiveInputField GhostText="Title" WidthWithUnit="50ch" OnValueChange="s => extRes.Title = s"/>
-        @* <input type="text" class="popout-modal-input" style="width: 50ch" @bind="@extRes.Title"/> *@
     </div>
-    @* <div style="margin-bottom: 5px"> *@
-    @*     <label style="font-weight: bold">Url</label> *@
-    @* </div> *@
     <div style="margin-bottom: 15px">
         <ReactiveInputField GhostText="Url" WidthWithUnit="50ch" OnValueChange="s => extRes.Url = s"/>
-
-        @* <input type="text" class="popout-modal-input" style="width: 50ch" @bind="@extRes.Url"/> *@
     </div>
-    @* <div style="margin-bottom: 5px"> *@
-    @*     <label style="font-weight: bold">Description</label> *@
-    @* </div> *@
     <div style="margin-bottom: 5px">
         <ReactiveTextArea GhostText="Description" WidthWithUnit="50ch" OnValueChange="s => extRes.Description = s"></ReactiveTextArea>
-        @* <textarea class="description-input" @bind="@extRes.Description"></textarea> *@
     </div>
     @if (!string.IsNullOrEmpty(errorMsg))
     {

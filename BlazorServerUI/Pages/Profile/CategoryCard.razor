@@ -68,9 +68,13 @@
     @if(externalResources != null && externalResources.Any()) {
         foreach (ExternalResourceDisplayDto resource in externalResources)
         {
-            <div style="text-align: left; padding: 15px">
+            <div class="resource-block" style="text-align: left; padding: 15px">
+                <img class="new-item-icon hidable"
+                                                 src="icons/edit.gif"
+                                                 @onclick="() => OpenEditResource(resource)"
+                                                 title="Edit Resource"/>
                 <strong>
-                    <a href="@resource.Url">@resource.Title</a>
+                    <a href="@resource.Url" class="movable-title">@resource.Title</a>
                 </strong>
                 <p style="text-align: left; padding: 5px">
                     @resource.Description
@@ -83,7 +87,29 @@
         <p>No resouces yet</p>
     }
 </div>
-
+<Modal ShowModal="@showEditResourceDialog">
+        <h3 >Create External Resource</h3>
+        <hr/>
+        <div style="margin-bottom: 15px">
+            <ReactiveInputField GhostText="Title" WidthWithUnit="50ch" OnValueChange="s => resourceBeingEdited.Title = s" InitialValue="@resourceBeingEdited.Title"/>
+        </div>
+        <div style="margin-bottom: 15px">
+            <ReactiveInputField GhostText="Url" WidthWithUnit="50ch" OnValueChange="s => resourceBeingEdited.Url = s" InitialValue="@resourceBeingEdited.Url"/>
+        </div>
+        <div style="margin-bottom: 5px">
+            <ReactiveTextArea GhostText="Description" WidthWithUnit="50ch" OnValueChange="s => resourceBeingEdited.Description = s" InitialValue="@resourceBeingEdited.Description"></ReactiveTextArea>
+        </div>
+        @if (!string.IsNullOrEmpty(editResourceMsg))
+        {
+            <div>
+                <label style="color:red">@editResourceMsg</label>
+            </div>
+        }
+        <div style="margin-top: 15px">
+            <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="UpdateResource">Accept</button>
+            <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="CloseEditResourceDialog">Cancel</button>
+        </div>
+</Modal>
 @code {
 
     // [Parameter]
@@ -102,8 +128,12 @@
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
-
+    private bool showEditResourceDialog = false;
+    
     private CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = null!;
+
+    private ExternalResourceDisplayDto? resourceBeingEdited;
+    private string editResourceMsg = "";
     
     protected override void OnInitialized()
     {
@@ -179,6 +209,23 @@
         {
             profileStateContainer.OnCategoryDeleted -= StateHasChanged;
         }
+    }
+
+    private void OpenEditResource(ExternalResourceDisplayDto resource)
+    {
+        resourceBeingEdited = resource;
+        showEditResourceDialog = true;
+    }
+
+    private void UpdateResource()
+    {
+        throw new NotImplementedException();
+    }
+
+    private void CloseEditResourceDialog()
+    {
+        resourceBeingEdited = null;
+        showEditResourceDialog = false;
     }
 
 }
