@@ -15,11 +15,12 @@
 <Modal ShowModal="@showEditCategoryModal">
     <h3>Edit Category</h3>
     <hr/>
+    @* <div style="margin-bottom: 5px"> *@
+    @*     <label style="font-weight: bold">Category title</label> *@
+    @* </div> *@
     <div style="margin-bottom: 5px">
-        <label style="font-weight: bold">Category title</label>
-    </div>
-    <div style="margin-bottom: 5px">
-        <input type="text" class="popout-modal-input" style="width: 20ch" @bind="@editedCategoryTitle" maxlength="20"/>
+        <ReactiveInputField GhostText="Title" WidthWithUnit="20ch" OnValueChange="s => editedCategoryTitle = s"></ReactiveInputField>
+        @* <input type="text" class="popout-modal-input" style="width: 20ch" @bind="@editedCategoryTitle" maxlength="20"/> *@
     </div>
     <div style="margin-bottom: 5px">
         <label>Background color:</label>
