@@ -13,11 +13,12 @@
 <Modal ShowModal="@showAddGuideModal">
     <h3 >Create New Guide</h3>
     <hr/>
+    @* <div style="margin-bottom: 5px"> *@
+    @*     <label style="font-weight: bold">Guide Title</label> *@
+    @* </div> *@
     <div style="margin-bottom: 5px">
-        <label style="font-weight: bold">Guide Title</label>
-    </div>
-    <div style="margin-bottom: 5px">
-        <input type="text" class="popout-modal-input" style="width: 75ch" @bind="@newGuideTitle" maxlength="75"/>
+        @* <input type="text" class="popout-modal-input" style="width: 75ch" @bind="@newGuideTitle" maxlength="75"/> *@
+        <ReactiveInputField GhostText="Title" WidthWithUnit="75ch" OnValueChange="s => newGuideTitle = s"></ReactiveInputField>
     </div>
     @if (!string.IsNullOrEmpty(createGuideErrorLabel))
     {
