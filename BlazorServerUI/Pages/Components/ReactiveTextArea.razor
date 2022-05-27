@@ -1,9 +1,9 @@
 ﻿<div class="floating-label-group">
-    <input style="width: @WidthWithUnit" class="floating-input" type="text" required @onchange="@OnChange"/>
+    <textarea style="width: @WidthWithUnit" class="floating-input" type="text" required @onchange="@OnChange"></textarea>
     <label class="floating-label">@GhostText</label>
 </div>
 
-@code{
+@code {
     [Parameter]
     public string WidthWithUnit { get; set; } = "25ch";
 

@@ -16,12 +16,12 @@
 
 .floating-input{
     border-radius: 20px;
-    height:30px;
+    height:90px;
     border: 2px solid black;
 }
 
-input:focus ~ .floating-label,
-input:not(:focus):valid ~ .floating-label {
+textarea:focus ~ .floating-label,
+textarea:not(:focus):valid ~ .floating-label {
     top: -14px;
     left: 8px;
 
