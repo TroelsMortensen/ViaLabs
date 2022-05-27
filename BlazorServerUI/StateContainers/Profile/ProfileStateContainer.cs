@@ -7,7 +7,7 @@ namespace BlazorServerUI.StateContainers.Profile;
 
 public class ProfileStateContainer
 {
-    public ICollection<CategoryWithGuidesDto> CategoriesWithGuides { get; set; } = null!;
+    public ICollection<CategoryWithGuidesAndResourcesDto> CategoriesWithGuides { get; set; } = null!;
 
     public Action OnCategoryAdded { get; set; } = null!;
     public Action OnCategoryDeleted { get; set; } = null!;
@@ -31,7 +31,7 @@ public class ProfileStateContainer
 
     public void AddCategory(CategoryDto categoryDto)
     {
-        CategoryWithGuidesDto c = new()
+        CategoryWithGuidesAndResourcesDto c = new()
         {
             Category = categoryDto
         };
@@ -41,7 +41,7 @@ public class ProfileStateContainer
 
     public void AddGuideToCategory(GuideHeaderDto created, CategoryDto? category)
     {
-        CategoryWithGuidesDto cwgw = category != null
+        CategoryWithGuidesAndResourcesDto cwgw = category != null
             ? CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
             : CategoriesWithGuides.First(c => c.Category == null);
 
@@ -51,10 +51,10 @@ public class ProfileStateContainer
 
     public void DeleteCategory(Guid categoryId)
     {
-        CategoryWithGuidesDto cwgw = CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(categoryId));
+        CategoryWithGuidesAndResourcesDto cwgw = CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(categoryId));
         ICollection<GuideHeaderDto> guideHeaderDtos = cwgw.Guides;
         CategoriesWithGuides.Remove(cwgw);
-        CategoryWithGuidesDto uncategorized = CategoriesWithGuides.First(c => c.Category == null);
+        CategoryWithGuidesAndResourcesDto uncategorized = CategoriesWithGuides.First(c => c.Category == null);
         foreach (GuideHeaderDto dto in guideHeaderDtos)
         {
             uncategorized.Guides.Add(dto);
@@ -62,9 +62,9 @@ public class ProfileStateContainer
         OnCategoryDeleted.Invoke();
     }
 
-    public void AddExternalResourceToCategory(ExternalResourceDto created, CategoryDto? category)
+    public void AddExternalResourceToCategory(ExternalResourceDisplayDto created, CategoryDto? category)
     {
-        CategoryWithGuidesDto cwgw = category != null
+        CategoryWithGuidesAndResourcesDto cwgw = category != null
             ? CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
             : CategoriesWithGuides.First(c => c.Category == null);
 

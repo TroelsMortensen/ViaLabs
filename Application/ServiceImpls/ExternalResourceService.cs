@@ -16,7 +16,7 @@ public class ExternalResourceService : IExternalResourceService
         this.repoUow = repoUow;
     }
 
-    public async Task<ExternalResourceDto> CreateExternalResourceAsync(ExtRecourseCreationDto dto)
+    public async Task<ExternalResourceDisplayDto> CreateExternalResourceAsync(ExtRecourseCreationDto dto)
     {
         ValidateExternalResourceData(dto);
         Guid id = Guid.NewGuid();
@@ -41,14 +41,14 @@ public class ExternalResourceService : IExternalResourceService
             throw;
         }
         
-        return new ExternalResourceDto
+        return new ExternalResourceDisplayDto
         {
             Id = id,
-            OwnerId = dto.OwnerId,
+            // OwnerId = dto.OwnerId,
             Title = dto.Title,
             Url = dto.Url,
             Description = dto.Description,
-            CategoryId = dto.CategoryId
+            // CategoryId = dto.CategoryId
         };
     }
     

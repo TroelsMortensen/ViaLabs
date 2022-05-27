@@ -1,4 +1,5 @@
 ﻿using Application.DTOs.CategoryDTOs;
+using Application.DTOs.ExternalResourceDTOs;
 using Application.DTOs.GuideDTOs;
 using Application.ProviderContracts;
 using JsonData.DataAccess;
@@ -21,30 +22,45 @@ public class JsonCategoryProvider : ICategoryProvider
         return Task.FromResult(categoryDtos);
     }
 
-    public Task<ICollection<CategoryWithGuidesDto>> GetCategoriesWithGuideHeadersAsync(string teacher)
+    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> GetCategoriesWithGuideHeadersAsync(string teacher)
     {
-        ICollection<CategoryWithGuidesDto> categoriesWithGuides = new List<CategoryWithGuidesDto>();
+        ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuides = new List<CategoryWithGuidesAndResourcesDto>();
 
         // get all uncategorized guides for teacher
-        CategoryWithGuidesDto unCatCwg = new();
+        CategoryWithGuidesAndResourcesDto unCatCwg = new();
         ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
             .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
         unCatCwg.Guides = list;
-        
+
         categoriesWithGuides.Add(unCatCwg);
 
         // get all categories for teacher
         ICollection<CategoryDto> categoryDtos = context.ViaLabData.Categories.Where(c => c.OwnerId.Equals(teacher))
             .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
 
-        // get all guides per category
+        // get all and resources guides per category
         foreach (CategoryDto cat in categoryDtos)
         {
-            List<GuideHeaderDto> guideHeaderDtos = context.ViaLabData.Guides.Where(g => g.CategoryId.Equals(cat.Id))
-                .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
-            CategoryWithGuidesDto cwg = new();
+            List<GuideHeaderDto> guideHeaderDtos = context.ViaLabData.Guides
+                .Where(g => g.CategoryId.Equals(cat.Id))
+                .Select(g => new GuideHeaderDto(g.Id, g.Title))
+                .ToList();
+
+            List<ExternalResourceDisplayDto> externalResourceDisplayDtos = context.ViaLabData.ExternalResources
+                .Where(er => er.CategoryId.Equals(cat.Id))
+                .Select(r => new ExternalResourceDisplayDto
+                {
+                    Id = r.Id,
+                    Title = r.Title,
+                    Url = r.Url,
+                    Description = r.Description
+                })
+                .ToList();
+
+            CategoryWithGuidesAndResourcesDto cwg = new();
             cwg.Category = cat;
             cwg.Guides = guideHeaderDtos;
+            cwg.ExternalResources = externalResourceDisplayDtos;
             categoriesWithGuides.Add(cwg);
         }
 

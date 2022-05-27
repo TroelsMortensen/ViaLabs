@@ -81,10 +81,10 @@
         string? teacher = authState.User.Identity!.Name;
 
         extRes.OwnerId = teacher!;
-
+        extRes.CategoryId = Category?.Id;
         try
         {
-            ExternalResourceDto created = await extResService.CreateExternalResourceAsync(extRes);
+            ExternalResourceDisplayDto created = await extResService.CreateExternalResourceAsync(extRes);
             profileStateContainer.AddExternalResourceToCategory(created, Category);
 
             extRes = new();
@@ -95,6 +95,7 @@
         }
         catch (Exception e)
         {
+            Console.WriteLine(e);
             errorMsg = e.Message;
         }
     }

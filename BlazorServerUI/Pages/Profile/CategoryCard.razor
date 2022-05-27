@@ -1,5 +1,6 @@
 ﻿@using BlazorServerUI.Pages.Profile.RadialMenuItems
 @using Application.DTOs.CategoryDTOs
+@using Application.DTOs.ExternalResourceDTOs
 @using Application.DTOs.GuideDTOs
 @using Application.ProviderContracts
 @using Application.ServiceContracts
@@ -37,7 +38,7 @@
             </div>
         </div>
     </div>
-    <h5 style="font-style: italic">Documentation</h5>
+    <h5 style="font-style: italic">Guides</h5>
     <div style="text-align: left">
         @if (guides == null || !guides.Any())
         {
@@ -64,12 +65,23 @@
         }
     </div>
     <h5 style="font-style: italic">External Resources</h5>
-    <div style="text-align: left; padding: 15px">
-        <strong>
-            <a href="https://youtu.be/EX81bDA-mkA">Installing postgres and setting up DataGrip</a>
-        </strong>
-        <p style="text-align: left; padding: 5px">This video shows you how to install a postgres database, and afterwards use DataGrip to connect to it.</p>
-    </div>
+    @if(externalResources != null && externalResources.Any()) {
+        foreach (ExternalResourceDisplayDto resource in externalResources)
+        {
+            <div style="text-align: left; padding: 15px">
+                <strong>
+                    <a href="@resource.Url">@resource.Title</a>
+                </strong>
+                <p style="text-align: left; padding: 5px">
+                    @resource.Description
+                </p>
+            </div>            
+        }
+    }
+    else
+    {
+        <p>No resouces yet</p>
+    }
 </div>
 
 @code {
@@ -86,18 +98,20 @@
     private CategoryDto? Category { get; set; }
 
     private ICollection<GuideHeaderDto> guides = null!;
-
+    private ICollection<ExternalResourceDisplayDto> externalResources = null!;
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
 
+    private CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = null!;
+    
     protected override void OnInitialized()
     {
-        CategoryWithGuidesDto categoryWithGuidesDto = profileStateContainer.CategoriesWithGuides.First(c =>
+        categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuides.First(c =>
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
-        Category = categoryWithGuidesDto.Category;
-        guides = categoryWithGuidesDto.Guides;
-        
+        Category = categoryWithGuidesAndResourcesDto.Category;
+        guides = categoryWithGuidesAndResourcesDto.Guides;
+        externalResources = categoryWithGuidesAndResourcesDto.ExternalResources;
         profileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
         profileStateContainer.OnGuideAdded += ReactToCategoryUpdated; 
         profileStateContainer.OnExtResourceAdded += ReactToCategoryUpdated;

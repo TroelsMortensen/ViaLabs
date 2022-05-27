@@ -7,5 +7,5 @@ public interface ICategoryProvider
 {
     Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName);
 
-    Task<ICollection<CategoryWithGuidesDto>> GetCategoriesWithGuideHeadersAsync(string teacher);
+    Task<ICollection<CategoryWithGuidesAndResourcesDto>> GetCategoriesWithGuideHeadersAsync(string teacher);
 }
