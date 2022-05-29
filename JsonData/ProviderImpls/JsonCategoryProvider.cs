@@ -27,10 +27,7 @@ public class JsonCategoryProvider : ICategoryProvider
         ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuides = new List<CategoryWithGuidesAndResourcesDto>();
 
         // get all uncategorized guides for teacher
-        CategoryWithGuidesAndResourcesDto unCatCwg = new();
-        ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
-            .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
-        unCatCwg.Guides = list;
+        CategoryWithGuidesAndResourcesDto unCatCwg = CreateUnCategorized(teacher);
 
         categoriesWithGuides.Add(unCatCwg);
 
@@ -65,5 +62,25 @@ public class JsonCategoryProvider : ICategoryProvider
         }
 
         return Task.FromResult(categoriesWithGuides);
+    }
+
+    private CategoryWithGuidesAndResourcesDto CreateUnCategorized(string teacher)
+    {
+        CategoryWithGuidesAndResourcesDto unCatCwg = new();
+        ICollection<GuideHeaderDto> guidesForUncategorized = context.ViaLabData.Guides
+            .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
+            .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
+        ICollection<ExternalResourceDisplayDto> resourcesForUncategorized = context.ViaLabData.ExternalResources
+            .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
+            .Select(er => new ExternalResourceDisplayDto
+            {
+                Id = er.Id,
+                Title = er.Title,
+                Url = er.Url,
+                Description = er.Description
+            }).ToList();
+        unCatCwg.Guides = guidesForUncategorized;
+        unCatCwg.ExternalResources = resourcesForUncategorized;
+        return unCatCwg;
     }
 }

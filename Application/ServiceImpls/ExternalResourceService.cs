@@ -16,9 +16,8 @@ public class ExternalResourceService : IExternalResourceService
         this.repoUow = repoUow;
     }
 
-    public async Task<ExternalResourceDisplayDto> CreateExternalResourceAsync(ExtRecourseCreationDto dto)
+    public async Task<ExternalResourceDisplayDto> CreateAsync(ExtRecourseCreationDto dto)
     {
-        ValidateExternalResourceData(dto);
         Guid id = Guid.NewGuid();
         
         ExternalResource er = new ()
@@ -30,6 +29,7 @@ public class ExternalResourceService : IExternalResourceService
             Description = dto.Description,
             CategoryId = dto.CategoryId
         };
+        ValidateExternalResourceData(er);
 
         try
         {
@@ -51,7 +51,31 @@ public class ExternalResourceService : IExternalResourceService
             // CategoryId = dto.CategoryId
         };
     }
-    
+
+    public async Task UpdateAsync(ExternalResourceDisplayDto dto)
+    {
+        ExternalResource er = new ()
+        {
+            Id = dto.Id,
+            Title = dto.Title,
+            Url = dto.Url,
+            Description = dto.Description,
+        };
+        ValidateExternalResourceData(er);
+
+        try
+        {
+            await repoUow.BeginAsync();
+            await repoUow.ExternalResourceRepo.UpdateAsync(er);
+            await repoUow.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            await repoUow.RollbackAsync();
+            throw;
+        }
+    }
+
     private async Task Create(ExternalResource er)
     {
         await repoUow.BeginAsync();
@@ -59,7 +83,7 @@ public class ExternalResourceService : IExternalResourceService
         await repoUow.SaveChangesAsync();
     }
 
-    private void ValidateExternalResourceData(ExtRecourseCreationDto dto)
+    private void ValidateExternalResourceData(ExternalResource dto)
     {
         ICollection<string> errors = new List<string>();
         if (string.IsNullOrEmpty(dto.Title))

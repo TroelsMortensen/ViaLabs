@@ -2,6 +2,7 @@
 @using Application.DTOs.CategoryDTOs
 @using Application.DTOs.ExternalResourceDTOs
 @using Application.DTOs.GuideDTOs
+@using Application.Exceptions
 @using Application.ProviderContracts
 @using Application.ServiceContracts
 @using BlazorServerUI.Handlers
@@ -10,6 +11,7 @@
 @inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
+@inject IExternalResourceService extResService;
 
 @implements IDisposable
 
@@ -97,7 +99,7 @@
             <ReactiveInputField GhostText="Url" WidthWithUnit="50ch" OnValueChange="s => resourceBeingEdited.Url = s" InitialValue="@resourceBeingEdited.Url"/>
         </div>
         <div style="margin-bottom: 5px">
-            <ReactiveTextArea GhostText="Description" WidthWithUnit="50ch" OnValueChange="s => resourceBeingEdited.Description = s" InitialValue="@resourceBeingEdited.Description"></ReactiveTextArea>
+            <ReactiveInputField UseArea="true" GhostText="Description" WidthWithUnit="50ch" OnValueChange="s => resourceBeingEdited.Description = s" InitialValue="@resourceBeingEdited.Description"></ReactiveInputField>
         </div>
         @if (!string.IsNullOrEmpty(editResourceMsg))
         {
@@ -145,7 +147,7 @@
         profileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
         profileStateContainer.OnGuideAdded += ReactToCategoryUpdated; 
         profileStateContainer.OnExtResourceAdded += ReactToCategoryUpdated;
-        
+        profileStateContainer.OnExtResourceUpdated += ReactToCategoryUpdated;
         if (Category == null)
         {
             profileStateContainer.OnCategoryDeleted += StateHasChanged;
@@ -204,6 +206,7 @@
         profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
         profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
         profileStateContainer.OnExtResourceAdded -= ReactToCategoryUpdated;
+        profileStateContainer.OnExtResourceUpdated -= ReactToCategoryUpdated;
 
         if (Category == null)
         {
@@ -215,11 +218,22 @@
     {
         resourceBeingEdited = resource;
         showEditResourceDialog = true;
+        editResourceMsg = "";
     }
 
-    private void UpdateResource()
+    private async Task UpdateResource()
     {
-        throw new NotImplementedException();
+        try
+        {
+            await extResService.UpdateAsync(resourceBeingEdited);
+            profileStateContainer.UpdateResource(resourceBeingEdited);
+            CloseEditResourceDialog();
+        }
+        catch (DataValidationException e)
+        {
+            editResourceMsg = e.Message;
+        }
+
     }
 
     private void CloseEditResourceDialog()

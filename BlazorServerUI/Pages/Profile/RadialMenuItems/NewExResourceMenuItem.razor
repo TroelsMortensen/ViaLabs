@@ -25,7 +25,7 @@
         <ReactiveInputField GhostText="Url" WidthWithUnit="50ch" OnValueChange="s => extRes.Url = s"/>
     </div>
     <div style="margin-bottom: 5px">
-        <ReactiveTextArea GhostText="Description" WidthWithUnit="50ch" OnValueChange="s => extRes.Description = s"></ReactiveTextArea>
+        <ReactiveInputField GhostText="Description" WidthWithUnit="50ch" UseArea="true" OnValueChange="s => extRes.Description = s"></ReactiveInputField>
     </div>
     @if (!string.IsNullOrEmpty(errorMsg))
     {
@@ -71,7 +71,7 @@
         extRes.CategoryId = Category?.Id;
         try
         {
-            ExternalResourceDisplayDto created = await extResService.CreateExternalResourceAsync(extRes);
+            ExternalResourceDisplayDto created = await extResService.CreateAsync(extRes);
             profileStateContainer.AddExternalResourceToCategory(created, Category);
 
             extRes = new();

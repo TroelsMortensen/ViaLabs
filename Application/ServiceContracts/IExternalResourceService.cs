@@ -4,5 +4,6 @@ namespace Application.ServiceContracts;
 
 public interface IExternalResourceService
 {
-    Task<ExternalResourceDisplayDto> CreateExternalResourceAsync(ExtRecourseCreationDto dto);
+    Task<ExternalResourceDisplayDto> CreateAsync(ExtRecourseCreationDto dto);
+    Task UpdateAsync(ExternalResourceDisplayDto resource);
 }
