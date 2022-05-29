@@ -177,7 +177,7 @@
     }
 
     
-    // below methods are used to automatically keep open or close the pop-out radial menu.
+// below methods are used to automatically keep open or close the pop-out radial menu.
     private void SetIsInteractingWithMenu()
     {
         if (showMenu)
@@ -200,7 +200,8 @@
         delayedCloseIsActive = false;
         showMenu = false;
     }
-
+// above methods are...
+    
     public void Dispose()
     {
         profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
@@ -225,8 +226,8 @@
     {
         try
         {
-            await extResService.UpdateAsync(resourceBeingEdited);
-            profileStateContainer.UpdateResource(resourceBeingEdited);
+            await extResService.UpdateAsync(resourceBeingEdited!);
+            profileStateContainer.UpdateResource(resourceBeingEdited!);
             CloseEditResourceDialog();
         }
         catch (DataValidationException e)
