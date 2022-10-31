@@ -39,7 +39,12 @@
     protected override void OnInitialized()
     {
         profileStateContainer.OnCategoryAdded += ReactToCategoryAdded;
-        profileStateContainer.OnCategoryDeleted += StateHasChanged;
+        profileStateContainer.OnCategoryDeleted += ReactToCategoryDeleted;
+    }
+
+    private void ReactToCategoryDeleted()
+    {
+        StateHasChanged();
     }
 
     private void ReactToCategoryAdded()

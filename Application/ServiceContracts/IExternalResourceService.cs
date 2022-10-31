@@ -6,4 +6,5 @@ public interface IExternalResourceService
 {
     Task<ExternalResourceDisplayDto> CreateAsync(ExtRecourseCreationDto dto);
     Task UpdateAsync(ExternalResourceDisplayDto resource);
+    Task DeleteAsync(ExternalResourceDisplayDto dto);
 }

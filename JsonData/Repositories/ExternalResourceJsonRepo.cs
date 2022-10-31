@@ -1,5 +1,5 @@
 ﻿using Application.RepositoryContracts;
-using Entities;
+using Domain.Models;
 using JsonData.DataAccess;
 
 namespace JsonData.Repositories;
@@ -26,5 +26,20 @@ public class ExternalResourceJsonRepo : IExternalResourceRepo
         first.Description = edited.Description;
         first.Url = edited.Url;
         return Task.CompletedTask;
+    }
+
+    public Task UnParentResourcesFromCategory(Guid categoryId)
+    {
+        context.ViaLabData.ExternalResources
+            .Where(er => er.CategoryId.Equals(categoryId))
+            .ToList()
+            .ForEach(er => er.CategoryId = null);
+
+        return Task.CompletedTask;
+    }
+
+    public Task DeleteAsync(Guid dtoId)
+    {
+        throw new NotImplementedException();
     }
 }

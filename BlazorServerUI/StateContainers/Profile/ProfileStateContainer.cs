@@ -34,7 +34,9 @@ public class ProfileStateContainer
     {
         CategoryWithGuidesAndResourcesDto c = new()
         {
-            Category = categoryDto
+            Category = categoryDto,
+            Guides = new List<GuideHeaderDto>(),
+            ExternalResources = new List<ExternalResourceDisplayDto>()
         };
         CategoriesWithGuides.Add(c);
         OnCategoryAdded?.Invoke();
@@ -54,14 +56,21 @@ public class ProfileStateContainer
     {
         CategoryWithGuidesAndResourcesDto cwgw = CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(categoryId));
         ICollection<GuideHeaderDto> guideHeaderDtos = cwgw.Guides;
+        ICollection<ExternalResourceDisplayDto> exResDtos = cwgw.ExternalResources;
         CategoriesWithGuides.Remove(cwgw);
         CategoryWithGuidesAndResourcesDto uncategorized = CategoriesWithGuides.First(c => c.Category == null);
+
         foreach (GuideHeaderDto dto in guideHeaderDtos)
         {
             uncategorized.Guides.Add(dto);
         }
+
+        foreach (ExternalResourceDisplayDto dto in exResDtos)
+        {
+            uncategorized.ExternalResources.Add(dto);
+        }
+
         OnCategoryDeleted.Invoke();
-        throw new Exception("Updater så resources også bliver håndteret");
     }
 
     public void AddExternalResourceToCategory(ExternalResourceDisplayDto created, CategoryDto? category)
@@ -70,18 +79,24 @@ public class ProfileStateContainer
             ? CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
             : CategoriesWithGuides.First(c => c.Category == null);
 
-        
+
         cwgw.ExternalResources.Add(created);
         OnExtResourceAdded?.Invoke(category?.Id);
     }
 
     public void UpdateResource(ExternalResourceDisplayDto resource)
     {
-        CategoryWithGuidesAndResourcesDto cwgar = CategoriesWithGuides.First(dto => dto.ExternalResources.Any(extRes => extRes.Id.Equals(resource.Id)));
+        CategoryWithGuidesAndResourcesDto cwgar =
+            CategoriesWithGuides.First(dto => dto.ExternalResources.Any(extRes => extRes.Id.Equals(resource.Id)));
         ExternalResourceDisplayDto toUpdate = cwgar.ExternalResources.First(extRes => extRes.Id.Equals(resource.Id));
         toUpdate.Title = resource.Title;
         toUpdate.Description = resource.Description;
         toUpdate.Url = resource.Url;
         OnExtResourceUpdated?.Invoke(cwgar.Category?.Id);
+    }
+
+    public void DeleteResource(Guid id)
+    {
+        throw new NotImplementedException();
     }
 }

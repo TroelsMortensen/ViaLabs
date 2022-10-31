@@ -3,7 +3,7 @@ using Application.DTOs.ExternalResourceDTOs;
 using Application.Exceptions;
 using Application.RepositoryContracts;
 using Application.ServiceContracts;
-using Entities;
+using Domain.Models;
 
 namespace Application.ServiceImpls;
 
@@ -44,11 +44,9 @@ public class ExternalResourceService : IExternalResourceService
         return new ExternalResourceDisplayDto
         {
             Id = id,
-            // OwnerId = dto.OwnerId,
             Title = dto.Title,
             Url = dto.Url,
             Description = dto.Description,
-            // CategoryId = dto.CategoryId
         };
     }
 
@@ -70,6 +68,21 @@ public class ExternalResourceService : IExternalResourceService
             await repoUow.SaveChangesAsync();
         }
         catch (Exception)
+        {
+            await repoUow.RollbackAsync();
+            throw;
+        }
+    }
+
+    public async Task DeleteAsync(ExternalResourceDisplayDto dto)
+    {
+        try
+        {
+            await repoUow.BeginAsync();
+            await repoUow.ExternalResourceRepo.DeleteAsync(dto.Id);
+            await repoUow.SaveChangesAsync();
+        }
+        catch (Exception e)
         {
             await repoUow.RollbackAsync();
             throw;

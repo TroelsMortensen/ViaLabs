@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.CategoryDTOs;
 using Application.RepositoryContracts;
 using Application.ServiceContracts;
-using Entities;
+using Domain.Models;
 
 namespace Application.ServiceImpls;
 
@@ -66,8 +66,10 @@ public class CategoryService : ICategoryService
     {
         try
         {
+            // TODO this should just happen in repository, because after when EFC I'll do on cascade delete.
             await repoUow.BeginAsync();
             await repoUow.GuideRepo.UnParentGuidesFromCategory(categoryId);
+            await repoUow.ExternalResourceRepo.UnParentResourcesFromCategory(categoryId);
             await repoUow.CategoryRepo.DeleteAsync(categoryId);
             await repoUow.SaveChangesAsync();
         }

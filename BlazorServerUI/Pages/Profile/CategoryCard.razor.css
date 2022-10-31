@@ -42,7 +42,7 @@
 }
 
 .guide-title {
-    display: inline-block;
+    /*display: inline-block;*/
     padding-left: 25px;
     margin-bottom: 5px;
     position: relative;

@@ -1,7 +1,7 @@
 ﻿using Application.DTOs.GuideDTOs;
 using Application.RepositoryContracts;
 using Application.ServiceContracts;
-using Entities;
+using Domain.Models;
 
 namespace Application.ServiceImpls;
 

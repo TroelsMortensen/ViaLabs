@@ -38,3 +38,29 @@
      -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 1.0);
      box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102, 175, 233, 1.0);
 }
+
+.progress-button {
+    /*border: solid 2px #0c4128;*/
+    background-color: #ff8888;
+    color: #000000;
+    padding: 5px 15px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: 10px;
+    /*min-width: 125px;*/
+    font-weight: bold;
+}
+
+.progress-button-filler {
+    position: absolute;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #ff1212;
+    transition: width 0.1s;
+}
+
+.progress-button-text {
+    position: relative;
+}

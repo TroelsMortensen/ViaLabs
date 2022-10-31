@@ -1,6 +1,6 @@
 ﻿using Application.ProviderContracts;
 using Application.RepositoryContracts;
-using Entities;
+using Domain.Models;
 using JsonData.DataAccess;
 
 namespace JsonData.ProviderImpls;

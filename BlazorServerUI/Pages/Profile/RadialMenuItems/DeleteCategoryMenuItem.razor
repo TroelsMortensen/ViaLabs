@@ -25,8 +25,8 @@
                 @onmousedown="DeleteButtonDown"
                 @onmouseup="() => isHolding = false"
                 @onmouseout="() => isHolding = false">
-            <div class="button__progress" style="width:@progress%"></div>
-            <span class="button__text">Hold to Delete</span>
+            <div class="progress-button-filler" style="width:@progress%"></div>
+            <span class="progress-button-text">Hold to Delete</span>
         </button>
         <span style="padding: 5px"></span>
         <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="@(() => showDeleteConfirmationModal = false)">Cancel</button>
@@ -59,7 +59,7 @@
     {
         await categoryService.DeleteAsync(CategoryId);
         profileStateContainer.DeleteCategory(CategoryId);
-        SnackBarHandler.ShowSnackMessage("Category deleted");
+        SnackBarHandler.ShowSnackMessage("Category deleted!");
     }
 
     private async Task DeleteButtonDown()

@@ -2,7 +2,7 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "Application\Application.csproj", "{79D5B875-AAD7-426A-9CBA-DDF6CE3D2EBC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Entities", "Entities\Entities.csproj", "{42C02B7A-DEB3-446A-81A0-59C48438BEF3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "Domain\Domain.csproj", "{42C02B7A-DEB3-446A-81A0-59C48438BEF3}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonData", "JsonData\JsonData.csproj", "{6A92F38A-CB1E-47A4-ABAB-053AF8563A39}"
 EndProject
