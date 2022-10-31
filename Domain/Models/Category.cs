@@ -15,4 +15,10 @@ public class Category
         BackgroundColor = backgroundColor;
         throw new Exception("Missing domain validation here");
     }
+
+    public void AssignId(Guid newGuid)
+    {
+        Id = newGuid;
+        throw new NotImplementedException("validate");
+    }
 }

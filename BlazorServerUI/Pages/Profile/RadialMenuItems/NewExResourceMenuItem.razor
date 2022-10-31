@@ -1,11 +1,12 @@
-﻿@using Application.DTOs.CategoryDTOs
-@using Application.DTOs.ExternalResourceDTOs
-@using BlazorServerUI.StateContainers.Profile
+﻿@using BlazorServerUI.StateContainers.Profile
 @using System.Text.Json
+@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
+@using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs
+@using Application.Features.ProfileDataLogic.LogicContracts
 
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 
-@inject IExternalResourceService extResService
+@inject IExternalResourceLogic extResLogic
 @inject ProfileStateContainer profileStateContainer
 
 
@@ -71,7 +72,7 @@
         extRes.CategoryId = Category?.Id;
         try
         {
-            ExternalResourceDisplayDto created = await extResService.CreateAsync(extRes);
+            ExternalResourceDisplayDto created = await extResLogic.CreateAsync(extRes);
             profileStateContainer.AddExternalResourceToCategory(created, Category);
 
             extRes = new();

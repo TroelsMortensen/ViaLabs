@@ -1,7 +1,8 @@
-﻿using Application.ProviderContracts;
+﻿using Application.Features.ProfileDataLogic.ProviderContracts;
 using Application.RepositoryContracts;
-using JsonData.DataAccess;
+using JsonData.Context;
 using JsonData.ProviderImpls;
+using JsonData.ProviderImpls.ProfileProviderImpls;
 using JsonData.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -30,7 +31,7 @@ public static class JsonDataServiceExtensions
         services.AddScoped<ICategoryRepo, CategoryJsonRepo>();
         services.AddScoped<IGuideRepo, GuideJsonRepo>();
         services.AddScoped<IExternalResourceRepo, ExternalResourceJsonRepo>();
-        services.AddScoped<IRepoUOW, JsonRepoUowImpl>();
+        services.AddScoped<IRepoManager, JsonRepoManagerImpl>();
     }
 
     private static void AddDataAccess(IServiceCollection services)

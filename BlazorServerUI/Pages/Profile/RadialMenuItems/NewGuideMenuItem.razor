@@ -1,8 +1,9 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
-@using Application.DTOs.CategoryDTOs
-@using Application.DTOs.GuideDTOs
+@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
+@using Application.Features.ProfileDataLogic.DTOs.GuideDTOs
+@using Application.Features.ProfileDataLogic.LogicContracts
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject IGuideService guideService
+@inject IGuideLogic guideLogic
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
@@ -61,7 +62,7 @@
 
         try
         {
-            GuideHeaderDto created = await guideService.CreateGuideAsync(guide);
+            GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide);
             
             profileStateContainer.AddGuideToCategory(created, Category);
             newGuideTitle = String.Empty;

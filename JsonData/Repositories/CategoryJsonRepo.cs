@@ -1,12 +1,12 @@
 ﻿using Application.RepositoryContracts;
 using Domain.Models;
-using JsonData.DataAccess;
+using JsonData.Context;
 
 namespace JsonData.Repositories;
 
 public class CategoryJsonRepo : ICategoryRepo
 {
-    private JsonDataContext context;
+    private readonly JsonDataContext context;
 
     public CategoryJsonRepo(JsonDataContext context)
     {
@@ -15,7 +15,7 @@ public class CategoryJsonRepo : ICategoryRepo
 
     public Task<Category> CreateAsync(Category category)
     {
-        category.Id = Guid.NewGuid();
+        category.AssignId( Guid.NewGuid());
         context.ViaLabData.Categories.Add(category);
         Category toReturn = context.ViaLabData.Categories.First(c => c.Id.Equals(category.Id));
         return Task.FromResult(toReturn);
@@ -35,8 +35,10 @@ public class CategoryJsonRepo : ICategoryRepo
             throw new Exception("Could not update non-existing category. Serious problem");
         }
 
-        existing.Title = categoryToUpdate.Title;
-        existing.BackgroundColor = categoryToUpdate.BackgroundColor;
+        context.ViaLabData.Categories.Remove(existing);
+        context.ViaLabData.Categories.Add(categoryToUpdate);
+        
+        context.SaveChangesAsync();
         return Task.CompletedTask;
     }
 

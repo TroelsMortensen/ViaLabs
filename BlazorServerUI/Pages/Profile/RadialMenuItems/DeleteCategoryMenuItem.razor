@@ -1,10 +1,8 @@
 ﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-
-@using Application.ServiceContracts
-@using Application.DTOs.CategoryDTOs
+@using Application.Features.ProfileDataLogic.LogicContracts
 @using BlazorServerUI.StateContainers.Profile
 
-@inject ICategoryService categoryService
+@inject ICategoryLogic categoryLogic
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
@@ -57,7 +55,7 @@
 
     private async Task DeleteCategory()
     {
-        await categoryService.DeleteAsync(CategoryId);
+        await categoryLogic.DeleteAsync(CategoryId);
         profileStateContainer.DeleteCategory(CategoryId);
         SnackBarHandler.ShowSnackMessage("Category deleted!");
     }

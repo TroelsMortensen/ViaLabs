@@ -1,7 +1,7 @@
-﻿using Application.DTOs.CategoryDTOs;
-using Application.DTOs.ExternalResourceDTOs;
-using Application.DTOs.GuideDTOs;
-using Application.ProviderContracts;
+﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
+using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
+using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
+using Application.Features.ProfileDataLogic.ProviderContracts;
 
 namespace BlazorServerUI.StateContainers.Profile;
 

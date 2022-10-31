@@ -1,10 +1,10 @@
 ﻿@page "/Profile"
-@using Application.ServiceContracts
-@using Application.ProviderContracts
 @using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
 @using Domain.Models
-@inject ITeacherService teacherService
+@using Application.Features.ProfileDataLogic.ProviderContracts
+@using Application.Features.ProfileDataLogic.LogicContracts
+@inject ITeacherLogic teacherLogic
 @inject ITeacherProvider teacherProvider
 @inject ProfileStateContainer profileStateContainer
 
@@ -30,7 +30,7 @@
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name!;
-        isViaTeacher = teacherService.IsViaTeacher(userName);
+        isViaTeacher = teacherLogic.IsViaTeacher(userName);
         if (!isViaTeacher) return;
 
         approvedTeacher = await teacherProvider.GetTeacherAsync(userName);

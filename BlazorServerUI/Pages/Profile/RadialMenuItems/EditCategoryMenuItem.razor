@@ -1,10 +1,10 @@
-﻿@using Application.ServiceContracts
-@using Application.DTOs.CategoryDTOs
+﻿@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
+@using Application.Features.ProfileDataLogic.LogicContracts
 @using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
 @using JsonData.Repositories
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICategoryService categoryService
+@inject ICategoryLogic categoryLogic
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -70,7 +70,7 @@
         CategoryDto toUpdate = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
-            await categoryService.UpdateAsync(toUpdate);
+            await categoryLogic.UpdateAsync(toUpdate);
             categoryDto.Title = editedCategoryTitle!;
             categoryDto.BackgroundColor = editedBackgroundColor!;
             

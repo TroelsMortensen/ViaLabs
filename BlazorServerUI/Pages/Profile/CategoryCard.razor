@@ -1,17 +1,17 @@
 ﻿@using BlazorServerUI.Pages.Profile.RadialMenuItems
-@using Application.DTOs.CategoryDTOs
-@using Application.DTOs.ExternalResourceDTOs
-@using Application.DTOs.GuideDTOs
-@using Application.Exceptions
-@using Application.ProviderContracts
-@using Application.ServiceContracts
+@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
+@using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs
+@using Application.Features.ProfileDataLogic.DTOs.GuideDTOs
+@using Application.Features.ProfileDataLogic.LogicContracts
+@using Application.Features.ProfileDataLogic.ProviderContracts
 @using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
+@using Domain.Exceptions
 
 @inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
-@inject IExternalResourceService extResService;
+@inject IExternalResourceLogic extResLogic;
 
 @implements IDisposable
 
@@ -242,7 +242,7 @@
     {
         try
         {
-            await extResService.UpdateAsync(resourceBeingEdited!);
+            await extResLogic.UpdateAsync(resourceBeingEdited!);
             profileStateContainer.UpdateResource(resourceBeingEdited!);
             CloseEditResourceDialog();
         }
@@ -294,7 +294,7 @@
 
     private async Task DeleteResource()
     {
-        await extResService.DeleteAsync(resourceBeingEdited);
+        await extResLogic.DeleteAsync(resourceBeingEdited);
         profileStateContainer.DeleteResource(resourceBeingEdited.Id);
         SnackBarHandler.ShowSnackMessage("Resource deleted!");
     }
