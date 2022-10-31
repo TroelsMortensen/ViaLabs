@@ -17,7 +17,7 @@ public class JsonCategoryProvider : ICategoryProvider
 
     public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
     {
-        ICollection<CategoryDto> categoryDtos = context.ViaLabData.Categories.Where(c => c.OwnerId.Equals(teacherName))
+        ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacherName))
             .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
         return Task.FromResult(categoryDtos);
     }
@@ -32,18 +32,18 @@ public class JsonCategoryProvider : ICategoryProvider
         categoriesWithGuides.Add(unCatCwg);
 
         // get all categories for teacher
-        ICollection<CategoryDto> categoryDtos = context.ViaLabData.Categories.Where(c => c.OwnerId.Equals(teacher))
+        ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacher))
             .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
 
         // get all and resources guides per category
         foreach (CategoryDto cat in categoryDtos)
         {
-            List<GuideHeaderDto> guideHeaderDtos = context.ViaLabData.Guides
+            List<GuideHeaderDto> guideHeaderDtos = context.Guides
                 .Where(g => g.CategoryId.Equals(cat.Id))
                 .Select(g => new GuideHeaderDto(g.Id, g.Title))
                 .ToList();
 
-            List<ExternalResourceDisplayDto> externalResourceDisplayDtos = context.ViaLabData.ExternalResources
+            List<ExternalResourceDisplayDto> externalResourceDisplayDtos = context.ExternalResources
                 .Where(er => er.CategoryId.Equals(cat.Id))
                 .Select(r => new ExternalResourceDisplayDto
                 {
@@ -67,10 +67,10 @@ public class JsonCategoryProvider : ICategoryProvider
     private CategoryWithGuidesAndResourcesDto CreateUnCategorized(string teacher)
     {
         CategoryWithGuidesAndResourcesDto unCatCwg = new();
-        ICollection<GuideHeaderDto> guidesForUncategorized = context.ViaLabData.Guides
+        ICollection<GuideHeaderDto> guidesForUncategorized = context.Guides
             .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
             .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
-        ICollection<ExternalResourceDisplayDto> resourcesForUncategorized = context.ViaLabData.ExternalResources
+        ICollection<ExternalResourceDisplayDto> resourcesForUncategorized = context.ExternalResources
             .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
             .Select(er => new ExternalResourceDisplayDto
             {

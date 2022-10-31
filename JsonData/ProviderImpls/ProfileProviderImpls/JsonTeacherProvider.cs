@@ -15,7 +15,7 @@ public class JsonTeacherProvider : ITeacherProvider
 
     public Task<Teacher> GetTeacherAsync(string userName)
     {
-        Teacher? teacher = context.ViaLabData.Teachers.FirstOrDefault(t => t.Name.Equals(userName));
+        Teacher? teacher = context.Teachers.FirstOrDefault(t => t.Name.Equals(userName));
 
         if (teacher is null)
         {

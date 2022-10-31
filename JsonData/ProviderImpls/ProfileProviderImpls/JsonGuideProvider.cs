@@ -17,7 +17,7 @@ public class JsonGuideProvider : IGuideProvider
 
     public Task<ICollection<GuideHeaderDto>> GetGuidesByCategoryIdAsync(Guid categoryId)
     {
-        ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.
+        ICollection<GuideHeaderDto> list = context.Guides.
             Where(g => g.CategoryId.Equals(categoryId)).
             Select(g => new GuideHeaderDto(g.Id, g.Title)).
             ToList();
@@ -27,7 +27,7 @@ public class JsonGuideProvider : IGuideProvider
 
     public Task<ICollection<GuideHeaderDto>> GetUnCategorizedByTeacherAsync(string teacher)
     {
-        ICollection<GuideHeaderDto> list = context.ViaLabData.Guides.
+        ICollection<GuideHeaderDto> list = context.Guides.
             Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher)).
             Select(g => new GuideHeaderDto(g.Id, g.Title)).
             ToList();
