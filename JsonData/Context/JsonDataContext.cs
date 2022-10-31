@@ -3,13 +3,21 @@ using Domain.Models;
 
 namespace JsonData.Context;
 
-public class JsonDataContext 
+public class JsonDataContext
 {
     private string path = "vialabs.json";
 
     private ViaLabData? viaLabData;
 
-    public ViaLabData ViaLabData
+    public ICollection<Teacher> Teachers => ViaLabData.Teachers;
+
+    public ICollection<Category> Categories => ViaLabData.Categories;
+
+    public ICollection<ExternalResource> ExternalResources => ViaLabData.ExternalResources;
+    public ICollection<Guide> Guides => ViaLabData.Guides;
+    public ICollection<Slide> Slides => throw new NotImplementedException();
+
+    private ViaLabData ViaLabData
     {
         get
         {
@@ -50,7 +58,7 @@ public class JsonDataContext
         viaLabData = JsonSerializer.Deserialize<ViaLabData>(vldAsJson);
     }
 
-    public void SaveChangesAsync()
+    public void SaveChanges()
     {
         Console.WriteLine("Saving changes!");
         string vldAsJson = JsonSerializer.Serialize(viaLabData, new JsonSerializerOptions

@@ -16,4 +16,9 @@ public class ExternalResource
         Url = url;
         throw new Exception("Missing domain validation here");
     }
+
+    public void DetachFromCategory()
+    {
+        CategoryId = null;
+    }
 }

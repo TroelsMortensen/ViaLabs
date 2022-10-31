@@ -18,4 +18,9 @@ public class Guide
         CategoryId = guide.CategoryId;
         throw new Exception("Missing domain validation here");
     }
+
+    public void DetachFromCategory()
+    {
+        CategoryId = null;
+    }
 }

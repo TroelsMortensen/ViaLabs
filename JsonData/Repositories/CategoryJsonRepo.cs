@@ -16,36 +16,36 @@ public class CategoryJsonRepo : ICategoryRepo
     public Task<Category> CreateAsync(Category category)
     {
         category.AssignId( Guid.NewGuid());
-        context.ViaLabData.Categories.Add(category);
-        Category toReturn = context.ViaLabData.Categories.First(c => c.Id.Equals(category.Id));
+        context.Categories.Add(category);
+        Category toReturn = context.Categories.First(c => c.Id.Equals(category.Id));
         return Task.FromResult(toReturn);
     }
 
     public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId)
     {
-        ICollection<Category> categories = context.ViaLabData.Categories.Where(c => c.OwnerId.Equals(teacherId)).ToList();
+        ICollection<Category> categories = context.Categories.Where(c => c.OwnerId.Equals(teacherId)).ToList();
         return Task.FromResult(categories);
     }
 
     public Task UpdateAsync(Category categoryToUpdate)
     {
-        Category? existing = context.ViaLabData.Categories.FirstOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
+        Category? existing = context.Categories.FirstOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
         if (existing == null)
         {
             throw new Exception("Could not update non-existing category. Serious problem");
         }
 
-        context.ViaLabData.Categories.Remove(existing);
-        context.ViaLabData.Categories.Add(categoryToUpdate);
+        context.Categories.Remove(existing);
+        context.Categories.Add(categoryToUpdate);
         
-        context.SaveChangesAsync();
+        context.SaveChanges();
         return Task.CompletedTask;
     }
 
     public Task DeleteAsync(Guid categoryId)
     {
-        Category toRemove = context.ViaLabData.Categories.First(c => c.Id.Equals(categoryId));
-        if (!context.ViaLabData.Categories.Remove(toRemove))
+        Category toRemove = context.Categories.First(c => c.Id.Equals(categoryId));
+        if (!context.Categories.Remove(toRemove))
         {
             throw new Exception("Removed nothing, something went wrong");
         }

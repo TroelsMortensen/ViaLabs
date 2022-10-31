@@ -15,7 +15,7 @@ public class TeacherJsonRepo : ITeacherRepo
 
     public Task<Teacher?> GetApprovedTeacher(string name)
     {
-        Teacher? firstOrDefault = context.ViaLabData.Teachers.FirstOrDefault(teacher => teacher.Name.Equals(name));
+        Teacher? firstOrDefault = context.Teachers.FirstOrDefault(teacher => teacher.Name.Equals(name));
         return Task.FromResult(firstOrDefault);
     }
 }

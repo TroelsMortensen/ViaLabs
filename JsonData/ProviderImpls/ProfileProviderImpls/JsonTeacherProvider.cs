@@ -22,6 +22,6 @@ public class JsonTeacherProvider : ITeacherProvider
             throw new Exception($"Did not find teacher by name {userName}");
         }
         
-        return Task.FromResult(teacher!);
+        return Task.FromResult(teacher);
     }
 }

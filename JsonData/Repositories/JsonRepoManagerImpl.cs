@@ -27,9 +27,10 @@ public class JsonRepoManagerImpl : IRepoManager
         return Task.CompletedTask;
     }
 
-    public async Task SaveChangesAsync()
+    public Task SaveChangesAsync()
     {
-        await context.SaveChangesAsync();
+         context.SaveChanges();
+         return Task.CompletedTask;
     }
 
     public Task RollbackAsync()
