@@ -14,74 +14,38 @@ public class CategoryLogic : ICategoryLogic
         this.repoManager = repoManager;
     }
 
-    public async Task<CategoryDto> CreateAsync(CategoryCreationDto category)
+    public async Task<CategoryDto> CreateAsync(CategoryCreationDto dto)
     {
-        Category newCat = new()
-        {
-            Id = Guid.NewGuid(),
-            Title = category.Title,
-            BackgroundColor = category.BackgroundColor,
-            OwnerId = category.OwnerId
-        };
-        ValidateNewCategoryData(newCat);
+        Category newCat = new(dto.Title, dto.OwnerId, dto.BackgroundColor);
         await ValidateTitleIsFree(newCat);
 
-        try
-        {
-            await repoManager.BeginAsync();
-            Category created = await repoManager.CategoryRepo.CreateAsync(newCat);
-            await repoManager.SaveChangesAsync();
-            return new CategoryDto(created.Id, created.Title, created.BackgroundColor);
-        }
-        catch (Exception e)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
+        ValidateNewCategoryData(newCat);
+
+        Category created = await repoManager.CategoryRepo.CreateAsync(newCat);
+        return new CategoryDto(created.Id, created.Title, created.BackgroundColor);
     }
 
     public async Task UpdateAsync(CategoryDto toUpdate)
     {
-        Category categoryToUpdate = new()
-        {
-            Id = toUpdate.Id,
-            Title = toUpdate.Title,
-            BackgroundColor = toUpdate.BackgroundColor,
-        };
-        ValidateNewCategoryData(categoryToUpdate);
-        try
-        {
-            await repoManager.BeginAsync();
-            await repoManager.CategoryRepo.UpdateAsync(categoryToUpdate);
-            await repoManager.SaveChangesAsync();
-        }
-        catch (Exception e)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
+        Category catBeingUpdated = await repoManager.CategoryRepo.GetCategoryById(toUpdate.Id);
+        catBeingUpdated.Update(toUpdate.Title, toUpdate.BackgroundColor);
+
+        ValidateNewCategoryData(catBeingUpdated);
+
+        await repoManager.CategoryRepo.UpdateAsync(catBeingUpdated);
     }
 
     public async Task DeleteAsync(Guid categoryId)
     {
-        try
-        {
-            // TODO this should just happen in repository, because after when EFC I'll do on cascade delete.
-            await repoManager.BeginAsync();
-            await repoManager.GuideRepo.UnParentGuidesFromCategory(categoryId);
-            await repoManager.ExternalResourceRepo.UnParentResourcesFromCategory(categoryId);
-            await repoManager.CategoryRepo.DeleteAsync(categoryId);
-            await repoManager.SaveChangesAsync();
-        }
-        catch (Exception e)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
+        // TODO this should just happen in repository, because after when EFC I'll do on cascade delete.
+        await repoManager.GuideRepo.UnParentGuidesFromCategory(categoryId);
+        await repoManager.ExternalResourceRepo.UnParentResourcesFromCategory(categoryId);
+        await repoManager.CategoryRepo.DeleteAsync(categoryId);
     }
 
     private static void ValidateNewCategoryData(Category category)
     {
+        // TODO create InValidDataException med list af errors
         if (string.IsNullOrEmpty(category.Title)) throw new ArgumentException("Title cannot be empty");
         if (category.Title.Length < 3) throw new ArgumentException("Title must be 3 or more characters");
         if (category.Title.Length > 25) throw new ArgumentException("Title must be 25 or fewer characters");

@@ -4,7 +4,7 @@ namespace Application.Features.ProfileDataLogic.LogicContracts;
 
 public interface ICategoryLogic
 {
-    public Task<CategoryDto> CreateAsync(CategoryCreationDto category);
+    public Task<CategoryDto> CreateAsync(CategoryCreationDto dto);
     Task UpdateAsync(CategoryDto toUpdate);
     Task DeleteAsync(Guid categoryId);
 }

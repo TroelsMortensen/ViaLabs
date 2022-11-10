@@ -10,14 +10,15 @@ public class CategoryJsonRepo : ICategoryRepo
 
     public CategoryJsonRepo(JsonDataContext context)
     {
-        this.context =  context;
+        this.context = context;
     }
 
     public Task<Category> CreateAsync(Category category)
     {
-        category.AssignId( Guid.NewGuid());
+        category.AssignId(Guid.NewGuid());
         context.Categories.Add(category);
         Category toReturn = context.Categories.First(c => c.Id.Equals(category.Id));
+        context.SaveChanges();
         return Task.FromResult(toReturn);
     }
 
@@ -37,7 +38,7 @@ public class CategoryJsonRepo : ICategoryRepo
 
         context.Categories.Remove(existing);
         context.Categories.Add(categoryToUpdate);
-        
+
         context.SaveChanges();
         return Task.CompletedTask;
     }
@@ -50,6 +51,19 @@ public class CategoryJsonRepo : ICategoryRepo
             throw new Exception("Removed nothing, something went wrong");
         }
 
+        context.SaveChanges();
         return Task.CompletedTask;
+    }
+
+    public Task<Category> GetCategoryById(Guid id)
+    {
+        Category? existingCategory = context.Categories.SingleOrDefault(category => category.Id.Equals(id));
+        
+        if (existingCategory is null)
+        {
+            throw new Exception($"Category with ID {id} not found");
+        }
+
+        return Task.FromResult(existingCategory);
     }
 }

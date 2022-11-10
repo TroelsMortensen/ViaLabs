@@ -23,10 +23,7 @@ public class ExternalResourceJsonRepo : IExternalResourceRepo
     {
         ExternalResource first = context.ExternalResources.First(resource => resource.Id.Equals(edited.Id));
         // TODO delete, then add
-        
-        first.Title = edited.Title;
-        first.Description = edited.Description;
-        first.Url = edited.Url;
+        first.Update(edited.Title, edited.Description, edited.Url);
         return Task.CompletedTask;
     }
 

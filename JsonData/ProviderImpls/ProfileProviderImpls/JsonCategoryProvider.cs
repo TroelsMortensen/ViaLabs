@@ -32,8 +32,11 @@ public class JsonCategoryProvider : ICategoryProvider
         categoriesWithGuides.Add(unCatCwg);
 
         // get all categories for teacher
-        ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacher))
-            .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
+        ICollection<CategoryDto> categoryDtos = context.Categories.
+            Where(c => c.OwnerId.Equals(teacher))
+            .Select(c => 
+                new CategoryDto(c.Id, c.Title, c.BackgroundColor)
+            ).ToList();
 
         // get all and resources guides per category
         foreach (CategoryDto cat in categoryDtos)

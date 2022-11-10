@@ -8,4 +8,5 @@ public interface ICategoryRepo
     Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId);
     Task UpdateAsync(Category categoryToUpdate);
     Task DeleteAsync(Guid categoryId);
+    Task<Category> GetCategoryById(Guid id);
 }

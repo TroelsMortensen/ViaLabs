@@ -18,28 +18,15 @@ public class ExternalResourceLogic : IExternalResourceLogic
     public async Task<ExternalResourceDisplayDto> CreateAsync(ExtRecourseCreationDto dto)
     {
         Guid id = Guid.NewGuid();
+
+        ExternalResource er = new(dto.OwnerId, dto.Title, dto.Url);
+        // TODO attach to Category by getting category, adding this.
         
-        ExternalResource er = new ()
-        {
-            Id = id,
-            OwnerId = dto.OwnerId,
-            Title = dto.Title,
-            Url = dto.Url,
-            Description = dto.Description,
-            CategoryId = dto.CategoryId
-        };
         ValidateExternalResourceData(er);
 
-        try
-        {
-            await Create(er);
-        }
-        catch (Exception)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
-        
+        await Create(er);
+
+
         return new ExternalResourceDisplayDto
         {
             Id = id,
@@ -51,7 +38,7 @@ public class ExternalResourceLogic : IExternalResourceLogic
 
     public async Task UpdateAsync(ExternalResourceDisplayDto dto)
     {
-        ExternalResource er = new ()
+        ExternalResource er = new()
         {
             Id = dto.Id,
             Title = dto.Title,

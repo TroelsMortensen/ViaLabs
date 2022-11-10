@@ -9,13 +9,14 @@ public class JsonDataContext
 
     private ViaLabData? viaLabData;
 
+    // todo de her skal returnere select many pga tree structurre
     public ICollection<Teacher> Teachers => ViaLabData.Teachers;
 
-    public ICollection<Category> Categories => ViaLabData.Categories;
+    public ICollection<Category> Categories => ViaLabData.Teachers.SelectMany(teacher => teacher.Categories).ToList();
 
-    public ICollection<ExternalResource> ExternalResources => ViaLabData.ExternalResources;
-    public ICollection<Guide> Guides => ViaLabData.Guides;
-    public ICollection<Slide> Slides => throw new NotImplementedException();
+    public ICollection<ExternalResource> ExternalResources => Categories.SelectMany(category => category.ExternalResources).ToList();
+    public ICollection<Guide> Guides => Categories.SelectMany(category => category.Guides).ToList();
+    public ICollection<Slide> Slides => Guides.SelectMany(guide => guide.Slides).ToList();
 
     private ViaLabData ViaLabData
     {
@@ -41,8 +42,6 @@ public class JsonDataContext
                     new Teacher("VIA\\TRMO")
                 },
                 UnApprovedTeachers = new List<Teacher>(),
-                Categories = new List<Category>(),
-                Guides = new List<Guide>()
             };
             string vldAsJson = JsonSerializer.Serialize(vld, new JsonSerializerOptions
             {
@@ -79,9 +78,4 @@ class ViaLabData
 {
     public ICollection<Teacher> Teachers { get; set; } = new List<Teacher>();
     public ICollection<Teacher> UnApprovedTeachers { get; set; } = new List<Teacher>();
-    public ICollection<Category> Categories { get; set; } = new List<Category>();
-
-    public ICollection<Guide> Guides { get; set; } = new List<Guide>();
-
-    public ICollection<ExternalResource> ExternalResources { get; set; } = new List<ExternalResource>();
 }
