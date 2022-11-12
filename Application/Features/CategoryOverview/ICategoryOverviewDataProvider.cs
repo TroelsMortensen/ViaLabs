@@ -1,8 +1,8 @@
 ﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 
-namespace Application.Features.ProfileDataLogic.ProviderContracts;
+namespace Application.Features.CategoryOverview;
 
-public interface ICategoryProvider
+public interface ICategoryOverviewDataProvider
 {
     // Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName);
 

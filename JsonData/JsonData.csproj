@@ -15,7 +15,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="ProviderImpls\CategoryOverview" />
       <Folder Include="ProviderImpls\CreateCategory" />
       <Folder Include="ProviderImpls\DisplayProfileInfo" />
     </ItemGroup>

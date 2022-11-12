@@ -1,10 +1,12 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Application.Features.DisplayProfileInfo;
+using Application.Features.DisplayProfileInfo.Logic;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
 
 public static class ServiceExtensions
 {
-    public static void AddAppServices(this IServiceCollection services)
+    public static void AddApplicationLayerServices(this IServiceCollection services)
     {
         AddServicesForDisplayProfileInfo(services);
         AddServicesForCreateCategory(services);
@@ -15,18 +17,17 @@ public static class ServiceExtensions
         // services.AddScoped<IExternalResourceLogic, ExternalResourceLogic>();
     }
 
+    private static void AddServicesForDisplayProfileInfo(IServiceCollection services)
+    {
+        services.AddScoped<IProfileDataHandler, ProfileDataHandler>();
+    }
+
     private static void AddServicesForCategoryOverview(IServiceCollection services)
     {
-        throw new NotImplementedException();
+        
     }
 
     private static void AddServicesForCreateCategory(IServiceCollection services)
     {
-        throw new NotImplementedException();
-    }
-
-    private static void AddServicesForDisplayProfileInfo(IServiceCollection services)
-    {
-        throw new NotImplementedException();
     }
 }

@@ -1,7 +1,12 @@
-﻿using Application.Features.ProfileDataLogic.ProviderContracts;
+﻿using Application.Features.CategoryOverview;
+using Application.Features.DisplayProfileInfo;
+using Application.Features.DisplayProfileInfo.DataProvider;
+using Application.Features.ProfileDataLogic.ProviderContracts;
 using Application.RepositoryContracts;
 using JsonData.Context;
 using JsonData.ProviderImpls;
+using JsonData.ProviderImpls.CategoryOverview;
+using JsonData.ProviderImpls.ProfileInfoProviderImpls;
 using JsonData.ProviderImpls.ProfileProviderImpls;
 using JsonData.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,9 +25,11 @@ public static class JsonDataServiceExtensions
 
     private static void AddProviders(IServiceCollection services)
     {
-        services.AddScoped<ICategoryProvider, JsonCategoryProvider>();
-        services.AddScoped<ITeacherProvider, JsonTeacherProvider>();
-        services.AddScoped<IGuideProvider, JsonGuideProvider>();
+        services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
+        services.AddScoped<ICategoryOverviewDataProvider, JsonCategoryOverviewDataProvider>();
+        // services.AddScoped<ICategoryProvider, JsonCategoryProvider>();
+        // services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
+        // services.AddScoped<IGuideProvider, JsonGuideProvider>();
     }
 
     private static void AddRepositories(IServiceCollection services)

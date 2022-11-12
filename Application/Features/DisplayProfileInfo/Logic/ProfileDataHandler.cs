@@ -1,8 +1,6 @@
-﻿using Application.Features.ProfileDataLogic.LogicContracts;
+﻿namespace Application.Features.DisplayProfileInfo.Logic;
 
-namespace Application.Features.ProfileDataLogic.LogicImpls;
-
-public class TeacherLogic : ITeacherLogic
+public class ProfileDataHandler : IProfileDataHandler
 {
 
     public bool IsViaTeacher(string userName)
@@ -10,7 +8,7 @@ public class TeacherLogic : ITeacherLogic
         if (string.IsNullOrEmpty(userName)) return false;
         if (!userName.StartsWith("VIA\\")) return false;
         string cleanedUserName = userName.Replace("VIA\\", "");
-        if (cleanedUserName.Any(char.IsDigit)) return false;
+        if (cleanedUserName.Any(char.IsDigit)) return false; // but why this?
         return true;
     }
 

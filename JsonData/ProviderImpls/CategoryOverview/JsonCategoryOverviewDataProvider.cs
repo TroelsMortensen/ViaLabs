@@ -1,16 +1,16 @@
-﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
+﻿using Application.Features.CategoryOverview;
+using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
-using Application.Features.ProfileDataLogic.ProviderContracts;
 using JsonData.Context;
 
-namespace JsonData.ProviderImpls.ProfileProviderImpls;
+namespace JsonData.ProviderImpls.CategoryOverview;
 
-public class JsonCategoryProvider : ICategoryProvider
+public class JsonCategoryOverviewDataProvider : ICategoryOverviewDataProvider
 {
     private readonly JsonDataContext context;
 
-    public JsonCategoryProvider(JsonDataContext context)
+    public JsonCategoryOverviewDataProvider(JsonDataContext context)
     {
         this.context = context;
     }

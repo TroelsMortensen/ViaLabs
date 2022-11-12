@@ -4,16 +4,21 @@
 @using Domain.Models
 @using Application.Features.ProfileDataLogic.ProviderContracts
 @using Application.Features.ProfileDataLogic.LogicContracts
-@inject ITeacherLogic teacherLogic
-@inject ITeacherProvider teacherProvider
+@using Application.Features.DisplayProfileInfo
+@using Application.Features.DisplayProfileInfo.DataProvider
+@using Application.Features.DisplayProfileInfo.DTOs
+@using Application.Features.DisplayProfileInfo.Logic
+@inject IProfileDataHandler profileDataHandler
+@inject IProfileDataProvider profileDataProvider
 @inject ProfileStateContainer profileStateContainer
 
 <div style="display:flex; justify-content: space-evenly">
-    @if (approvedTeacher is not null)
-    {
-        <CategoriesOverview/>
-    }
-    <ProfileCard ApprovedTeacher="@approvedTeacher" UserName="@userName" IsViaTeacher="@isViaTeacher"/>
+    @* @if (approvedTeacher is not null)  TODO*@ 
+    @* { *@
+    @*     <CategoriesOverview/> *@
+    @* } *@
+   
+    <ProfileCard ApprovedTeacher="@approvedTeacher" UserName="@userName" IsViaTeacher="@isViaTeacher"/> 
 
 </div>
 
@@ -24,16 +29,16 @@
 
     private string userName = String.Empty;
     private bool isViaTeacher;
-    private Teacher? approvedTeacher;
+    private TeacherHeaderDto? approvedTeacher;
 
     protected override async Task OnInitializedAsync()
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name!;
-        isViaTeacher = teacherLogic.IsViaTeacher(userName);
+        isViaTeacher = profileDataHandler.IsViaTeacher(userName);
         if (!isViaTeacher) return;
 
-        approvedTeacher = await teacherProvider.GetTeacherAsync(userName);
+        approvedTeacher = await profileDataProvider.GetTeacherAsync(userName);
         if (approvedTeacher != null)
         {
            await profileStateContainer.PopulateAsync(approvedTeacher.Name);

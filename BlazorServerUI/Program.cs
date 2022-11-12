@@ -20,7 +20,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // Add custom services
-builder.Services.AddAppServices();
+builder.Services.AddApplicationLayerServices();
 builder.Services.AddJsonDataAccess();
 builder.Services.AddScoped<SnackBarHandler>();
 builder.Services.AddScoped<ProfileStateContainer>();

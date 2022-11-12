@@ -1,6 +1,10 @@
 ﻿@using Domain.Models
+@using Application.Features.DisplayProfileInfo
+@using Application.Features.DisplayProfileInfo.DTOs
+
 <div class="profile-card">
-    <h1>Hello @UserName</h1>
+    <h1>Welcome <u>@UserName</u></h1>
+    
     @if (!IsViaTeacher)
     {
         <p>
@@ -39,6 +43,6 @@
     public bool IsViaTeacher { get; set; }
 
     [Parameter]
-    public Teacher? ApprovedTeacher { get; set; }
+    public TeacherHeaderDto? ApprovedTeacher { get; set; }
 
 }

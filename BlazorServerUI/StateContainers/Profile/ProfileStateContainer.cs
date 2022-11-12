@@ -1,4 +1,5 @@
-﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
+﻿using Application.Features.CategoryOverview;
+using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
 using Application.Features.ProfileDataLogic.ProviderContracts;
@@ -18,16 +19,16 @@ public class ProfileStateContainer
 
     // TODO public Action< Type { get; set; }  external resource added
 
-    private readonly ICategoryProvider categoryProvider;
+    private readonly ICategoryOverviewDataProvider categoryOverviewDataProvider;
 
-    public ProfileStateContainer(ICategoryProvider categoryProvider)
+    public ProfileStateContainer(ICategoryOverviewDataProvider categoryOverviewDataProvider)
     {
-        this.categoryProvider = categoryProvider;
+        this.categoryOverviewDataProvider = categoryOverviewDataProvider;
     }
 
     public async Task PopulateAsync(string teacher)
     {
-        CategoriesWithGuides = await categoryProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher);
+        // CategoriesWithGuides = await categoryProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher); TODO
     }
 
     public void AddCategory(CategoryDto categoryDto)
