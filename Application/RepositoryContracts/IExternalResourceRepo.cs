@@ -4,8 +4,8 @@ namespace Application.RepositoryContracts;
 
 public interface IExternalResourceRepo
 {
-    Task CreateAsync(ExternalResource externalResource);
+    Task AddToCategory(ExternalResource externalResource, Guid categoryId);
     Task UpdateAsync(ExternalResource edited);
-    Task UnParentResourcesFromCategory(Guid categoryId);
+    // Task UnParentResourcesFromCategory(Guid categoryId);
     Task DeleteAsync(Guid id);
 }

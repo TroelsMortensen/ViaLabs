@@ -27,19 +27,20 @@ public class ProfileStateContainer
 
     public async Task PopulateAsync(string teacher)
     {
-        CategoriesWithGuides = await categoryProvider.GetCategoriesWithGuideHeadersAsync(teacher);
+        CategoriesWithGuides = await categoryProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher);
     }
 
     public void AddCategory(CategoryDto categoryDto)
     {
-        CategoryWithGuidesAndResourcesDto c = new()
-        {
-            Category = categoryDto,
-            Guides = new List<GuideHeaderDto>(),
-            ExternalResources = new List<ExternalResourceDisplayDto>()
-        };
-        CategoriesWithGuides.Add(c);
-        OnCategoryAdded?.Invoke();
+        throw new NotImplementedException();
+        // CategoryWithGuidesAndResourcesDto c = new()
+        // {
+        //     Category = categoryDto,
+        //     Guides = new List<GuideHeaderDto>(),
+        //     ExternalResources = new List<ExternalResourceDisplayDto>()
+        // };
+        // CategoriesWithGuides.Add(c);
+        // OnCategoryAdded?.Invoke();
     }
 
     public void AddGuideToCategory(GuideHeaderDto created, CategoryDto? category)
@@ -86,13 +87,15 @@ public class ProfileStateContainer
 
     public void UpdateResource(ExternalResourceDisplayDto resource)
     {
-        CategoryWithGuidesAndResourcesDto cwgar =
-            CategoriesWithGuides.First(dto => dto.ExternalResources.Any(extRes => extRes.Id.Equals(resource.Id)));
-        ExternalResourceDisplayDto toUpdate = cwgar.ExternalResources.First(extRes => extRes.Id.Equals(resource.Id));
-        toUpdate.Title = resource.Title;
-        toUpdate.Description = resource.Description;
-        toUpdate.Url = resource.Url;
-        OnExtResourceUpdated?.Invoke(cwgar.Category?.Id);
+        throw new NotImplementedException();
+        // CategoryWithGuidesAndResourcesDto cwgar =
+        //     CategoriesWithGuides.First(dto => dto.ExternalResources.Any(extRes => extRes.Id.Equals(resource.Id)));
+        // ExternalResourceDisplayDto toUpdate = cwgar.ExternalResources.First(extRes => extRes.Id.Equals(resource.Id));
+        // toUpdate.Title = resource.Title;
+        // toUpdate.Description = resource.Description;
+        // toUpdate.Url = resource.Url;
+        // OnExtResourceUpdated?.Invoke(cwgar.Category?.Id);
+        
     }
 
     public void DeleteResource(Guid id)

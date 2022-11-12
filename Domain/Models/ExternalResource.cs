@@ -1,4 +1,7 @@
-﻿namespace Domain.Models;
+﻿using System.ComponentModel.DataAnnotations;
+using Domain.Exceptions;
+
+namespace Domain.Models;
 
 public class ExternalResource
 {
@@ -11,20 +14,51 @@ public class ExternalResource
     {
         Title = title;
         Url = url;
-        throw new Exception("TODO: Missing domain validation here");
+        ValidateData(title, url);
     }
 
     public void SetDescription(string desc)
     {
-        throw new Exception("TODO: Missing domain validation here");
+        ValidateDescription(desc);
         Description = desc;
     }
 
     public void Update(string editedTitle, string? editedDescription, string editedUrl)
     {
+        ValidateData(editedTitle, editedUrl);
+        ValidateDescription(editedDescription);
         Title = editedTitle;
         Description = editedDescription;
         Url = editedUrl;
-        throw new Exception("TODO: Missing domain validation here");
+    }
+
+    private static void ValidateData(string title, string url)
+    {
+        DataValidationException exception = new ("Invalid data.");
+        if (string.IsNullOrEmpty(title))
+        {
+            exception.AddError("Title cannot be empty.");
+        }
+
+        if (title.Length > 100)
+        {
+            exception.AddError("Title must be less than 100 characters.");
+        }
+
+        if (string.IsNullOrEmpty(url))
+        {
+            exception.AddError("The Url cannot be empty");
+        }
+
+        exception.ThrowIfErrors();
+    }
+
+    private static void ValidateDescription(string? desc)
+    {
+        if (desc is null) return;
+        if (desc.Length > 250)
+        {
+            throw new DataValidationException("Description length must be less than 250");
+        }
     }
 }

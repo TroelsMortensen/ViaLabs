@@ -76,7 +76,9 @@
             
             showEditCategoryModal = false;
             SnackBarHandler.ShowSnackMessage("Category edited");
-            profileStateContainer.OnCategoryUpdated.Invoke(categoryDto.Id); // TODO Shouldn't call here. Ask pSC to raise event. Some day
+
+            throw new NotImplementedException(); // Do I get back the updated record?
+            profileStateContainer.OnCategoryUpdated.Invoke(categoryDto.Id); // TODO Shouldn't call here. Ask ProfileStateContainer to raise event. Some day
         }
         catch (Exception e)
         {

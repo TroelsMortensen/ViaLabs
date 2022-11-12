@@ -1,6 +1,6 @@
 ﻿namespace Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 
-public class ExtRecourseCreationDto
+public class ExtResCreationRequest
 {
     public string OwnerId { get; set; }
     public string Title { get; set; }

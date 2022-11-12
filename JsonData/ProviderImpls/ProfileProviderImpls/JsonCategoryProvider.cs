@@ -15,75 +15,49 @@ public class JsonCategoryProvider : ICategoryProvider
         this.context = context;
     }
 
-    public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
+    // public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
+    // {
+    //     context.Teachers.First(t => t.Name.Equals(teacherName)).Categories.Select();
+    //     ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacherName))
+    //         .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
+    //     return Task.FromResult(categoryDtos);
+    // }
+
+    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> GetCategoriesWithGuideHeadersByTeacherAsync(string teacher)
     {
-        ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacherName))
-            .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
-        return Task.FromResult(categoryDtos);
-    }
-
-    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> GetCategoriesWithGuideHeadersAsync(string teacher)
-    {
-        ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuides = new List<CategoryWithGuidesAndResourcesDto>();
-
-        // get all uncategorized guides for teacher
-        CategoryWithGuidesAndResourcesDto unCatCwg = CreateUnCategorized(teacher);
-
-        categoriesWithGuides.Add(unCatCwg);
-
         // get all categories for teacher
-        ICollection<CategoryDto> categoryDtos = context.Categories.
-            Where(c => c.OwnerId.Equals(teacher))
-            .Select(c => 
-                new CategoryDto(c.Id, c.Title, c.BackgroundColor)
-            ).ToList();
+        ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuidesAndExRes = context.Teachers
+            .First(t => t.Name.Equals(teacher))
+            .Categories
+            .Select(c =>
+                new CategoryWithGuidesAndResourcesDto(
+                    new CategoryDto(c.Id, c.Title, c.BackgroundColor),
+                    c.Guides.Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList(),
+                    c.ExternalResources.Select(er => new ExternalResourceDisplayDto(er.Id, er.Title, er.Url, er.Description)).ToList()
+                )
+            )
+            .ToList();
 
-        // get all and resources guides per category
-        foreach (CategoryDto cat in categoryDtos)
-        {
-            List<GuideHeaderDto> guideHeaderDtos = context.Guides
-                .Where(g => g.CategoryId.Equals(cat.Id))
-                .Select(g => new GuideHeaderDto(g.Id, g.Title))
-                .ToList();
-
-            List<ExternalResourceDisplayDto> externalResourceDisplayDtos = context.ExternalResources
-                .Where(er => er.CategoryId.Equals(cat.Id))
-                .Select(r => new ExternalResourceDisplayDto
-                {
-                    Id = r.Id,
-                    Title = r.Title,
-                    Url = r.Url,
-                    Description = r.Description
-                })
-                .ToList();
-
-            CategoryWithGuidesAndResourcesDto cwg = new();
-            cwg.Category = cat;
-            cwg.Guides = guideHeaderDtos;
-            cwg.ExternalResources = externalResourceDisplayDtos;
-            categoriesWithGuides.Add(cwg);
-        }
-
-        return Task.FromResult(categoriesWithGuides);
+        return Task.FromResult(categoriesWithGuidesAndExRes);
     }
 
-    private CategoryWithGuidesAndResourcesDto CreateUnCategorized(string teacher)
-    {
-        CategoryWithGuidesAndResourcesDto unCatCwg = new();
-        ICollection<GuideHeaderDto> guidesForUncategorized = context.Guides
-            .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
-            .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
-        ICollection<ExternalResourceDisplayDto> resourcesForUncategorized = context.ExternalResources
-            .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
-            .Select(er => new ExternalResourceDisplayDto
-            {
-                Id = er.Id,
-                Title = er.Title,
-                Url = er.Url,
-                Description = er.Description
-            }).ToList();
-        unCatCwg.Guides = guidesForUncategorized;
-        unCatCwg.ExternalResources = resourcesForUncategorized;
-        return unCatCwg;
-    }
+    // private CategoryWithGuidesAndResourcesDto CreateUnCategorized(string teacher)
+    // {
+    //     CategoryWithGuidesAndResourcesDto unCatCwg = new();
+    //     ICollection<GuideHeaderDto> guidesForUncategorized = context.Guides
+    //         .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
+    //         .Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList();
+    //     ICollection<ExternalResourceDisplayDto> resourcesForUncategorized = context.ExternalResources
+    //         .Where(g => g.CategoryId is null && g.OwnerId.Equals(teacher))
+    //         .Select(er => new ExternalResourceDisplayDto
+    //         {
+    //             Id = er.Id,
+    //             Title = er.Title,
+    //             Url = er.Url,
+    //             Description = er.Description
+    //         }).ToList();
+    //     unCatCwg.Guides = guidesForUncategorized;
+    //     unCatCwg.ExternalResources = resourcesForUncategorized;
+    //     return unCatCwg;
+    // }
 }

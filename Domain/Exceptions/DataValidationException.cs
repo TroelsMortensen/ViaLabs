@@ -4,12 +4,26 @@ namespace Domain.Exceptions;
 
 public class DataValidationException : Exception
 {
-    private IEnumerable<string> Errors;
-    private string msg;
-    public DataValidationException(string msg, ICollection<string> errors)
+    public IEnumerable<string> Errors => errors;
+
+    private readonly ICollection<string> errors;
+    private readonly string msg;
+
+
+    public DataValidationException() : this("Invalid data.")
     {
-        Errors = errors;
-        this.msg = msg;
+    }
+
+    public DataValidationException(string message) 
+    {
+        msg = message;
+        errors = new List<string>();
+    }
+
+
+    public void AddError(string error)
+    {
+        errors.Add(error);
     }
 
     public override string Message
@@ -17,12 +31,21 @@ public class DataValidationException : Exception
         get
         {
             StringBuilder sb = new();
-            foreach (string error in Errors)
+            
+            foreach (string error in errors)
             {
                 sb.AppendLine(error);
             }
 
             return msg + "\n" + sb.ToString();
+        }
+    }
+
+    public void ThrowIfErrors()
+    {
+        if (errors.Any())
+        {
+            throw this;
         }
     }
 }

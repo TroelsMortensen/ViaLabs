@@ -1,6 +1,7 @@
 ﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 using Application.Features.ProfileDataLogic.LogicContracts;
 using Application.RepositoryContracts;
+using Domain.Exceptions;
 using Domain.Models;
 
 namespace Application.Features.ProfileDataLogic.LogicImpls;
@@ -14,15 +15,18 @@ public class CategoryLogic : ICategoryLogic
         this.repoManager = repoManager;
     }
 
-    public async Task<CategoryDto> CreateAsync(CategoryCreationDto dto)
+    public async Task<CategoryDto> CreateAsync(CategoryCreationRequest request)
     {
-        Category newCat = new(dto.Title, dto.OwnerId, dto.BackgroundColor);
-        await ValidateTitleIsFree(newCat);
+        await ValidateTitleIsFree(request.Title, request.OwningTeacher);
+
+        Category newCat = new(request.Title, request.BackgroundColor);
 
         ValidateNewCategoryData(newCat);
 
-        Category created = await repoManager.CategoryRepo.CreateAsync(newCat);
-        return new CategoryDto(created.Id, created.Title, created.BackgroundColor);
+        Category created = await repoManager.CategoryRepo.AddToTeacher(newCat, request.OwningTeacher);
+        CategoryDto categoryDto = new(created.Id, created.Title, created.BackgroundColor);
+
+        return categoryDto;
     }
 
     public async Task UpdateAsync(CategoryDto toUpdate)
@@ -37,29 +41,46 @@ public class CategoryLogic : ICategoryLogic
 
     public async Task DeleteAsync(Guid categoryId)
     {
-        // TODO this should just happen in repository, because after when EFC I'll do on cascade delete.
-        await repoManager.GuideRepo.UnParentGuidesFromCategory(categoryId);
-        await repoManager.ExternalResourceRepo.UnParentResourcesFromCategory(categoryId);
+        // cannot delete something which has resources. Do not do cascade.
+
+        throw new NotImplementedException("Mangler her");
+
         await repoManager.CategoryRepo.DeleteAsync(categoryId);
     }
 
     private static void ValidateNewCategoryData(Category category)
     {
-        // TODO create InValidDataException med list af errors
-        if (string.IsNullOrEmpty(category.Title)) throw new ArgumentException("Title cannot be empty");
-        if (category.Title.Length < 3) throw new ArgumentException("Title must be 3 or more characters");
-        if (category.Title.Length > 25) throw new ArgumentException("Title must be 25 or fewer characters");
+        DataValidationException exception = new();
+
+        if (string.IsNullOrEmpty(category.Title))
+        {
+            exception.AddError("Title cannot be empty");
+        }
+
+        if (category.Title.Length < 3)
+        {
+            exception.AddError("Title must be 3 or more characters");
+        }
+
+        if (category.Title.Length > 25)
+        {
+            exception.AddError("Title must be less than 25 characters");
+        }
+
+        exception.ThrowIfErrors();
     }
 
-    private async Task ValidateTitleIsFree(Category category)
+    private async Task ValidateTitleIsFree(string categoryTitle, string teacherName)
     {
-        // TODO should probably change this? Currently multiple teachers can have the same category.
+        DataValidationException exception = new();
 
-        ICollection<Category> existing = await repoManager.CategoryRepo.GetCategoriesByTeacherAsync(category.OwnerId);
-        Category? existingCategory = existing.FirstOrDefault(c => c.Title.Equals(category.Title, StringComparison.OrdinalIgnoreCase));
+        ICollection<Category> existing = await repoManager.CategoryRepo.GetCategoriesByTeacherAsync(teacherName);
+        Category? existingCategory = existing.FirstOrDefault(c => c.Title.Equals(categoryTitle, StringComparison.OrdinalIgnoreCase));
+
         if (existingCategory != null)
         {
-            throw new ArgumentException("Category name already in use");
+            exception.AddError("Category name already in use");
         }
+        exception.ThrowIfErrors();
     }
 }

@@ -1,4 +1,5 @@
-﻿using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
+﻿using Application.Features.ProfileDataLogic.DTOs;
+using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.LogicContracts;
 using Application.RepositoryContracts;
 using Domain.Exceptions;
@@ -15,94 +16,66 @@ public class ExternalResourceLogic : IExternalResourceLogic
         this.repoManager = repoManager;
     }
 
-    public async Task<ExternalResourceDisplayDto> CreateAsync(ExtRecourseCreationDto dto)
+    public async Task<ExternalResourceDisplayDto> CreateAsync(ExtResCreationRequest request)
     {
-        Guid id = Guid.NewGuid();
-
-        ExternalResource er = new(dto.OwnerId, dto.Title, dto.Url);
-        // TODO attach to Category by getting category, adding this.
-        
-        ValidateExternalResourceData(er);
-
-        await Create(er);
-
-
-        return new ExternalResourceDisplayDto
-        {
-            Id = id,
-            Title = dto.Title,
-            Url = dto.Url,
-            Description = dto.Description,
-        };
+        throw new NotImplementedException();
+        // Guid id = Guid.NewGuid();
+        //
+        // ExternalResource er = new(request.Title, request.Url);
+        // // TODO attach to Category by getting category, adding this.
+        //
+        // ValidateExternalResourceData(er);
+        //
+        // await Create(er);
+        //
+        //
+        // ExternalResourceDisplayDto returnValue = new(id, request.Title, request.Url, request.Description);
+        //
+        // return returnValue;
     }
 
-    public async Task UpdateAsync(ExternalResourceDisplayDto dto)
+    public async Task UpdateAsync(ExtResUpdateRequest request)
     {
-        ExternalResource er = new()
-        {
-            Id = dto.Id,
-            Title = dto.Title,
-            Url = dto.Url,
-            Description = dto.Description,
-        };
-        ValidateExternalResourceData(er);
-
-        try
-        {
-            await repoManager.BeginAsync();
-            await repoManager.ExternalResourceRepo.UpdateAsync(er);
-            await repoManager.SaveChangesAsync();
-        }
-        catch (Exception)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
+        throw new NotImplementedException();
+        // ValidateExternalResourceData(request);
+        //
+        // try
+        // {
+        //     await repoManager.BeginAsync();
+        //     await repoManager.ExternalResourceRepo.UpdateAsync(er);
+        //     await repoManager.SaveChangesAsync();
+        // }
+        // catch (Exception)
+        // {
+        //     await repoManager.RollbackAsync();
+        //     throw;
+        // }
     }
 
-    public async Task DeleteAsync(ExternalResourceDisplayDto dto)
+    public async Task DeleteAsync(Guid id)
     {
-        try
-        {
-            await repoManager.BeginAsync();
-            await repoManager.ExternalResourceRepo.DeleteAsync(dto.Id);
-            await repoManager.SaveChangesAsync();
-        }
-        catch (Exception e)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
+        throw new NotImplementedException();
+        // try
+        // {
+        //     await repoManager.ExternalResourceRepo.DeleteAsync(dto.Id);
+        // }
+        // catch (Exception e)
+        // {
+        //     await repoManager.RollbackAsync();
+        //     throw;
+        // }
     }
 
     private async Task Create(ExternalResource er)
     {
-        await repoManager.BeginAsync();
-        await repoManager.ExternalResourceRepo.CreateAsync(er);
-        await repoManager.SaveChangesAsync();
+        throw new NotImplementedException();
+        // await repoManager.BeginAsync();
+        // await repoManager.ExternalResourceRepo.CreateAsync(er);
+        // await repoManager.SaveChangesAsync();
     }
 
-    private void ValidateExternalResourceData(ExternalResource dto)
-    {
-        ICollection<string> errors = new List<string>();
-        if (string.IsNullOrEmpty(dto.Title))
-        {
-            errors.Add("Title cannot be empty");
-        }
-
-        if (dto.Title.Length > 100)
-        {
-            errors.Add("Title must be less than 100 characters");
-        }
-
-        if (string.IsNullOrEmpty(dto.Url))
-        {
-            errors.Add("The Url cannot be empty");
-        }
-
-        if (errors.Any())
-        {
-            throw new DataValidationException("Invalid data:", errors);
-        }
-    }
+    // private void ValidateExternalResourceData(ExtResUpdateRequest dto)
+    // {
+    //
+    // }
 }

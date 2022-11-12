@@ -2,6 +2,14 @@
 
 public class ExternalResourceDisplayDto
 {
+    public ExternalResourceDisplayDto(Guid id, string title, string url, string? description)
+    {
+        Id = id;
+        Title = title;
+        Url = url;
+        Description = description;
+    }
+
     public Guid Id { get; set; }
     // public string OwnerId { get; set; }
     public string Title { get; set; }

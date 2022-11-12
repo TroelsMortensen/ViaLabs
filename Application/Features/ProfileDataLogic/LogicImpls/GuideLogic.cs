@@ -16,32 +16,35 @@ public class GuideLogic : IGuideLogic
 
     public async Task<GuideHeaderDto> CreateGuideAsync(GuideCreationDto guide)
     {
-        ValidateGuide(guide);
-        Guide guideToCreate = new ()
-        {
-            Id = Guid.NewGuid(),
-            Title = guide.Title,
-            CategoryId = guide.CategoryId,
-            OwnerId = guide.OwnerId
-        };
-        try
-        {
-            await Create(guideToCreate);
-        }
-        catch (Exception e)
-        {
-            await repoManager.RollbackAsync();
-            throw;
-        }
+        throw new NotImplementedException();
 
-        return new GuideHeaderDto(guideToCreate.Id, guideToCreate.Title);
+        // ValidateGuide(guide);
+        // Guide guideToCreate = new ()
+        // {
+        //     Id = Guid.NewGuid(),
+        //     Title = guide.Title,
+        //     CategoryId = guide.CategoryId,
+        //     OwnerId = guide.OwnerId
+        // };
+        // try
+        // {
+        //     await Create(guideToCreate);
+        // }
+        // catch (Exception e)
+        // {
+        //     await repoManager.RollbackAsync();
+        //     throw;
+        // }
+        //
+        // return new GuideHeaderDto(guideToCreate.Id, guideToCreate.Title);
     }
 
     private async Task Create(Guide guideToCreate)
     {
-        await repoManager.BeginAsync();
-        await repoManager.GuideRepo.CreateAsync(guideToCreate);
-        await repoManager.SaveChangesAsync();
+        throw new NotImplementedException();
+        // await repoManager.BeginAsync();
+        // await repoManager.GuideRepo.CreateAsync(guideToCreate);
+        // await repoManager.SaveChangesAsync();
     }
 
 

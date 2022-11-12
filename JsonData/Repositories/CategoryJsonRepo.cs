@@ -13,31 +13,33 @@ public class CategoryJsonRepo : ICategoryRepo
         this.context = context;
     }
 
-    public Task<Category> CreateAsync(Category category)
+    public Task<Category> AddToTeacher(Category category, string teacherName)
     {
-        category.AssignId(Guid.NewGuid());
-        context.Categories.Add(category);
-        Category toReturn = context.Categories.First(c => c.Id.Equals(category.Id));
+        Teacher teacher = context.Teachers.Single(t => t.Name.Equals(teacherName));
+        teacher.Categories.Add(category);
+        Guid id = category.Id;
         context.SaveChanges();
+        Category toReturn = context.Categories.Single(cat => cat.Id.Equals(id));
         return Task.FromResult(toReturn);
     }
 
-    public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherId)
+    public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherName)
     {
-        ICollection<Category> categories = context.Categories.Where(c => c.OwnerId.Equals(teacherId)).ToList();
+        ICollection<Category> categories = context.Teachers.Single(t => t.Name.Equals(teacherName)).Categories;
         return Task.FromResult(categories);
     }
 
     public Task UpdateAsync(Category categoryToUpdate)
     {
-        Category? existing = context.Categories.FirstOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
-        if (existing == null)
+        Category? existing = context.Categories.SingleOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
+        if (existing is null)
         {
-            throw new Exception("Could not update non-existing category. Serious problem");
+            throw new Exception($"Could not update non-existing category with ID {categoryToUpdate.Id}. Serious problem");
         }
 
-        context.Categories.Remove(existing);
-        context.Categories.Add(categoryToUpdate);
+        throw new Exception("The below out-commented code would not work. The category would loose the connection to teacher");
+        // context.Categories.Remove(existing);
+        // context.Categories.Add(categoryToUpdate);
 
         context.SaveChanges();
         return Task.CompletedTask;

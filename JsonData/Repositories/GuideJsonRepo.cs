@@ -36,11 +36,11 @@ public class GuideJsonRepo : IGuideRepo
         return Task.CompletedTask;
     }
 
-    public Task UnParentGuidesFromCategory(Guid categoryId)
-    {
-        context.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList().ForEach(guide => guide.DetachFromCategory());
-
-        return Task.CompletedTask;
-    }
+    // public Task UnParentGuidesFromCategory(Guid categoryId)
+    // {
+    //     context.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList().ForEach(guide => guide.DetachFromCategory());
+    //
+    //     return Task.CompletedTask;
+    // }
 
 }

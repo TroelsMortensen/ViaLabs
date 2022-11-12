@@ -16,7 +16,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Features\ProfileDataLogic\DTOs" />
+      <Folder Include="Features\CreateCategory" />
+      <Folder Include="Features\DisplayProfileInfo" />
+      <Folder Include="Features\CategoryOverview" />
     </ItemGroup>
 
 </Project>

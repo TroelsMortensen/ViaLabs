@@ -13,10 +13,10 @@ public class ExternalResourceJsonRepo : IExternalResourceRepo
         this.context = context;
     }
 
-    public Task CreateAsync(ExternalResource externalResource)
+
+    public Task AddToCategory(ExternalResource externalResource, Guid categoryId)
     {
-        context.ExternalResources.Add(externalResource);
-        return Task.CompletedTask;
+        throw new NotImplementedException();
     }
 
     public Task UpdateAsync(ExternalResource edited)
@@ -24,18 +24,19 @@ public class ExternalResourceJsonRepo : IExternalResourceRepo
         ExternalResource first = context.ExternalResources.First(resource => resource.Id.Equals(edited.Id));
         // TODO delete, then add
         first.Update(edited.Title, edited.Description, edited.Url);
+        throw new NotImplementedException("not done yet");
         return Task.CompletedTask;
     }
 
-    public Task UnParentResourcesFromCategory(Guid categoryId)
-    {
-        context.ExternalResources
-            .Where(er => er.CategoryId.Equals(categoryId))
-            .ToList()
-            .ForEach(er => er.DetachFromCategory());
-
-        return Task.CompletedTask;
-    }
+    // public Task UnParentResourcesFromCategory(Guid categoryId)
+    // {
+    //     context.ExternalResources
+    //         .Where(er => er.CategoryId.Equals(categoryId))
+    //         .ToList()
+    //         .ForEach(er => er.DetachFromCategory());
+    //
+    //     return Task.CompletedTask;
+    // }
 
     public Task DeleteAsync(Guid dtoId)
     {

@@ -7,6 +7,7 @@
 @using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
 @using Domain.Exceptions
+@using Application.Features.ProfileDataLogic.DTOs
 
 @inject IGuideProvider guideProvider
 @inject NavigationManager navMgr
@@ -233,6 +234,7 @@
     private void OpenEditResource(ExternalResourceDisplayDto resource)
     {
         progress = 0;
+
         resourceBeingEdited = resource;
         showEditResourceDialog = true;
         editResourceMsg = "";
@@ -242,8 +244,10 @@
     {
         try
         {
-            await extResLogic.UpdateAsync(resourceBeingEdited!);
-            profileStateContainer.UpdateResource(resourceBeingEdited!);
+            ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
+            await extResLogic.UpdateAsync(request!);
+            throw new NotImplementedException();
+            // profileStateContainer.UpdateResource(resourceBeingEdited!);
             CloseEditResourceDialog();
         }
         catch (DataValidationException e)
@@ -258,6 +262,7 @@
         showEditResourceDialog = false;
         editResourceMsg = "";
     }
+
     private async Task DeleteButtonDown()
     {
         isHolding = true;
@@ -266,7 +271,6 @@
 
     private async Task UpdateProgressBar()
     {
-        
         while (progress < 100 && isHolding)
         {
             await Task.Delay(10);
@@ -294,8 +298,9 @@
 
     private async Task DeleteResource()
     {
-        await extResLogic.DeleteAsync(resourceBeingEdited);
+        await extResLogic.DeleteAsync(resourceBeingEdited!.Id);
         profileStateContainer.DeleteResource(resourceBeingEdited.Id);
         SnackBarHandler.ShowSnackMessage("Resource deleted!");
     }
+
 }
