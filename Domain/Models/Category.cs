@@ -1,4 +1,5 @@
-﻿using Domain.Exceptions;
+﻿using System.Text.Json;
+using Domain.Exceptions;
 
 namespace Domain.Models;
 

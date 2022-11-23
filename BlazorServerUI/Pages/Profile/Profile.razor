@@ -13,13 +13,13 @@
 @inject ProfileStateContainer profileStateContainer
 
 <div style="display:flex; justify-content: space-evenly">
-    @* @if (approvedTeacher is not null)  TODO*@ 
-    @* { *@
-    @*     <CategoriesOverview/> *@
-    @* } *@
-   
-    <ProfileCard ApprovedTeacher="@approvedTeacher" UserName="@userName" IsViaTeacher="@isViaTeacher"/> 
-
+    <ProfileCard ApprovedTeacher="@approvedTeacher" UserName="@userName" IsViaTeacher="@isViaTeacher"/>
+</div>
+<div style="display:flex; justify-content: space-evenly">
+    @if (approvedTeacher is not null)
+    {
+        <CategoriesOverview/> <-- jeg er igang med at få den her til at virke
+    }
 </div>
 
 @code {
@@ -41,7 +41,7 @@
         approvedTeacher = await profileDataProvider.GetTeacherAsync(userName);
         if (approvedTeacher != null)
         {
-           await profileStateContainer.PopulateAsync(approvedTeacher.Name);
+            await profileStateContainer.PopulateAsync(approvedTeacher.Name);
         }
     // TODO catch exceptions here, and show toast error message
     }
