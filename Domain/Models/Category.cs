@@ -4,34 +4,68 @@ namespace Domain.Models;
 
 public class Category
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
-    public string Title { get; private set; }
+    // private fields to be able to update.
+    private string title = null!;
+    private string backgroundColor = null!;
+    public Guid Id { get; init; }
 
-    public ICollection<Guide> Guides { get; private set; } = new List<Guide>();
-    public ICollection<ExternalResource> ExternalResources { get; private set; } = new List<ExternalResource>();
-    public string BackgroundColor { get; private set; }
+    public string Title
+    {
+        get => title;
+        init => title = value;
+    }
+
+    public string BackgroundColor
+    {
+        get => backgroundColor;
+        init => backgroundColor = value;
+    }
+
+    public ICollection<Guide> Guides { get; init; }
+    public ICollection<ExternalResource> ExternalResources { get; init; }
 
     public static Result<Category> Create(string title, string backgroundColor)
     {
-        Result<Category> result = ValidateData(title, backgroundColor);
+        Result validationResult = ValidateData(title, backgroundColor);
+
+        if (validationResult.HasErrors)
+            return new Result<Category>(validationResult.Errors);
+
+        Result<Category> createdResult =
+            new Result<Category>(
+                new Category(Guid.NewGuid(), title, backgroundColor, new List<Guide>(), new List<ExternalResource>()));
         
-        if (result.HasErrors)
-            return result;
-        
-        result.Value = new(title, backgroundColor);
-        return result;
+        return createdResult;
     }
 
-    private Category(string title, string backgroundColor)
+    private Category(Guid id, string title, string backgroundColor, ICollection<Guide> guides,
+        ICollection<ExternalResource> externalResources)
     {
+        Id = id;
         Title = title;
+        Guides = guides;
+        ExternalResources = externalResources;
         BackgroundColor = backgroundColor;
     }
 
-    private static Result<Category> ValidateData(string title, string backgroundColor)
+    public void AddGuide(Guide guide)
     {
-        Result<Category> result = new();
-        
+        // TODO Check if guide exists in collection?
+        Guides.Add(guide);
+    }
+
+    public void AddExternalResource(ExternalResource er)
+    {
+        // TODO Check if Ex Res exists in collection
+        ExternalResources.Add(er);
+    }
+
+    private Category(){}
+
+    private static Result ValidateData(string title, string backgroundColor)
+    {
+        Result result = new();
+
         if (string.IsNullOrEmpty(title))
         {
             result.AddError("Category.Title", "Title cannot be empty");
@@ -50,23 +84,14 @@ public class Category
         return result;
     }
 
-    public void AddGuide(Guide guide)
-    {
-        // TODO Check if guide exists in collection?
-        Guides.Add(guide);
-    }
-
-    public void AddExternalResource(ExternalResource er)
-    {
-        // TODO Check if Ex Res exists in collection
-        ExternalResources.Add(er);
-    }
-
     public Result Update(string newTitle, string newBackgroundColor)
     {
-        ValidateData(newTitle, newBackgroundColor);
-        Title = newTitle;
-        BackgroundColor = newBackgroundColor;
+        Result validationResult = ValidateData(newTitle, newBackgroundColor);
+        if (validationResult.HasErrors)
+            return validationResult;
+        
+        title = newTitle;
+        backgroundColor = newBackgroundColor;
         return new();
     }
 }

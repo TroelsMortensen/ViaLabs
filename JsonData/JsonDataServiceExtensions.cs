@@ -4,6 +4,7 @@ using Application.Features.DisplayProfileInfo.DataProvider;
 using Application.Features.ProfileDataLogic.ProviderContracts;
 using Application.RepositoryContracts;
 using JsonData.Context;
+using JsonData.JsonSerializationUtils;
 using JsonData.ProviderImpls;
 using JsonData.ProviderImpls.CategoryOverview;
 using JsonData.ProviderImpls.ProfileInfoProviderImpls;
@@ -27,6 +28,7 @@ public static class JsonDataServiceExtensions
     {
         services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
         services.AddScoped<ICategoryOverviewDataProvider, JsonCategoryOverviewDataProvider>();
+        services.AddScoped<IJsonHelper, SystemNetJsonSerializerHelper>();
         // services.AddScoped<ICategoryProvider, JsonCategoryProvider>();
         // services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
         // services.AddScoped<IGuideProvider, JsonGuideProvider>();

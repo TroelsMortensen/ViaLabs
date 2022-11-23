@@ -1,4 +1,4 @@
-﻿namespace Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
+﻿namespace Application.Features.SharedDtos;
 
 public class GuideHeaderDto
 {

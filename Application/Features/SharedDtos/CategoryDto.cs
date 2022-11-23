@@ -1,4 +1,4 @@
-﻿namespace Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
+﻿namespace Application.Features.SharedDtos;
 
 public class CategoryDto
 {

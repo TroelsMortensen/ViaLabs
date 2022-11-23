@@ -1,6 +1,7 @@
 ﻿using Application.Features.ProfileDataLogic.DTOs;
 using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.LogicContracts;
+using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
 using Domain.Exceptions;
 using Domain.Models;

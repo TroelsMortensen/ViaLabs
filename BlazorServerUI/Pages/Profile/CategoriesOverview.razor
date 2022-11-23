@@ -1,5 +1,4 @@
-﻿@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
-@using Application.Features.ProfileDataLogic.ProviderContracts
+﻿@using Application.Features.ProfileDataLogic.ProviderContracts
 @using BlazorServerUI.StateContainers.Profile
 @using Application.Features.CategoryOverview
 @using BlazorServerUI.Popups
@@ -52,7 +51,7 @@
     private void ReactToCategoryAdded()
     {
         StateHasChanged();
-        SnackBarHandler.ShowSnackMessage("Category created!");
+        // SnackBarHandler.ShowSnackMessage("Category created!");
     }
 
     public void Dispose()

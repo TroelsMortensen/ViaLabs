@@ -1,5 +1,6 @@
 ﻿using Application.Features.ProfileDataLogic.DTOs;
 using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
+using Application.Features.SharedDtos;
 
 namespace Application.Features.ProfileDataLogic.LogicContracts;
 

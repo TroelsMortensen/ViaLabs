@@ -2,11 +2,13 @@
 @using System.Drawing
 @using Application.Features.CreateCategory
 @using Application.Features.OldStuffToBeMovedAround.LogicContracts
-@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
 @using Application.Features.ProfileDataLogic.LogicContracts
+@using Application.Features.SharedDtos
+@using BlazorServerUI.Popups
 @inject ICreateCategoryHandler createCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 
+<hr/>
 <div style="display:flex; justify-content: center">
     <div>
         <h1>
@@ -59,7 +61,6 @@
         AuthenticationState authState = await AuthenticationState;
         string teacherName = authState.User.Identity!.Name!;
 
-        errorLabel = string.Empty;
         CategoryCreationRequest category = new(categoryTitle, teacherName, backgroundColor);
 
         try
@@ -70,15 +71,19 @@
             
             showModal = false;
             categoryTitle = string.Empty;
+            SnackBarHandler.ShowSnackMessage("Category successfully created");
         }
         catch (Exception e)
         {
             errorLabel = "Error: " + e.Message;
+            Console.WriteLine(e);
         }
+        
     }
 
     private void OpenDialog()
     {
+        errorLabel = String.Empty;
         var random = new Random();
         
         Color c = Color.FromArgb(random.Next(150, 255), random.Next(150, 255), random.Next(150, 255));

@@ -1,24 +1,27 @@
-﻿namespace Domain.Models;
+﻿using System.Text.Json.Serialization;
+using SharedKernel.Results;
+
+namespace Domain.Models;
 
 public class Teacher
 {
-    public string Name { get; private set; }
+    public string Name { get; init; }
 
-    public ICollection<Category> Categories { get; private set; } = new List<Category>();
+    
+    public ICollection<Category> Categories { get; init; } 
 
-    public Teacher(string name)
+    public static Result<Teacher> Create(string name)
+    {
+        Teacher teacher = new(name, new List<Category>());
+        return new(teacher);
+    }
+
+    private Teacher(string name, ICollection<Category> categories)
     {
         Name = name;
-        ValidateData();
+        Categories = categories;
     }
+    
+    private Teacher(){} // for JSON/EFC
 
-    private void ValidateData()
-    {
-        // anything? I get this from the log in framework. But I shouldn't depend on that, though. So I'll make up some rules at some point.
-    }
-
-    public void AddCategory(Category cat)
-    {
-        Categories.Add(cat);
-    }
 }

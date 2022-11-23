@@ -23,9 +23,9 @@ public class CategoryJsonRepo : ICategoryRepo
         return Task.FromResult(toReturn);
     }
 
-    public Task<ICollection<Category>> GetCategoriesByTeacherAsync(string teacherName)
+    public Task<IEnumerable<Category>> GetCategoriesByTeacherAsync(string teacherName)
     {
-        ICollection<Category> categories = context.Teachers.Single(t => t.Name.Equals(teacherName)).Categories;
+        IEnumerable<Category> categories = context.Teachers.Single(t => t.Name.Equals(teacherName)).Categories;
         return Task.FromResult(categories);
     }
 

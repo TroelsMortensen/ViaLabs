@@ -10,7 +10,7 @@
     color: #a2a2a2;
     position: absolute;
     pointer-events: none;
-    top: 6px;
+    top: 5px;
     left: 12px;
     transition: all 0.2s;
     padding: 0 2px;
@@ -20,7 +20,8 @@
 .floating-label::before {
     content: "";
     height: 3px;
-    background: #ffffff;
+    /*background: #66afe9;*/
+    /*border: 0px 0px 0px 2px solid #66afe9;*/
     position: absolute;
     left: 0px;
     top: 14px;
@@ -40,9 +41,10 @@ input:not(:focus):valid ~ .floating-label,
 textarea:focus ~ .floating-label,
 textarea:not(:focus):valid ~ .floating-label
 {
-    top: -14px;
+    top: -16px;
     left: 12px;
     color: #000000;
+    text-decoration: underline 1px #66afe9;
     /*background-color: #ffffff;*/
     padding:0 5px 0 5px;
 }

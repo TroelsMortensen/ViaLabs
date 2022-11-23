@@ -1,4 +1,4 @@
-﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
+﻿using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
 using Domain.Models;
 using SharedKernel.Results;
@@ -37,7 +37,7 @@ public class CreateCategoryHandler : ICreateCategoryHandler
     {
         Teacher teacher = await repoManager.TeacherRepo.GetApprovedTeacher(teacherName);
 
-        ICollection<Category> teachersCategories = teacher.Categories;
+        IEnumerable<Category> teachersCategories = teacher.Categories;
         Category? existingCategory =
             teachersCategories.FirstOrDefault(c => c.Title.Equals(categoryTitle, StringComparison.OrdinalIgnoreCase));
 

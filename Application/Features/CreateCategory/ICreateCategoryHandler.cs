@@ -1,4 +1,4 @@
-﻿using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
+﻿using Application.Features.SharedDtos;
 using SharedKernel.Results;
 
 namespace Application.Features.CreateCategory;

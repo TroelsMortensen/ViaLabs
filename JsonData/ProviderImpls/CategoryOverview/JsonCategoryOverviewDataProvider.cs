@@ -1,7 +1,7 @@
 ﻿using Application.Features.CategoryOverview;
-using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
+using Application.Features.SharedDtos;
 using JsonData.Context;
 
 namespace JsonData.ProviderImpls.CategoryOverview;

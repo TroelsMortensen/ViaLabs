@@ -1,8 +1,8 @@
 ﻿using Application.Features.CategoryOverview;
-using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
 using Application.Features.ProfileDataLogic.ProviderContracts;
+using Application.Features.SharedDtos;
 
 namespace BlazorServerUI.StateContainers.Profile;
 
@@ -33,15 +33,10 @@ public class ProfileStateContainer
 
     public void AddCategory(CategoryDto categoryDto)
     {
-        throw new NotImplementedException();
-        // CategoryWithGuidesAndResourcesDto c = new()
-        // {
-        //     Category = categoryDto,
-        //     Guides = new List<GuideHeaderDto>(),
-        //     ExternalResources = new List<ExternalResourceDisplayDto>()
-        // };
-        // CategoriesWithGuides.Add(c);
-        // OnCategoryAdded?.Invoke();
+        CategoryWithGuidesAndResourcesDto c = new(categoryDto, new List<GuideHeaderDto>(), new List<ExternalResourceDisplayDto>());
+        
+        CategoriesWithGuides.Add(c);
+        OnCategoryAdded?.Invoke();
     }
 
     public void AddGuideToCategory(GuideHeaderDto created, CategoryDto? category)

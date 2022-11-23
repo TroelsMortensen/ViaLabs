@@ -1,4 +1,4 @@
-﻿namespace Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
+﻿namespace Application.Features.SharedDtos;
 
 public class ExternalResourceDisplayDto
 {

@@ -1,7 +1,7 @@
 ﻿using Application.Features.CreateCategory;
 using Application.Features.OldStuffToBeMovedAround.LogicContracts;
-using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs;
 using Application.Features.ProfileDataLogic.LogicContracts;
+using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
 using Domain.Exceptions;
 using Domain.Models;
