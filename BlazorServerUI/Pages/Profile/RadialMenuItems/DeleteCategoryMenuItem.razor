@@ -4,7 +4,7 @@
 @using Application.Features.OldStuffToBeMovedAround.LogicContracts
 @using BlazorServerUI.Popups
 
-@inject ICategoryLogic categoryLogic
+@* @inject ICategoryLogic categoryLogic *@
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
@@ -57,9 +57,10 @@
 
     private async Task DeleteCategory()
     {
-        await categoryLogic.DeleteAsync(CategoryId);
-        profileStateContainer.DeleteCategory(CategoryId);
-        SnackBarHandler.ShowSnackMessage("Category deleted!");
+        throw new NotImplementedException();
+    // await categoryLogic.DeleteAsync(CategoryId);
+    // profileStateContainer.DeleteCategory(CategoryId);
+    // SnackBarHandler.ShowSnackMessage("Category deleted!");
     }
 
     private async Task DeleteButtonDown()

@@ -7,7 +7,7 @@
 
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 
-@inject IExternalResourceLogic extResLogic
+@* @inject IExternalResourceLogic extResLogic *@
 @inject ProfileStateContainer profileStateContainer
 
 
@@ -73,14 +73,15 @@
         extRes.CategoryId = Category?.Id;
         try
         {
-            ExternalResourceDisplayDto created = await extResLogic.CreateAsync(extRes);
-            profileStateContainer.AddExternalResourceToCategory(created, Category);
-
-            extRes = new();
-
-            SnackBarHandler.ShowSnackMessage($"Resource \"{created.Title}\" created!");
-
-            showAddExtResModal = false;
+            throw new NotImplementedException();
+    // ExternalResourceDisplayDto created = await extResLogic.CreateAsync(extRes); TODO
+    // profileStateContainer.AddExternalResourceToCategory(created, Category);
+    //
+    // extRes = new();
+    //
+    // SnackBarHandler.ShowSnackMessage($"Resource \"{created.Title}\" created!");
+    //
+    // showAddExtResModal = false;
         }
         catch (Exception e)
         {

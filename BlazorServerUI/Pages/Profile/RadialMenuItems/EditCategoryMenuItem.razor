@@ -5,7 +5,7 @@
 @using Application.Features.SharedDtos
 @using BlazorServerUI.Popups
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICategoryLogic categoryLogic
+@* @inject ICategoryLogic categoryLogic *@
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -71,15 +71,16 @@
         CategoryDto toUpdate = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
-            await categoryLogic.UpdateAsync(toUpdate);
-            categoryDto.Title = editedCategoryTitle!;
-            categoryDto.BackgroundColor = editedBackgroundColor!;
-            
-            showEditCategoryModal = false;
-            SnackBarHandler.ShowSnackMessage("Category edited");
-
-            throw new NotImplementedException(); // Do I get back the updated record?
-            profileStateContainer.OnCategoryUpdated.Invoke(categoryDto.Id); // TODO Shouldn't call here. Ask ProfileStateContainer to raise event. Some day
+            throw new NotImplementedException();
+    // await categoryLogic.UpdateAsync(toUpdate); TODO
+    // categoryDto.Title = editedCategoryTitle!;
+    // categoryDto.BackgroundColor = editedBackgroundColor!;
+    //
+    // showEditCategoryModal = false;
+    // SnackBarHandler.ShowSnackMessage("Category edited");
+    //
+    // throw new NotImplementedException(); // Do I get back the updated record?
+    // profileStateContainer.OnCategoryUpdated.Invoke(categoryDto.Id); // TODO Shouldn't call here. Ask ProfileStateContainer to raise event. Some day
         }
         catch (Exception e)
         {

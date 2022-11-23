@@ -9,10 +9,10 @@
 @using Application.Features.SharedDtos
 @using BlazorServerUI.Popups
 
-@inject IGuideProvider guideProvider
+@* @inject IGuideProvider guideProvider *@
 @inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
-@inject IExternalResourceLogic extResLogic;
+@* @inject IExternalResourceLogic extResLogic; *@
 
 @implements IDisposable
 
@@ -216,19 +216,19 @@
         showMenu = false;
     }
 
-    // above methods are...
+    // above methods are... what? What was I thinking here about the above methods?
 
     public void Dispose()
     {
-        profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
-        profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
-        profileStateContainer.OnExtResourceAdded -= ReactToCategoryUpdated;
-        profileStateContainer.OnExtResourceUpdated -= ReactToCategoryUpdated;
-
-        if (Category == null)
-        {
-            profileStateContainer.OnCategoryDeleted -= StateHasChanged;
-        }
+        // profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
+        // profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
+        // profileStateContainer.OnExtResourceAdded -= ReactToCategoryUpdated;
+        // profileStateContainer.OnExtResourceUpdated -= ReactToCategoryUpdated;
+        //
+        // if (Category == null)
+        // {
+        //     profileStateContainer.OnCategoryDeleted -= StateHasChanged;
+        // }
     }
 
     private void OpenEditResource(ExternalResourceDisplayDto resource)
@@ -244,8 +244,9 @@
     {
         try
         {
+            throw new NotImplementedException();
             ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
-            await extResLogic.UpdateAsync(request!);
+            // await extResLogic.UpdateAsync(request!); TODO
             throw new NotImplementedException();
             // profileStateContainer.UpdateResource(resourceBeingEdited!);
             CloseEditResourceDialog();
@@ -298,8 +299,9 @@
 
     private async Task DeleteResource()
     {
-        await extResLogic.DeleteAsync(resourceBeingEdited!.Id);
-        profileStateContainer.DeleteResource(resourceBeingEdited.Id);
+        throw new NotImplementedException();
+        // await extResLogic.DeleteAsync(resourceBeingEdited!.Id); TODO
+        profileStateContainer.DeleteResource(resourceBeingEdited.Id); 
         SnackBarHandler.ShowSnackMessage("Resource deleted!");
     }
 

@@ -4,7 +4,7 @@
 @using Application.Features.SharedDtos
 @using BlazorServerUI.Popups
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject IGuideLogic guideLogic
+@* @inject IGuideLogic guideLogic *@
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
@@ -63,12 +63,13 @@
 
         try
         {
-            GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide);
+            throw new NotImplementedException();
+            // GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide); TODO
             
-            profileStateContainer.AddGuideToCategory(created, Category);
-            newGuideTitle = String.Empty;
-            SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
-            showAddGuideModal = false;
+            // profileStateContainer.AddGuideToCategory(created, Category);
+            // newGuideTitle = String.Empty;
+            // SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
+            // showAddGuideModal = false;
         }
         catch (Exception e)
         {
