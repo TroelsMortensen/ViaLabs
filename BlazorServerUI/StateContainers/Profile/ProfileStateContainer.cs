@@ -28,7 +28,7 @@ public class ProfileStateContainer
 
     public async Task PopulateAsync(string teacher)
     {
-        // CategoriesWithGuides = await categoryProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher); TODO
+        CategoriesWithGuides = await categoryOverviewDataProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher);
     }
 
     public void AddCategory(CategoryDto categoryDto)

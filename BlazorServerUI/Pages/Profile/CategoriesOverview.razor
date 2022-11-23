@@ -1,6 +1,7 @@
 ﻿@using Application.Features.ProfileDataLogic.ProviderContracts
 @using BlazorServerUI.StateContainers.Profile
 @using Application.Features.CategoryOverview
+@using Application.Features.SharedDtos
 @using BlazorServerUI.Popups
 
 @inject ICategoryOverviewDataProvider categoryOverviewDataProvider
@@ -12,25 +13,25 @@
 
     <CategoriesHeader/>
 
-    @* <div class="column-container"> *@
-    @*     @for (int i = 0; i < 2; i++) *@
-    @*     { *@
-    @*         <div class="guide-coloumn"> *@
-    @*             @{ *@
-    @*                 int idx = 0; *@
-    @*                 foreach (CategoryWithGuidesAndResourcesDto cwg in profileStateContainer.CategoriesWithGuides) *@
-    @*                 { *@
-    @*                     if (idx % 2 == i) *@
-    @*                     { *@
-    @*                         CategoryDto? tmp = cwg.Category; *@
-    @*                         <CategoryCard CategoryId="@tmp?.Id" /> *@
-    @*                     } *@
-    @*                     idx++; *@
-    @*                 } *@
-    @*             } *@
-    @*         </div> *@
-    @*     } *@
-    @* </div> *@
+    <div class="column-container">
+        @for (int i = 0; i < 2; i++)
+        {
+            <div class="guide-coloumn">
+                @{
+                    int idx = 0;
+                    foreach (CategoryWithGuidesAndResourcesDto cwg in profileStateContainer.CategoriesWithGuides)
+                    {
+                        if (idx % 2 == i)
+                        {
+                            CategoryDto? tmp = cwg.Category;
+                            <CategoryCard CategoryId="@tmp?.Id" />
+                        }
+                        idx++;
+                    }
+                }
+            </div>
+        }
+    </div>
 
 </div>
 
