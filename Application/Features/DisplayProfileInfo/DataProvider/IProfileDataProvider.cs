@@ -1,8 +1,9 @@
 ﻿using Application.Features.DisplayProfileInfo.DTOs;
+using SharedKernel.Results;
 
 namespace Application.Features.DisplayProfileInfo.DataProvider;
 
 public interface IProfileDataProvider
 {
-    Task<TeacherHeaderDto> GetTeacherAsync(string userName);
+    Task<Result<TeacherHeaderDto>> GetTeacherAsync(string userName);
 }

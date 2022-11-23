@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerUI", "BlazorSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownEditorComponent", "MarkdownEditorComponent\MarkdownEditorComponent.csproj", "{3D202D23-6A75-4E56-909D-B6FE1CA14B91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{192DF334-EC3D-4546-98F9-C6ADC948F56C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{3D202D23-6A75-4E56-909D-B6FE1CA14B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D202D23-6A75-4E56-909D-B6FE1CA14B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D202D23-6A75-4E56-909D-B6FE1CA14B91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

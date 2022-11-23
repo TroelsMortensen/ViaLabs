@@ -1,4 +1,4 @@
-﻿namespace Domain.Results;
+﻿namespace SharedKernel.Results;
 
 public class Result<T>
 {
