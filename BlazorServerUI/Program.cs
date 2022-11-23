@@ -1,5 +1,5 @@
 using Application;
-using BlazorServerUI.Handlers;
+using BlazorServerUI.Popups;
 using BlazorServerUI.StateContainers.Profile;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;

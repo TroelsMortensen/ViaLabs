@@ -1,4 +1,5 @@
-﻿using Application.Features.DisplayProfileInfo;
+﻿using Application.Features.CreateCategory;
+using Application.Features.DisplayProfileInfo;
 using Application.Features.DisplayProfileInfo.Logic;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,5 +30,6 @@ public static class ServiceExtensions
 
     private static void AddServicesForCreateCategory(IServiceCollection services)
     {
+        services.AddScoped<ICreateCategoryHandler, CreateCategoryHandler>();
     }
 }

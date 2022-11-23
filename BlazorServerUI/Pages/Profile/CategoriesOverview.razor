@@ -1,8 +1,8 @@
 ﻿@using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
 @using Application.Features.ProfileDataLogic.ProviderContracts
-@using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
 @using Application.Features.CategoryOverview
+@using BlazorServerUI.Popups
 
 @inject ICategoryOverviewDataProvider categoryOverviewDataProvider
 @inject NavigationManager navMgr
@@ -13,25 +13,25 @@
 
     <CategoriesHeader/>
 
-    <div class="column-container">
-        @for (int i = 0; i < 2; i++)
-        {
-            <div class="guide-coloumn">
-                @{
-                    int idx = 0;
-                    foreach (CategoryWithGuidesAndResourcesDto cwg in profileStateContainer.CategoriesWithGuides)
-                    {
-                        if (idx % 2 == i)
-                        {
-                            CategoryDto? tmp = cwg.Category;
-                            <CategoryCard CategoryId="@tmp?.Id" />
-                        }
-                        idx++;
-                    }
-                }
-            </div>
-        }
-    </div>
+    @* <div class="column-container"> *@
+    @*     @for (int i = 0; i < 2; i++) *@
+    @*     { *@
+    @*         <div class="guide-coloumn"> *@
+    @*             @{ *@
+    @*                 int idx = 0; *@
+    @*                 foreach (CategoryWithGuidesAndResourcesDto cwg in profileStateContainer.CategoriesWithGuides) *@
+    @*                 { *@
+    @*                     if (idx % 2 == i) *@
+    @*                     { *@
+    @*                         CategoryDto? tmp = cwg.Category; *@
+    @*                         <CategoryCard CategoryId="@tmp?.Id" /> *@
+    @*                     } *@
+    @*                     idx++; *@
+    @*                 } *@
+    @*             } *@
+    @*         </div> *@
+    @*     } *@
+    @* </div> *@
 
 </div>
 
@@ -41,6 +41,7 @@
     {
         profileStateContainer.OnCategoryAdded += ReactToCategoryAdded;
         profileStateContainer.OnCategoryDeleted += ReactToCategoryDeleted;
+    // TODO ReactToCategoryUpdated ??
     }
 
     private void ReactToCategoryDeleted()
@@ -53,11 +54,12 @@
         StateHasChanged();
         SnackBarHandler.ShowSnackMessage("Category created!");
     }
-    
+
     public void Dispose()
     {
         profileStateContainer.OnCategoryAdded -= ReactToCategoryAdded;
         profileStateContainer.OnCategoryDeleted -= StateHasChanged;
+    // TODO ReactToCategoryUpdated ??
     }
 
 }

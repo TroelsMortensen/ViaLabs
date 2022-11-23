@@ -1,5 +1,4 @@
 ﻿@page "/Profile"
-@using BlazorServerUI.Handlers
 @using BlazorServerUI.StateContainers.Profile
 @using Domain.Models
 @using Application.Features.ProfileDataLogic.ProviderContracts
@@ -8,6 +7,7 @@
 @using Application.Features.DisplayProfileInfo.DataProvider
 @using Application.Features.DisplayProfileInfo.DTOs
 @using Application.Features.DisplayProfileInfo.Logic
+@using SharedKernel.Results
 @inject IProfileDataHandler profileDataHandler
 @inject IProfileDataProvider profileDataProvider
 @inject ProfileStateContainer profileStateContainer
@@ -18,7 +18,7 @@
 <div style="display:flex; justify-content: space-evenly">
     @if (approvedTeacher is not null)
     {
-        <CategoriesOverview/> <-- jeg er igang med at få den her til at virke
+        <CategoriesOverview/> 
     }
 </div>
 
@@ -36,9 +36,17 @@
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name!;
         isViaTeacher = profileDataHandler.IsViaTeacher(userName);
+        
         if (!isViaTeacher) return;
 
-        approvedTeacher = await profileDataProvider.GetTeacherAsync(userName);
+        Result<TeacherHeaderDto> result = await profileDataProvider.GetTeacherAsync(userName);
+        if (result.HasErrors)
+        {
+            // TODO handle these errors somehow?
+            return;
+        }
+        
+        approvedTeacher = result.Value;
         if (approvedTeacher != null)
         {
             await profileStateContainer.PopulateAsync(approvedTeacher.Name);

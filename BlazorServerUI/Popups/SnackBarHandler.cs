@@ -1,4 +1,4 @@
-﻿namespace BlazorServerUI.Handlers;
+﻿namespace BlazorServerUI.Popups;
 
 public class SnackBarHandler
 {

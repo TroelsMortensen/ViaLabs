@@ -1,8 +1,10 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
 @using System.Drawing
+@using Application.Features.CreateCategory
+@using Application.Features.OldStuffToBeMovedAround.LogicContracts
 @using Application.Features.ProfileDataLogic.DTOs.CategoryDTOs
 @using Application.Features.ProfileDataLogic.LogicContracts
-@inject ICategoryLogic categoryLogic
+@inject ICreateCategoryHandler createCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 
 <div style="display:flex; justify-content: center">
@@ -62,9 +64,10 @@
 
         try
         {
-            CategoryDto finishedCategory = await categoryLogic.CreateAsync(category);
+            Result<CategoryDto> result = await createCategoryHandler.CreateAsync(category);
 
-            profileStateContainer.AddCategory(finishedCategory);
+            profileStateContainer.AddCategory(result.Value);
+            
             showModal = false;
             categoryTitle = string.Empty;
         }
