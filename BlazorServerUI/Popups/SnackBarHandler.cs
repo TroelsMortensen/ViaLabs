@@ -3,12 +3,20 @@
 public class SnackBarHandler
 {
 
+    public enum SnackType
+    {
+        Positive,
+        Neutral,
+        Negative
+    }
 
-    public static event Action<string> OnSnackMsg = null!;
+    public static event Action<string, SnackType> OnSnackMsg = null!;
 
     
-    public static void ShowSnackMessage(string msg)
+    
+    
+    public static void ShowSnackMessage(string msg, SnackType snackType)
     {
-        OnSnackMsg.Invoke(msg);
+        OnSnackMsg.Invoke(msg, snackType);
     }
 }

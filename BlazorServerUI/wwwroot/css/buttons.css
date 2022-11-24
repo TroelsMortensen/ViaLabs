@@ -3,7 +3,11 @@
 }
 
 .negative-color{
-    background-color: #ff8888;
+    background-color: #ff1b1b;
+}
+
+.cancel-color{
+    background-color: #ffdcdc;
 }
 
 .neutral-color {

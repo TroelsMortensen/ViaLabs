@@ -302,7 +302,7 @@
         throw new NotImplementedException();
         // await extResLogic.DeleteAsync(resourceBeingEdited!.Id); TODO
         profileStateContainer.DeleteResource(resourceBeingEdited.Id); 
-        SnackBarHandler.ShowSnackMessage("Resource deleted!");
+        SnackBarHandler.ShowSnackMessage("Resource deleted!", SnackBarHandler.SnackType.Negative);
     }
 
 }

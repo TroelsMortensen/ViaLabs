@@ -1,39 +1,43 @@
 ﻿@using BlazorServerUI.Popups
+@using System.Diagnostics
 @implements IDisposable
 
-<div class="snackbar @showClass">@snackMsg</div>
+<div class="snackbar @showClass" style="background-color: @snackTypeColor">@snackMsg</div>
 
 @code {
 
     private string showClass = string.Empty;
+    private string snackTypeColor = string.Empty;
     private string snackMsg = string.Empty;
 
     private bool isShowing;
-    private Queue<string> msgs = new();
+    private Queue<SnackMsg> msgs = new();
 
     protected override void OnInitialized()
     {
         SnackBarHandler.OnSnackMsg += OnMessage;
     }
 
-    private void OnMessage(string msg)
+    private void OnMessage(string msg, SnackBarHandler.SnackType type)
     {
-        msgs.Enqueue(msg);
+        msgs.Enqueue(new SnackMsg(msg, type));
 
         if (!isShowing)
         {
-            ShowHideMsg(msg);
+            ShowHideMsg();
         }
     }
 
-    private async Task ShowHideMsg(string msg)
+    private async Task ShowHideMsg()
     {
         isShowing = true;
         while (msgs.Any())
         {
-            string dequeue = msgs.Dequeue();
-            snackMsg = dequeue;
+            SnackMsg msg = msgs.Dequeue();
+            snackMsg = msg.Msg;
+    // snackMsg = msg;
             showClass = "show";
+            snackTypeColor = GetColor(msg.Type);
             await InvokeAsync(StateHasChanged);
             await Task.Delay(4900);
             showClass = "";
@@ -43,9 +47,28 @@
         isShowing = false;
     }
 
+    
+    // colors here are hardcoded, not good. I could instead reference classes in the buttons.css class, where they were stolen from. Eventually
+    private string GetColor(SnackBarHandler.SnackType msgType)
+    {
+        switch (msgType)
+        {
+            case SnackBarHandler.SnackType.Negative:
+                return "#ffdcdc";
+            case SnackBarHandler.SnackType.Neutral:
+                return "#c2edff";
+            case SnackBarHandler.SnackType.Positive:
+                return "#80ff80";
+            default:
+                return "#fff";
+        }
+    }
+
     public void Dispose()
     {
         SnackBarHandler.OnSnackMsg -= OnMessage;
     }
+
+    private record struct SnackMsg(string Msg, SnackBarHandler.SnackType Type);
 
 }

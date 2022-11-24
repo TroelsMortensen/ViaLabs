@@ -9,7 +9,6 @@ public class CreateCategoryHandler : ICreateCategoryHandler
 {
     private readonly IRepoManager repoManager;
 
-
     public CreateCategoryHandler(IRepoManager repoManager)
     {
         this.repoManager = repoManager;

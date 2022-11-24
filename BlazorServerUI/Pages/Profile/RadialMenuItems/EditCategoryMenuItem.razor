@@ -3,9 +3,10 @@
 @using JsonData.Repositories
 @using Application.Features.OldStuffToBeMovedAround.LogicContracts
 @using Application.Features.SharedDtos
+@using Application.Features.UpdateCategory
 @using BlazorServerUI.Popups
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@* @inject ICategoryLogic categoryLogic *@
+@inject ICategoryUpdateHandler categoryUpdateHandler
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -16,9 +17,8 @@
 <Modal ShowModal="@showEditCategoryModal">
     <h3>Edit Category</h3>
     <hr/>
-    ½
     <div style="margin-bottom: 5px">
-        <ReactiveInputField GhostText="Title" WidthWithUnit="20ch" OnValueChange="s => editedCategoryTitle = s"></ReactiveInputField>
+        <ReactiveInputField GhostText="Title" WidthWithUnit="20ch" OnValueChange="s => editedCategoryTitle = s" InitialValue="@editedCategoryTitle"></ReactiveInputField>
     </div>
     <div style="margin-bottom: 5px">
         <label>Background color:</label>
@@ -34,7 +34,7 @@
     }
     <div style="margin-top: 15px">
         <button class="positive-color vialab-button" style="margin-right: 10px" @onclick="UpdateCategory">Accept</button>
-        <button class="neutral-color vialab-button" style="margin-left: 10px" @onclick="@(() => showEditCategoryModal = false)">Cancel</button>
+        <button class="cancel-color vialab-button" style="margin-left: 10px" @onclick="@(() => showEditCategoryModal = false)">Cancel</button>
     </div>
 </Modal>
 
@@ -45,7 +45,7 @@
 
     [Parameter]
     public Guid CategoryId { get; set; }
-   
+
     private string? editedCategoryTitle;
 
     private CategoryDto categoryDto;
@@ -60,7 +60,7 @@
         categoryDto = categoryWithGuidesAndResourcesDto.Category;
         editedCategoryTitle = categoryDto.Title;
         editedBackgroundColor = categoryDto.BackgroundColor;
-        
+
         showEditCategoryModal = true;
         errorLabel = string.Empty;
     }
@@ -68,23 +68,24 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        CategoryDto toUpdate = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
+        CategoryUpdateRequest toUpdate = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
-            throw new NotImplementedException();
-    // await categoryLogic.UpdateAsync(toUpdate); TODO
-    // categoryDto.Title = editedCategoryTitle!;
-    // categoryDto.BackgroundColor = editedBackgroundColor!;
-    //
-    // showEditCategoryModal = false;
-    // SnackBarHandler.ShowSnackMessage("Category edited");
-    //
-    // throw new NotImplementedException(); // Do I get back the updated record?
-    // profileStateContainer.OnCategoryUpdated.Invoke(categoryDto.Id); // TODO Shouldn't call here. Ask ProfileStateContainer to raise event. Some day
+            await categoryUpdateHandler.UpdateAsync(toUpdate);
+            
+            categoryDto.Title = editedCategoryTitle!;
+            categoryDto.BackgroundColor = editedBackgroundColor!;
+
+            showEditCategoryModal = false;
+            
+            SnackBarHandler.ShowSnackMessage("Category edited", SnackBarHandler.SnackType.Positive);
+
+            profileStateContainer.UpdateCategory(categoryDto.Id); 
         }
         catch (Exception e)
         {
             errorLabel = e.Message;
         }
     }
+
 }

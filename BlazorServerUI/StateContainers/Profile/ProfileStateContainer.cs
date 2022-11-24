@@ -98,4 +98,9 @@ public class ProfileStateContainer
     {
         throw new NotImplementedException();
     }
+
+    public void UpdateCategory(Guid categoryDtoId)
+    {
+        OnCategoryUpdated.Invoke(categoryDtoId);
+    }
 }

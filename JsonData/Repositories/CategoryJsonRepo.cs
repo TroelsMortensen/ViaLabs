@@ -34,13 +34,11 @@ public class CategoryJsonRepo : ICategoryRepo
         Category? existing = context.Categories.SingleOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
         if (existing is null)
         {
-            throw new Exception($"Could not update non-existing category with ID {categoryToUpdate.Id}. Serious problem");
+            throw new Exception($"Could not update non-existing category with ID {categoryToUpdate.Id} and title {categoryToUpdate.Title}. Severe server problem");
         }
 
-        throw new Exception("The below out-commented code would not work. The category would loose the connection to teacher");
-        // context.Categories.Remove(existing);
-        // context.Categories.Add(categoryToUpdate);
-
+        _ = existing.Update(categoryToUpdate.Title, categoryToUpdate.BackgroundColor); // bit of a hack to do again here. May redo later.
+        
         context.SaveChanges();
         return Task.CompletedTask;
     }
