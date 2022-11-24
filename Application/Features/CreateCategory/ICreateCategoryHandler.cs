@@ -5,6 +5,6 @@ namespace Application.Features.CreateCategory;
 
 public interface ICreateCategoryHandler
 {
-    public Task<Result<CategoryDto>> CreateAsync(CategoryCreationRequest request);
+    public Task<Result<CategoryDto>> CreateAsync(CreateCategoryRequest request);
 
 }

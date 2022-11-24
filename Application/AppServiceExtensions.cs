@@ -32,6 +32,6 @@ public static class ServiceExtensions
     private static void AddServicesForCrudCategory(IServiceCollection services)
     {
         services.AddScoped<ICreateCategoryHandler, CreateCategoryHandler>();
-        services.AddScoped<ICategoryUpdateHandler, UpdateCategoryHandler>();
+        services.AddScoped<IUpdateCategoryHandler, UpdateCategoryHandler>();
     }
 }

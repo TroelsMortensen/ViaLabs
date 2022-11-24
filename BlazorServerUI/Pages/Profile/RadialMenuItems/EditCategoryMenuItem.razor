@@ -6,7 +6,7 @@
 @using Application.Features.UpdateCategory
 @using BlazorServerUI.Popups
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICategoryUpdateHandler categoryUpdateHandler
+@inject IUpdateCategoryHandler updateCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -68,10 +68,10 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        CategoryUpdateRequest toUpdate = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
+        UpdateCategoryRequest to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
-            await categoryUpdateHandler.UpdateAsync(toUpdate);
+            await updateCategoryHandler.UpdateAsync(to);
             
             categoryDto.Title = editedCategoryTitle!;
             categoryDto.BackgroundColor = editedBackgroundColor!;

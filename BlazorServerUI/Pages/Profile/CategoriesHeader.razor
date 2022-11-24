@@ -61,11 +61,11 @@
         AuthenticationState authState = await AuthenticationState;
         string teacherName = authState.User.Identity!.Name!;
 
-        CategoryCreationRequest category = new(categoryTitle, teacherName, backgroundColor);
+        CreateCategoryRequest createCategory = new(categoryTitle, teacherName, backgroundColor);
 
         try
         {
-            Result<CategoryDto> result = await createCategoryHandler.CreateAsync(category);
+            Result<CategoryDto> result = await createCategoryHandler.CreateAsync(createCategory);
 
             profileStateContainer.AddCategory(result.Value);
             

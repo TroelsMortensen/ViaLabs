@@ -14,7 +14,7 @@ public class CreateCategoryHandler : ICreateCategoryHandler
         this.repoManager = repoManager;
     }
 
-    public async Task<Result<CategoryDto>> CreateAsync(CategoryCreationRequest request)
+    public async Task<Result<CategoryDto>> CreateAsync(CreateCategoryRequest request)
     {
         bool categoryIsFree = await ValidateTitleIsFree(request.Title, request.OwningTeacher);
 

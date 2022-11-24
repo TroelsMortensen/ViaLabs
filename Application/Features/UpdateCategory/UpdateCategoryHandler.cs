@@ -4,7 +4,7 @@ using SharedKernel.Results;
 
 namespace Application.Features.UpdateCategory;
 
-public class UpdateCategoryHandler : ICategoryUpdateHandler
+public class UpdateCategoryHandler : IUpdateCategoryHandler
 {
     private readonly IRepoManager repoManager;
 
@@ -13,7 +13,7 @@ public class UpdateCategoryHandler : ICategoryUpdateHandler
         this.repoManager = repoManager;
     }
 
-    public async Task<Result> UpdateAsync(CategoryUpdateRequest request)
+    public async Task<Result> UpdateAsync(UpdateCategoryRequest request)
     {
         Category catBeingUpdated = await repoManager.CategoryRepo.GetCategoryById(request.Id);
         Result result = catBeingUpdated.Update(request.Title, request.BackgroundColor);
