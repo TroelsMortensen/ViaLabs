@@ -1,6 +1,9 @@
-﻿namespace Application.Features.CategoryDelete;
+﻿using SharedKernel.Results;
 
-public class ICategoryDeleteHandler
+namespace Application.Features.CategoryDelete;
+
+public interface ICategoryDeleteHandler
 {
-    
+    Task<Result> DeleteAsync(Guid categoryId);
+
 }

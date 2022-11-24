@@ -1,4 +1,5 @@
 ﻿using Application.Features.CategoryCreate;
+using Application.Features.CategoryDelete;
 using Application.Features.CategoryUpdate;
 using Application.Features.DisplayProfileInfo;
 using Application.Features.DisplayProfileInfo.Logic;
@@ -33,5 +34,6 @@ public static class ServiceExtensions
     {
         services.AddScoped<ICategoryCreateHandler, CategoryCreateHandler>();
         services.AddScoped<ICategoryUpdateHandler, CategoryUpdateHandler>();
+        services.AddScoped<ICategoryDeleteHandler, CategoryDeleteHandler>();
     }
 }
