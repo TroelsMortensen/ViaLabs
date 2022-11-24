@@ -2,16 +2,16 @@
     background-color: #e8f0ff;
     border-bottom: 3px solid #d6d5d5;
     width: 100%;
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: baseline;
-    
+
 }
 
 .forum-title {
     /*text-align: center;*/
-    cursor:pointer;
-    margin:auto;
+    cursor: pointer;
+    margin: auto;
 }
 
 .menu-icons {
@@ -24,3 +24,26 @@
     cursor: pointer;
     height: 32px;
 }
+
+.sway-anim:hover {
+    animation: sway ease-in-out 1s infinite;
+    transform-origin: 50% 0;
+}
+
+@keyframes sway {
+    0% {transform: rotate(0deg);}
+    25%{transform: rotate(-10deg);}
+    75%{transform: rotate(10deg);}
+}
+
+/*@-webkit-keyframes sway {*/
+/*    0%, 40%, 80%, 100% {*/
+/*        transform: rotate(0deg);*/
+/*    }*/
+/*    20% {*/
+/*        transform: rotate(20deg);*/
+/*    }*/
+/*    60% {*/
+/*        transform: rotate(-20deg);*/
+/*    }*/
+/*}*/
