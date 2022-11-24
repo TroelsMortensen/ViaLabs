@@ -1,7 +1,7 @@
-﻿using Application.Features.CreateCategory;
+﻿using Application.Features.CategoryCreate;
+using Application.Features.CategoryUpdate;
 using Application.Features.DisplayProfileInfo;
 using Application.Features.DisplayProfileInfo.Logic;
-using Application.Features.UpdateCategory;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -31,7 +31,7 @@ public static class ServiceExtensions
 
     private static void AddServicesForCrudCategory(IServiceCollection services)
     {
-        services.AddScoped<ICreateCategoryHandler, CreateCategoryHandler>();
-        services.AddScoped<IUpdateCategoryHandler, UpdateCategoryHandler>();
+        services.AddScoped<ICategoryCreateHandler, CategoryCreateHandler>();
+        services.AddScoped<ICategoryUpdateHandler, CategoryUpdateHandler>();
     }
 }

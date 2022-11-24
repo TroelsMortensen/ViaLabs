@@ -2,13 +2,13 @@
 using Domain.Models;
 using SharedKernel.Results;
 
-namespace Application.Features.UpdateCategory;
+namespace Application.Features.CategoryUpdate;
 
-public class UpdateCategoryHandler : IUpdateCategoryHandler
+public class CategoryUpdateHandler : ICategoryUpdateHandler
 {
     private readonly IRepoManager repoManager;
 
-    public UpdateCategoryHandler(IRepoManager repoManager)
+    public CategoryUpdateHandler(IRepoManager repoManager)
     {
         this.repoManager = repoManager;
     }

@@ -1,8 +1,8 @@
 ﻿using SharedKernel.Results;
 
-namespace Application.Features.UpdateCategory;
+namespace Application.Features.CategoryUpdate;
 
-public interface IUpdateCategoryHandler
+public interface ICategoryUpdateHandler
 {
     Task<Result> UpdateAsync(UpdateCategoryRequest request);
 }

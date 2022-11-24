@@ -1,5 +1,4 @@
-﻿using Application.Features.CreateCategory;
-using Application.Features.SharedDtos;
+﻿using Application.Features.SharedDtos;
 using SharedKernel.Results;
 
 namespace Application.Features.OldStuffToBeMovedAround.LogicContracts;

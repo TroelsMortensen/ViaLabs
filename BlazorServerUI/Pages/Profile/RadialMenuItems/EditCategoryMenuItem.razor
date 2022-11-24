@@ -3,10 +3,10 @@
 @using JsonData.Repositories
 @using Application.Features.OldStuffToBeMovedAround.LogicContracts
 @using Application.Features.SharedDtos
-@using Application.Features.UpdateCategory
 @using BlazorServerUI.Popups
+@using Application.Features.CategoryUpdate
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject IUpdateCategoryHandler updateCategoryHandler
+@inject ICategoryUpdateHandler categoryUpdateHandler
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -71,7 +71,7 @@
         UpdateCategoryRequest to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
         try
         {
-            await updateCategoryHandler.UpdateAsync(to);
+            await categoryUpdateHandler.UpdateAsync(to);
             
             categoryDto.Title = editedCategoryTitle!;
             categoryDto.BackgroundColor = editedBackgroundColor!;

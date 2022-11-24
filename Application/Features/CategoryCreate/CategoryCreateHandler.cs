@@ -3,18 +3,18 @@ using Application.RepositoryContracts;
 using Domain.Models;
 using SharedKernel.Results;
 
-namespace Application.Features.CreateCategory;
+namespace Application.Features.CategoryCreate;
 
-public class CreateCategoryHandler : ICreateCategoryHandler
+public class CategoryCreateHandler : ICategoryCreateHandler
 {
     private readonly IRepoManager repoManager;
 
-    public CreateCategoryHandler(IRepoManager repoManager)
+    public CategoryCreateHandler(IRepoManager repoManager)
     {
         this.repoManager = repoManager;
     }
 
-    public async Task<Result<CategoryDto>> CreateAsync(CreateCategoryRequest request)
+    public async Task<Result<CategoryDto>> CreateAsync(CategoryCreateRequest request)
     {
         bool categoryIsFree = await ValidateTitleIsFree(request.Title, request.OwningTeacher);
 

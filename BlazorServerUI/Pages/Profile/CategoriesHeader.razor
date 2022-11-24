@@ -1,11 +1,11 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
 @using System.Drawing
-@using Application.Features.CreateCategory
+@using Application.Features.CategoryCreate
 @using Application.Features.OldStuffToBeMovedAround.LogicContracts
 @using Application.Features.ProfileDataLogic.LogicContracts
 @using Application.Features.SharedDtos
 @using BlazorServerUI.Popups
-@inject ICreateCategoryHandler createCategoryHandler
+@inject ICategoryCreateHandler categoryCreateHandler
 @inject ProfileStateContainer profileStateContainer
 
 <hr/>
@@ -61,11 +61,11 @@
         AuthenticationState authState = await AuthenticationState;
         string teacherName = authState.User.Identity!.Name!;
 
-        CreateCategoryRequest createCategory = new(categoryTitle, teacherName, backgroundColor);
+        CategoryCreateRequest categoryCreate = new(categoryTitle, teacherName, backgroundColor);
 
         try
         {
-            Result<CategoryDto> result = await createCategoryHandler.CreateAsync(createCategory);
+            Result<CategoryDto> result = await categoryCreateHandler.CreateAsync(categoryCreate);
 
             profileStateContainer.AddCategory(result.Value);
             

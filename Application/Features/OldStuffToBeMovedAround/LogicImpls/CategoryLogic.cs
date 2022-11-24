@@ -1,5 +1,4 @@
-﻿using Application.Features.CreateCategory;
-using Application.Features.OldStuffToBeMovedAround.LogicContracts;
+﻿using Application.Features.OldStuffToBeMovedAround.LogicContracts;
 using Application.Features.ProfileDataLogic.LogicContracts;
 using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
