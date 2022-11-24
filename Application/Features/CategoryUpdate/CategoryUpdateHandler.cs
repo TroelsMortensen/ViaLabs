@@ -15,7 +15,7 @@ public class CategoryUpdateHandler : ICategoryUpdateHandler
 
     public async Task<Result> UpdateAsync(UpdateCategoryRequest request)
     {
-        Category catBeingUpdated = await repoManager.CategoryRepo.GetCategoryById(request.Id);
+        Category catBeingUpdated = await repoManager.CategoryRepo.GetCategoryByIdAsync(request.Id);
         Result result = catBeingUpdated.Update(request.Title, request.BackgroundColor);
         if (result.HasErrors)
         {

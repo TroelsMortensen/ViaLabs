@@ -1,4 +1,5 @@
 ﻿using Application.RepositoryContracts;
+using Domain.Models;
 using SharedKernel.Results;
 
 namespace Application.Features.CategoryDelete;
@@ -12,8 +13,31 @@ public class CategoryDeleteHandler : ICategoryDeleteHandler
         this.repoManager = repoManager;
     }
 
-    public Task<Result> DeleteAsync(Guid categoryId)
+    public async Task<Result> DeleteAsync(Guid categoryId)
     {
-        throw new NotImplementedException();
+        ICategoryRepo catRepo = repoManager.CategoryRepo;
+        Category categoryForDeletion = await catRepo.GetCategoryByIdAsync(categoryId);
+        Result result = CheckIfCategoryCanBeDeleted(categoryForDeletion);
+        if (result.HasErrors) return result;
+        
+        await catRepo.DeleteAsync(categoryId);
+
+        return result;
+    }
+
+    private static Result CheckIfCategoryCanBeDeleted(Category categoryForDeletion)
+    {
+        Result result = new();
+        if (categoryForDeletion.Guides.Any())
+        {
+            result.AddError("Guides", "Cannot delete a category, which contains guides.");
+        }
+
+        if (categoryForDeletion.ExternalResources.Any())
+        {
+            result.AddError("ExternalResources", "Cannot delete a category, which contains external resources.");
+        }
+
+        return result;
     }
 }

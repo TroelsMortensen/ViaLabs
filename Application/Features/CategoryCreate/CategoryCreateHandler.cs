@@ -25,7 +25,7 @@ public class CategoryCreateHandler : ICategoryCreateHandler
         if (newCatResult.HasErrors)
             return new Result<CategoryDto>(newCatResult.Errors);
 
-        Category created = await repoManager.CategoryRepo.AddToTeacher(newCatResult.Value, request.OwningTeacher);
+        Category created = await repoManager.CategoryRepo.AddToTeacherAsync(newCatResult.Value, request.OwningTeacher);
 
         CategoryDto categoryDto = new(created.Id, created.Title, created.BackgroundColor);
 

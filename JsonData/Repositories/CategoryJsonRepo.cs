@@ -1,4 +1,5 @@
 ﻿using Application.RepositoryContracts;
+using Domain.Exceptions;
 using Domain.Models;
 using JsonData.Context;
 
@@ -13,7 +14,7 @@ public class CategoryJsonRepo : ICategoryRepo
         this.context = context;
     }
 
-    public Task<Category> AddToTeacher(Category category, string teacherName)
+    public Task<Category> AddToTeacherAsync(Category category, string teacherName)
     {
         Teacher teacher = context.Teachers.Single(t => t.Name.Equals(teacherName));
         teacher.Categories.Add(category);
@@ -34,7 +35,7 @@ public class CategoryJsonRepo : ICategoryRepo
         Category? existing = context.Categories.SingleOrDefault(c => c.Id.Equals(categoryToUpdate.Id));
         if (existing is null)
         {
-            throw new Exception($"Could not update non-existing category with ID {categoryToUpdate.Id} and title {categoryToUpdate.Title}. Severe server problem");
+            throw new NotFoundException($"Could not update non-existing category with ID {categoryToUpdate.Id} and title {categoryToUpdate.Title}. Severe server problem");
         }
 
         _ = existing.Update(categoryToUpdate.Title, categoryToUpdate.BackgroundColor); // bit of a hack to do again here. May redo later.
@@ -46,22 +47,24 @@ public class CategoryJsonRepo : ICategoryRepo
     public Task DeleteAsync(Guid categoryId)
     {
         Category toRemove = context.Categories.First(c => c.Id.Equals(categoryId));
-        if (!context.Categories.Remove(toRemove))
+        bool categoryWasRemoved = context.Categories.Remove(toRemove);
+        
+        if (!categoryWasRemoved)
         {
-            throw new Exception("Removed nothing, something went wrong");
+            throw new NotFoundException($"Could not find category with id {categoryId}");
         }
 
         context.SaveChanges();
         return Task.CompletedTask;
     }
 
-    public Task<Category> GetCategoryById(Guid id)
+    public Task<Category> GetCategoryByIdAsync(Guid id)
     {
         Category? existingCategory = context.Categories.SingleOrDefault(category => category.Id.Equals(id));
         
         if (existingCategory is null)
         {
-            throw new Exception($"Category with ID {id} not found");
+            throw new NotFoundException($"Category with ID {id} not found");
         }
 
         return Task.FromResult(existingCategory);
