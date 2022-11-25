@@ -2,8 +2,9 @@
 @using Application.Features.ProfileDataLogic.LogicContracts
 @using BlazorServerUI.StateContainers.Profile
 @using BlazorServerUI.Popups
+@using Application.Features.CategoryDelete
 
-@* @inject ICategoryLogic categoryLogic *@
+@inject ICategoryDeleteHandler categoryDeleteHandler
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
@@ -57,10 +58,14 @@
 
     private async Task DeleteCategory()
     {
-        throw new NotImplementedException();
-    // await categoryLogic.DeleteAsync(CategoryId);
-    // profileStateContainer.DeleteCategory(CategoryId);
-    // SnackBarHandler.ShowSnackMessage("Category deleted!");
+        Result result = await categoryDeleteHandler.DeleteAsync(CategoryId);
+        if (result.HasErrors)
+        {
+            errorLabel = result.GetCombinedErrorMessage();
+            return;
+        }
+        profileStateContainer.DeleteCategory(CategoryId);
+        SnackBarHandler.ShowSnackMessage("Category deleted!");
     }
 
     private async Task DeleteButtonDown()

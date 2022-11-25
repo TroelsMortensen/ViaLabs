@@ -8,7 +8,7 @@ namespace BlazorServerUI.StateContainers.Profile;
 
 public class ProfileStateContainer
 {
-    public ICollection<CategoryWithGuidesAndResourcesDto> CategoriesWithGuides { get; set; } = null!;
+    public ICollection<CategoryWithGuidesAndResourcesDto> CategoriesWithGuidesAndResources { get; set; } = null!;
 
     public Action OnCategoryAdded { get; set; } = null!;
     public Action OnCategoryDeleted { get; set; } = null!;
@@ -28,22 +28,22 @@ public class ProfileStateContainer
 
     public async Task PopulateAsync(string teacher)
     {
-        CategoriesWithGuides = await categoryOverviewDataProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher);
+        CategoriesWithGuidesAndResources = await categoryOverviewDataProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher);
     }
 
     public void AddCategory(CategoryDto categoryDto)
     {
         CategoryWithGuidesAndResourcesDto c = new(categoryDto, new List<GuideHeaderDto>(), new List<ExternalResourceDisplayDto>());
         
-        CategoriesWithGuides.Add(c);
+        CategoriesWithGuidesAndResources.Add(c);
         OnCategoryAdded?.Invoke();
     }
 
     public void AddGuideToCategory(GuideHeaderDto created, CategoryDto? category)
     {
         CategoryWithGuidesAndResourcesDto cwgw = category != null
-            ? CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
-            : CategoriesWithGuides.First(c => c.Category == null);
+            ? CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
+            : CategoriesWithGuidesAndResources.First(c => c.Category == null);
 
         cwgw.Guides.Add(created);
         OnGuideAdded?.Invoke(category?.Id);
@@ -51,21 +51,22 @@ public class ProfileStateContainer
 
     public void DeleteCategory(Guid categoryId)
     {
-        CategoryWithGuidesAndResourcesDto cwgw = CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(categoryId));
-        ICollection<GuideHeaderDto> guideHeaderDtos = cwgw.Guides;
-        ICollection<ExternalResourceDisplayDto> exResDtos = cwgw.ExternalResources;
-        CategoriesWithGuides.Remove(cwgw);
-        CategoryWithGuidesAndResourcesDto uncategorized = CategoriesWithGuides.First(c => c.Category == null);
+        CategoryWithGuidesAndResourcesDto cwgw = CategoriesWithGuidesAndResources.First(c => c.Category.Id.Equals(categoryId));
+        // ICollection<GuideHeaderDto> guideHeaderDtos = cwgw.Guides;
+        // ICollection<ExternalResourceDisplayDto> exResDtos = cwgw.ExternalResources;
 
-        foreach (GuideHeaderDto dto in guideHeaderDtos)
-        {
-            uncategorized.Guides.Add(dto);
-        }
-
-        foreach (ExternalResourceDisplayDto dto in exResDtos)
-        {
-            uncategorized.ExternalResources.Add(dto);
-        }
+        CategoriesWithGuidesAndResources.Remove(cwgw);
+        // CategoryWithGuidesAndResourcesDto uncategorized = CategoriesWithGuidesAndResources.First(c => c.Category == null);
+        //
+        // foreach (GuideHeaderDto dto in guideHeaderDtos)
+        // {
+        //     uncategorized.Guides.Add(dto);
+        // }
+        //
+        // foreach (ExternalResourceDisplayDto dto in exResDtos)
+        // {
+        //     uncategorized.ExternalResources.Add(dto);
+        // }
 
         OnCategoryDeleted.Invoke();
     }
@@ -73,8 +74,8 @@ public class ProfileStateContainer
     public void AddExternalResourceToCategory(ExternalResourceDisplayDto created, CategoryDto? category)
     {
         CategoryWithGuidesAndResourcesDto cwgw = category != null
-            ? CategoriesWithGuides.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
-            : CategoriesWithGuides.First(c => c.Category == null);
+            ? CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
+            : CategoriesWithGuidesAndResources.First(c => c.Category == null);
 
 
         cwgw.ExternalResources.Add(created);

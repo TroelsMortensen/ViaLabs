@@ -46,8 +46,11 @@ public class CategoryJsonRepo : ICategoryRepo
 
     public Task DeleteAsync(Guid categoryId)
     {
-        Category toRemove = context.Categories.First(c => c.Id.Equals(categoryId));
-        bool categoryWasRemoved = context.Categories.Remove(toRemove);
+        Teacher teacher = context.Teachers.First(teacher => teacher.Categories.FirstOrDefault(c => c.Id.Equals(categoryId)) != null);
+        Category categoryToBeRemoved = teacher.Categories.First(c => c.Id.Equals(categoryId));
+        bool categoryWasRemoved = teacher.Categories.Remove(categoryToBeRemoved);
+        // Category toRemove = context.Categories.First(c => c.Id.Equals(categoryId));
+         // = context.Categories.Remove(toRemove);
         
         if (!categoryWasRemoved)
         {

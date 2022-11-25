@@ -151,7 +151,7 @@
 
     protected override void OnInitialized()
     {
-        categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuides.First(c =>
+        categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuidesAndResources.First(c =>
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
         Category = categoryWithGuidesAndResourcesDto.Category;
         guides = categoryWithGuidesAndResourcesDto.Guides;

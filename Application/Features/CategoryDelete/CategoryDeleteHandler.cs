@@ -30,12 +30,12 @@ public class CategoryDeleteHandler : ICategoryDeleteHandler
         Result result = new();
         if (categoryForDeletion.Guides.Any())
         {
-            result.AddError("Guides", "Cannot delete a category, which contains guides.");
+            result.AddError("Category.Guides", "Cannot delete a category, which contains guides.");
         }
 
         if (categoryForDeletion.ExternalResources.Any())
         {
-            result.AddError("ExternalResources", "Cannot delete a category, which contains external resources.");
+            result.AddError("Category.ExternalResources", "Cannot delete a category, which contains external resources.");
         }
 
         return result;

@@ -55,7 +55,7 @@
 
     private void ShowEditCategory()
     {
-        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuides.First(c => c.Category != null && c.Category.Id.Equals(CategoryId));
+        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category.Id.Equals(CategoryId));
         categoryDto = categoryWithGuidesAndResourcesDto.Category;
         editedCategoryTitle = categoryDto.Title;
         editedBackgroundColor = categoryDto.BackgroundColor;
