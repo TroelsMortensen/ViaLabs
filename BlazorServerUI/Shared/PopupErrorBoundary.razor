@@ -12,7 +12,7 @@ else if (ErrorContent is not null)
 }
 else
 {
-    <Modal ShowModal="true">
+    <Modal ShowModal="@show">
         <div class="header">
             <img class="error-icon" src="icons/Error.svg" title="Error" alt="what is this alt you speak about"/>
             <hr/>
@@ -39,6 +39,8 @@ else
 @code {
     List<Exception> receivedExceptions = new();
 
+    private bool show = true;
+    
     protected override Task OnErrorAsync(Exception exception)
     {
         receivedExceptions.Add(exception);
@@ -48,6 +50,7 @@ else
     private void Close()
     {
         receivedExceptions.Clear();
+        show = false;
         base.Recover();
     }
 

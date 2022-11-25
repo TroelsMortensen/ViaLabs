@@ -15,13 +15,3 @@
 </div>
 
 <SnackBar/> <!-- snack bar added here, because MainLayout is always shown. The snack bar is globally showable -->
-
-@code {
-    private ErrorBoundary? errorBoundary;
-
-    protected override void OnParametersSet()
-    {
-        errorBoundary?.Recover();
-    }
-
-}
