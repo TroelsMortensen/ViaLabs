@@ -15,7 +15,8 @@
     <h3>Delete Category?</h3>
     <hr/>
     <div style="margin-top: 5px">
-        @if(!string.IsNullOrEmpty(errorLabel)){
+        @if (!string.IsNullOrEmpty(errorLabel))
+        {
             <div>
                 <label style="color:red">@errorLabel</label>
             </div>
@@ -39,12 +40,12 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public Guid CategoryId { get; set; } 
-    
+    public Guid CategoryId { get; set; }
+
     private int progress;
     private bool isHolding;
     private string errorLabel = string.Empty;
-    
+
     private bool showDeleteConfirmationModal;
 
     private void ShowRemoveCategory()
@@ -70,7 +71,6 @@
 
     private async Task UpdateProgressBar()
     {
-        
         while (progress < 100 && isHolding)
         {
             await Task.Delay(10);
@@ -79,20 +79,14 @@
         }
         if (progress == 100)
         {
-            try
-            {
-                showDeleteConfirmationModal = false;
-                progress = 0;
-                await DeleteCategory();
-            }
-            catch (Exception e)
-            {
-                errorLabel = e.Message;
-            }
+            showDeleteConfirmationModal = false;
+            progress = 0;
+            await DeleteCategory();
         }
         if (!isHolding)
         {
             progress = 0;
         }
     }
+
 }

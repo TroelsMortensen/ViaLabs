@@ -68,23 +68,22 @@
     {
         errorLabel = string.Empty;
         UpdateCategoryRequest to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
-        try
-        {
-            await categoryUpdateHandler.UpdateAsync(to);
-            
-            categoryDto.Title = editedCategoryTitle!;
-            categoryDto.BackgroundColor = editedBackgroundColor!;
 
-            showEditCategoryModal = false;
-            
-            SnackBarHandler.ShowSnackMessage("Category edited");
-
-            profileStateContainer.UpdateCategory(categoryDto.Id); 
-        }
-        catch (Exception e)
+        Result result = await categoryUpdateHandler.UpdateAsync(to);
+        if (result.HasErrors)
         {
-            errorLabel = e.Message;
+            errorLabel = result.GetCombinedErrorMessage();
+            return;
         }
+
+        categoryDto.Title = editedCategoryTitle!;
+        categoryDto.BackgroundColor = editedBackgroundColor!;
+
+        showEditCategoryModal = false;
+
+        SnackBarHandler.ShowSnackMessage("Category edited");
+
+        profileStateContainer.UpdateCategory(categoryDto.Id);
     }
 
 }

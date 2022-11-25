@@ -22,6 +22,11 @@ public class Result
     public void AddErrors(IEnumerable<Error> errorsToAdd) => this.errors.AddRange(errorsToAdd);
     public IEnumerable<Error> Errors => errors.AsReadOnly();
     public bool HasErrors => Errors.Any();
+
+    public string GetCombinedErrorMessage() // convenience method, which should probably not actually be used. Errors display format should be defined in UI.
+    {
+        return string.Join(".\n", Errors.Select(error => error.Message));
+    }
 }
 
 public class Result<T> : Result
@@ -47,7 +52,7 @@ public class Result<T> : Result
 
     public T Value
     {
-        get => HasErrors ? throw new NoValueWhenErrorsException() : value;
+        get => HasErrors ? throw new NoValueWhenErrorsException() : this.value;
         set => this.value = value;
     }
 }

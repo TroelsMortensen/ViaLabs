@@ -71,8 +71,7 @@
 
         extRes.OwnerId = teacher!;
         extRes.CategoryId = Category?.Id;
-        try
-        {
+
             throw new NotImplementedException();
     // ExternalResourceDisplayDto created = await extResLogic.CreateAsync(extRes); TODO
     // profileStateContainer.AddExternalResourceToCategory(created, Category);
@@ -82,12 +81,7 @@
     // SnackBarHandler.ShowSnackMessage($"Resource \"{created.Title}\" created!");
     //
     // showAddExtResModal = false;
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            errorMsg = e.Message;
-        }
+
     }
 
     private void Close()

@@ -62,32 +62,31 @@
 
         CategoryCreateRequest categoryCreate = new(categoryTitle, teacherName, backgroundColor);
 
-        try
-        {
-            Result<CategoryDto> result = await categoryCreateHandler.CreateAsync(categoryCreate);
 
-            profileStateContainer.AddCategory(result.Value);
-            
-            showModal = false;
-            categoryTitle = string.Empty;
-            SnackBarHandler.ShowSnackMessage("Category successfully created", SnackBarHandler.SnackType.Positive);
-        }
-        catch (Exception e)
+        Result<CategoryDto> result = await categoryCreateHandler.CreateAsync(categoryCreate);
+
+        if (result.HasErrors)
         {
-            errorLabel = "Error: " + e.Message;
-            Console.WriteLine(e);
+            errorLabel = result.GetCombinedErrorMessage();
+            return;
         }
-        
+
+        profileStateContainer.AddCategory(result.Value);
+
+
+        showModal = false;
+        categoryTitle = string.Empty;
+        SnackBarHandler.ShowSnackMessage("Category successfully created", SnackBarHandler.SnackType.Positive);
     }
 
     private void OpenDialog()
     {
-        throw new Exception("Hello there");
         errorLabel = String.Empty;
         var random = new Random();
-        
+
         Color c = Color.FromArgb(random.Next(150, 255), random.Next(150, 255), random.Next(150, 255));
-        backgroundColor = ColorTranslator.ToHtml(c);;
+        backgroundColor = ColorTranslator.ToHtml(c);
+        ;
         showModal = true;
     }
 }
