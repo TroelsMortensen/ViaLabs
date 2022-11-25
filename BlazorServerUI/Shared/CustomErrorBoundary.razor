@@ -14,9 +14,7 @@ else
 {
     <Modal ShowModal="true">
         <div class="header">
-            <img class="error-icon"
-                 src="icons/Error.svg"
-                 title="Error"/>
+            <img class="error-icon" src="icons/Error.svg" title="Error" alt="what is this alt you speak about"/>
             <hr/>
         </div>
 
@@ -47,15 +45,10 @@ else
         return base.OnErrorAsync(exception);
     }
 
-    private new void Recover()
+    private void Close()
     {
         receivedExceptions.Clear();
         base.Recover();
-    }
-
-    private void Close()
-    {
-        Recover();
     }
 
 }
