@@ -1,13 +1,8 @@
 ﻿@page "/Profile"
-@using BlazorServerUI.StateContainers.Profile
-@using Domain.Models
-@using Application.Features.ProfileDataLogic.ProviderContracts
-@using Application.Features.ProfileDataLogic.LogicContracts
-@using Application.Features.DisplayProfileInfo
+@using Application.Features.DisplayProfileInfo.Logic
 @using Application.Features.DisplayProfileInfo.DataProvider
 @using Application.Features.DisplayProfileInfo.DTOs
-@using Application.Features.DisplayProfileInfo.Logic
-@using SharedKernel.Results
+@using BlazorServerUI.StateContainers.Profile
 @inject IProfileDataHandler profileDataHandler
 @inject IProfileDataProvider profileDataProvider
 @inject ProfileStateContainer profileStateContainer

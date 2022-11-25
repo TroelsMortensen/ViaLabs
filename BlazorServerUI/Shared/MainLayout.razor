@@ -7,9 +7,21 @@
         <NavHeader/>
 
         <article class="content px-4">
-            @Body
+            <CustomErrorBoundary>
+                @Body
+            </CustomErrorBoundary>
         </article>
     </main>
 </div>
 
 <SnackBar/> <!-- snack bar added here, because MainLayout is always shown. The snack bar is globally showable -->
+
+@code {
+    private ErrorBoundary? errorBoundary;
+
+    protected override void OnParametersSet()
+    {
+        errorBoundary?.Recover();
+    }
+
+}

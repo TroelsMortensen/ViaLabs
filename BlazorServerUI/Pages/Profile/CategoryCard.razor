@@ -9,10 +9,8 @@
 @using Application.Features.SharedDtos
 @using BlazorServerUI.Popups
 
-@* @inject IGuideProvider guideProvider *@
 @inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
-@* @inject IExternalResourceLogic extResLogic; *@
 
 @implements IDisposable
 
@@ -29,18 +27,16 @@
                     <div class="radial-menu">
                         <div class="@(showMenu ? "radial-background-open" : "radial-background-closed")" @onmouseover="SetIsInteractingWithMenu"></div>
                         <img class="new-item-icon hover-enlarge radial-menu-item @(showMenu ? "menu-open" : "menu-closed")" src="icons/Options.svg" @onclick="ToggleMenu" title="Options"/>
-                        <NewGuideMenuItem ShowMenu="@showMenu" Category="Category"/>
-                        <NewExResourceMenuItem ShowMenu="@showMenu" Category="Category"/>
-                        @if (Category != null)
-                        {
-                            <EditCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
-                            <DeleteCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
-                        }
+                        <NewGuideMenuItem ShowMenu="showMenu" Category="Category"/>
+                        <NewExResourceMenuItem ShowMenu="showMenu" Category="Category"/>
+                        <EditCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
+                        <DeleteCategoryMenuItem ShowMenu="showMenu" CategoryId="Category.Id"/>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <hr/>
     <h5 style="font-style: italic">Guides</h5>
     <div style="text-align: left">
         @if (guides == null || !guides.Any())
@@ -67,6 +63,7 @@
             </ul>
         }
     </div>
+    <hr/>
     <h5 style="font-style: italic">External Resources</h5>
     <div style="text-align: left">
 
@@ -114,7 +111,7 @@
     }
     <div style="margin-top: 15px">
         <button class="positive-color vialab-button" style="margin-right: 20px" @onclick="UpdateResource">Accept Changes</button>
-        <button class="neutral-color vialab-button" style="margin-right: 20px" @onclick="CloseEditResourceDialog">Cancel</button>
+        <button class="cancel-color vialab-button" style="margin-right: 20px" @onclick="CloseEditResourceDialog">Cancel</button>
         <button class="progress-button vialab-button"
                 @onmousedown="DeleteButtonDown"
                 @onmouseup="() => isHolding = false"
@@ -220,15 +217,15 @@
 
     public void Dispose()
     {
-        // profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
-        // profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
-        // profileStateContainer.OnExtResourceAdded -= ReactToCategoryUpdated;
-        // profileStateContainer.OnExtResourceUpdated -= ReactToCategoryUpdated;
-        //
-        // if (Category == null)
-        // {
-        //     profileStateContainer.OnCategoryDeleted -= StateHasChanged;
-        // }
+    // profileStateContainer.OnGuideAdded -= ReactToCategoryUpdated;
+    // profileStateContainer.OnCategoryUpdated -= ReactToCategoryUpdated;
+    // profileStateContainer.OnExtResourceAdded -= ReactToCategoryUpdated;
+    // profileStateContainer.OnExtResourceUpdated -= ReactToCategoryUpdated;
+    //
+    // if (Category == null)
+    // {
+    //     profileStateContainer.OnCategoryDeleted -= StateHasChanged;
+    // }
     }
 
     private void OpenEditResource(ExternalResourceDisplayDto resource)
@@ -246,9 +243,9 @@
         {
             throw new NotImplementedException();
             ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
-            // await extResLogic.UpdateAsync(request!); TODO
+    // await extResLogic.UpdateAsync(request!); TODO
             throw new NotImplementedException();
-            // profileStateContainer.UpdateResource(resourceBeingEdited!);
+    // profileStateContainer.UpdateResource(resourceBeingEdited!);
             CloseEditResourceDialog();
         }
         catch (DataValidationException e)
@@ -300,8 +297,8 @@
     private async Task DeleteResource()
     {
         throw new NotImplementedException();
-        // await extResLogic.DeleteAsync(resourceBeingEdited!.Id); TODO
-        profileStateContainer.DeleteResource(resourceBeingEdited.Id); 
+    // await extResLogic.DeleteAsync(resourceBeingEdited!.Id); TODO
+        profileStateContainer.DeleteResource(resourceBeingEdited.Id);
         SnackBarHandler.ShowSnackMessage("Resource deleted!", SnackBarHandler.SnackType.Negative);
     }
 

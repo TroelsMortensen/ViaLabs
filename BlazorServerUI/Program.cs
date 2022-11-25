@@ -37,6 +37,7 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
+app.UseExceptionHandler("/ExceptionPage");
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

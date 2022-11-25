@@ -1,0 +1,61 @@
+﻿@using BlazorServerUI.Popups
+@inherits ErrorBoundary
+
+
+@if (CurrentException is null)
+{
+    @ChildContent
+}
+else if (ErrorContent is not null)
+{
+    @ErrorContent(CurrentException)
+}
+else
+{
+    <Modal ShowModal="true">
+        <div class="header">
+            <img class="error-icon"
+                 src="icons/Error.svg"
+                 title="Error"/>
+            <hr/>
+        </div>
+
+        <div class="errors">
+                @foreach (var exception in receivedExceptions)
+                {
+                    <div class="exception-item">
+                        <label>@exception.Message</label>
+                    </div>
+                }
+        </div>
+        <hr/>
+        <div class="button-row">
+            <button class="positive-cancel vialab-button" style="margin-right: 10px" @onclick="Close">Close</button>
+        </div>
+    </Modal>
+
+    @ChildContent
+
+}
+
+@code {
+    List<Exception> receivedExceptions = new();
+
+    protected override Task OnErrorAsync(Exception exception)
+    {
+        receivedExceptions.Add(exception);
+        return base.OnErrorAsync(exception);
+    }
+
+    private new void Recover()
+    {
+        receivedExceptions.Clear();
+        base.Recover();
+    }
+
+    private void Close()
+    {
+        Recover();
+    }
+
+}
