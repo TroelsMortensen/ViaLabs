@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownEditorComponent", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "SharedKernel\SharedKernel.csproj", "{192DF334-EC3D-4546-98F9-C6ADC948F56C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests", "UnitTests\UnitTests.csproj", "{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{192DF334-EC3D-4546-98F9-C6ADC948F56C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
