@@ -1,5 +1,5 @@
 ﻿using Application.Features.DisplayProfileInfo.DTOs;
-using SharedKernel.Results;
+using SharedKernel.OperationResult;
 
 namespace Application.Features.DisplayProfileInfo.DataProvider;
 

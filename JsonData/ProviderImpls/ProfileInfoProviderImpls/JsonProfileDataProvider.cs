@@ -4,7 +4,7 @@ using Application.Features.DisplayProfileInfo.DTOs;
 using Domain.Entities;
 using Domain.Exceptions;
 using JsonData.Context;
-using SharedKernel.Results;
+using SharedKernel.OperationResult;
 
 namespace JsonData.ProviderImpls.ProfileInfoProviderImpls;
 

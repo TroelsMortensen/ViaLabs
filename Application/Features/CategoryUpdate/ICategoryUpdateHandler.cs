@@ -1,4 +1,4 @@
-﻿using SharedKernel.Results;
+﻿using SharedKernel.OperationResult;
 
 namespace Application.Features.CategoryUpdate;
 

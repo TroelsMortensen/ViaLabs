@@ -1,7 +1,7 @@
 ﻿using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
 using Domain.Entities;
-using SharedKernel.Results;
+using SharedKernel.OperationResult;
 
 namespace Application.Features.CategoryCreate;
 

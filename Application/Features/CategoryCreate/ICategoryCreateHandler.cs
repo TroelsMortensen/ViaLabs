@@ -1,5 +1,5 @@
 ﻿using Application.Features.SharedDtos;
-using SharedKernel.Results;
+using SharedKernel.OperationResult;
 
 namespace Application.Features.CategoryCreate;
 
