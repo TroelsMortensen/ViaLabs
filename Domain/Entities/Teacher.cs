@@ -1,7 +1,6 @@
-﻿using System.Text.Json.Serialization;
-using SharedKernel.Results;
+﻿using SharedKernel.Results;
 
-namespace Domain.Models;
+namespace Domain.Entities;
 
 public class Teacher
 {

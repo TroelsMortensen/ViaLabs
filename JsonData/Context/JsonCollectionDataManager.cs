@@ -1,5 +1,5 @@
 ﻿using System.Text.Json;
-using Domain.Models;
+using Domain.Entities;
 using JsonData.JsonSerializationUtils;
 
 namespace JsonData.Context;

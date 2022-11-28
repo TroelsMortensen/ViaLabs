@@ -1,6 +1,6 @@
 ﻿using Application.RepositoryContracts;
+using Domain.Entities;
 using Domain.Exceptions;
-using Domain.Models;
 using JsonData.Context;
 
 namespace JsonData.Repositories;

@@ -1,6 +1,4 @@
-﻿using Domain.Models;
-
-namespace Application.RepositoryContracts;
+﻿namespace Application.RepositoryContracts;
 
 public interface IGuideRepo
 {

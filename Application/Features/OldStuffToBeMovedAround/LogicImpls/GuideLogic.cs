@@ -2,7 +2,7 @@
 using Application.Features.ProfileDataLogic.LogicContracts;
 using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
-using Domain.Models;
+using Domain.Entities;
 
 namespace Application.Features.ProfileDataLogic.LogicImpls;
 

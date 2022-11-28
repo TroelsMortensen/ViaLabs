@@ -1,5 +1,5 @@
 ﻿using Application.RepositoryContracts;
-using Domain.Models;
+using Domain.Entities;
 using JsonData.Context;
 
 namespace JsonData.Repositories;

@@ -3,8 +3,8 @@ using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
 using Application.Features.ProfileDataLogic.LogicContracts;
 using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
+using Domain.Entities;
 using Domain.Exceptions;
-using Domain.Models;
 
 namespace Application.Features.ProfileDataLogic.LogicImpls;
 

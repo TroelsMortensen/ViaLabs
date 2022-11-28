@@ -1,6 +1,6 @@
 ﻿using SharedKernel.Results;
 
-namespace Domain.Models;
+namespace Domain.Entities;
 
 public class Category
 {

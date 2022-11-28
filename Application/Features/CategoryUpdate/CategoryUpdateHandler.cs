@@ -1,5 +1,5 @@
 ﻿using Application.RepositoryContracts;
-using Domain.Models;
+using Domain.Entities;
 using SharedKernel.Results;
 
 namespace Application.Features.CategoryUpdate;

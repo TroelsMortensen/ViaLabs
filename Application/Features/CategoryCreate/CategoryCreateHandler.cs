@@ -1,6 +1,6 @@
 ﻿using Application.Features.SharedDtos;
 using Application.RepositoryContracts;
-using Domain.Models;
+using Domain.Entities;
 using SharedKernel.Results;
 
 namespace Application.Features.CategoryCreate;

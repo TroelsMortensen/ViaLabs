@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Domain.Exceptions;
+﻿using Domain.Exceptions;
 
-namespace Domain.Models;
+namespace Domain.Entities;
 
 public class ExternalResource
 {

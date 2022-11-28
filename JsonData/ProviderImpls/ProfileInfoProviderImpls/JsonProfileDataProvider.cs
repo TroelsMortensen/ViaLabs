@@ -1,8 +1,8 @@
 ﻿using Application.Features.DisplayProfileInfo;
 using Application.Features.DisplayProfileInfo.DataProvider;
 using Application.Features.DisplayProfileInfo.DTOs;
+using Domain.Entities;
 using Domain.Exceptions;
-using Domain.Models;
 using JsonData.Context;
 using SharedKernel.Results;
 
