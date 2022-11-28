@@ -2,6 +2,9 @@
 @inherits ErrorBoundary
 
 
+@* Found the following solution here https://stackoverflow.com/questions/57539330/is-there-a-way-to-globally-catch-all-unhandled-errors-in-a-blazor-single-page-ap *@
+
+
 @if (CurrentException is null)
 {
     @ChildContent

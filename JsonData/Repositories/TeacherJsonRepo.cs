@@ -7,9 +7,9 @@ namespace JsonData.Repositories;
 
 public class TeacherJsonRepo : ITeacherRepo
 {
-    private JsonDataContext context;
+    private CollectionsDataContext context;
 
-    public TeacherJsonRepo(JsonDataContext context)
+    public TeacherJsonRepo(CollectionsDataContext context)
     {
         this.context = context;
     }

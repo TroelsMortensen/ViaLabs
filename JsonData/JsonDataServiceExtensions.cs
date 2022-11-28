@@ -28,7 +28,6 @@ public static class JsonDataServiceExtensions
     {
         services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
         services.AddScoped<ICategoryOverviewDataProvider, JsonCategoryOverviewDataProvider>();
-        services.AddScoped<IJsonHelper, SystemNetJsonSerializerHelper>();
         // services.AddScoped<ICategoryProvider, JsonCategoryProvider>();
         // services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
         // services.AddScoped<IGuideProvider, JsonGuideProvider>();
@@ -45,6 +44,8 @@ public static class JsonDataServiceExtensions
 
     private static void AddDataAccess(IServiceCollection services)
     {
-        services.AddScoped<JsonDataContext>();
+        services.AddScoped<CollectionsDataContext>();
+        services.AddScoped<ICollectionDataManager, JsonCollectionDataManager>();
+        services.AddScoped<IJsonHelper, SystemNetJsonSerializerHelper>();
     }
 }

@@ -10,9 +10,9 @@ namespace JsonData.ProviderImpls.ProfileInfoProviderImpls;
 
 public class JsonProfileDataProvider : IProfileDataProvider
 {
-    private readonly JsonDataContext context;
+    private readonly CollectionsDataContext context;
 
-    public JsonProfileDataProvider(JsonDataContext context)
+    public JsonProfileDataProvider(CollectionsDataContext context)
     {
         this.context = context;
     }

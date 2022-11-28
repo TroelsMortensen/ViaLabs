@@ -6,9 +6,9 @@ namespace JsonData.Repositories;
 
 public class ExternalResourceJsonRepo : IExternalResourceRepo
 {
-    private readonly JsonDataContext context;
+    private readonly CollectionsDataContext context;
 
-    public ExternalResourceJsonRepo(JsonDataContext context)
+    public ExternalResourceJsonRepo(CollectionsDataContext context)
     {
         this.context = context;
     }

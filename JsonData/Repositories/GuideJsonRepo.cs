@@ -6,9 +6,9 @@ namespace JsonData.Repositories;
 
 public class GuideJsonRepo : IGuideRepo
 {
-    private readonly JsonDataContext context;
+    private readonly CollectionsDataContext context;
 
-    public GuideJsonRepo(JsonDataContext context)
+    public GuideJsonRepo(CollectionsDataContext context)
     {
         this.context = context;
     }

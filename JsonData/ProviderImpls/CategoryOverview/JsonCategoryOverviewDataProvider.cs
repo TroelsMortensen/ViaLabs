@@ -8,9 +8,9 @@ namespace JsonData.ProviderImpls.CategoryOverview;
 
 public class JsonCategoryOverviewDataProvider : ICategoryOverviewDataProvider
 {
-    private readonly JsonDataContext context;
+    private readonly CollectionsDataContext context;
 
-    public JsonCategoryOverviewDataProvider(JsonDataContext context)
+    public JsonCategoryOverviewDataProvider(CollectionsDataContext context)
     {
         this.context = context;
     }

@@ -7,9 +7,9 @@ namespace JsonData.Repositories;
 
 public class CategoryJsonRepo : ICategoryRepo
 {
-    private readonly JsonDataContext context;
+    private readonly CollectionsDataContext context;
 
-    public CategoryJsonRepo(JsonDataContext context)
+    public CategoryJsonRepo(CollectionsDataContext context)
     {
         this.context = context;
     }

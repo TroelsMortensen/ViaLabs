@@ -7,10 +7,10 @@ namespace JsonData.ProviderImpls.ProfileProviderImpls;
 public class JsonGuideProvider : IGuideProvider
 {
 
-    private readonly JsonDataContext context;
+    private readonly CollectionsDataContext context;
 
 
-    public JsonGuideProvider(JsonDataContext context)
+    public JsonGuideProvider(CollectionsDataContext context)
     {
         this.context = context;
     }
