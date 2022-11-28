@@ -6,8 +6,7 @@ public class Teacher
 {
     public string Name { get; init; }
 
-
-    public ICollection<Category> Categories { get; init; }
+    public ICollection<Category> Categories { get; init; } // make private? :/ some day
 
     public static Result<Teacher> Create(string name)
     {
@@ -16,7 +15,7 @@ public class Teacher
 
         return validationResult.HasErrors ? new(validationResult.Errors) : new(teacher);
     }
-
+    
     private static Result Validate(string name)
     {
         Result result = new();

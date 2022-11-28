@@ -28,14 +28,16 @@ public class Category
     {
         Result validationResult = ValidateData(title, backgroundColor);
 
-        if (validationResult.HasErrors)
-            return new Result<Category>(validationResult.Errors);
-
-        Result<Category> createdResult =
-            new Result<Category>(
-                new Category(Guid.NewGuid(), title, backgroundColor, new List<Guide>(), new List<ExternalResource>()));
-        
-        return createdResult;
+        return validationResult.HasErrors
+            ? new Result<Category>(validationResult.Errors)
+            : new(
+                new Category(
+                    Guid.NewGuid(),
+                    title,
+                    backgroundColor,
+                    new List<Guide>(),
+                    new List<ExternalResource>())
+            );
     }
 
     private Category(Guid id, string title, string backgroundColor, ICollection<Guide> guides,
@@ -48,40 +50,109 @@ public class Category
         BackgroundColor = backgroundColor;
     }
 
-    public void AddGuide(Guide guide)
-    {
-        // TODO Check if guide exists in collection?
-        Guides.Add(guide);
-    }
+    // public void AddGuide(Guide guide)
+    // {
+    //     // TODO Check if guide exists in collection?
+    //     Guides.Add(guide);
+    // }
+    //
+    // public void AddExternalResource(ExternalResource er)
+    // {
+    //     // TODO Check if Ex Res exists in collection
+    //     ExternalResources.Add(er);
+    // }
 
-    public void AddExternalResource(ExternalResource er)
+    private Category()
     {
-        // TODO Check if Ex Res exists in collection
-        ExternalResources.Add(er);
     }
-
-    private Category(){}
 
     private static Result ValidateData(string title, string backgroundColor)
     {
         Result result = new();
 
+        ValidateTitle(title, result);
+        ValidateColor(backgroundColor, result);
+
+        return result;
+    }
+
+    private static void ValidateColor(string color, Result result)
+    {
+        string attr = "Category.BackgroundColor";
+        if (!StartsWithHash(color))
+        {
+            result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'");
+        }
+
+        if (!HasValidLength(color))
+        {
+            result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters");
+        }
+
+        if (!IsValidColorCode(color))
+        {
+            result.AddError(attr, "Color must be on hex format: '#000000'. Each character is between 0 and f");
+        }
+    }
+
+    private static bool IsValidColorCode(string color)
+    {
+        string clr = color.ToLower();
+        for (int i = 1; i < color.Length; i++)
+        {
+            char charToCheck = clr[i];
+            if (!IsValidHexDigit(charToCheck))
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    private static bool IsValidHexDigit(char charToCheck)
+    {
+        return IsBetween0And9(charToCheck) || IsBetweenAndF(charToCheck);
+    }
+
+    private static bool IsBetweenAndF(char c)
+    {
+        return c >= 'a' && c <= 'f';
+    }
+
+    private static bool IsBetween0And9(char c)
+    {
+        return c >= '0' && c <= '9';
+    }
+
+    private static bool HasValidLength(string color)
+    {
+        return color.Length is 4 or 7;
+    }
+
+    private static bool StartsWithHash(string color)
+    {
+        return color[0] == '#';
+    }
+
+    private static void ValidateTitle(string title, Result result)
+    {
+        string attr = "Category.Title";
         if (string.IsNullOrEmpty(title))
         {
-            result.AddError("Category.Title", "Title cannot be empty");
+            result.AddError(attr, "Title cannot be empty");
+            return;
         }
 
         if (title.Length < 3)
         {
-            result.AddError("Category.Title", "Title must be 3 or more characters");
+            result.AddError(attr, "Title must be 3 or more characters");
         }
 
         if (title.Length > 25)
         {
-            result.AddError("Category.Title", "Title must be less than 25 characters");
+            result.AddError(attr, "Title must be less than 25 characters");
         }
-
-        return result;
     }
 
     public Result Update(string newTitle, string newBackgroundColor)
@@ -89,7 +160,7 @@ public class Category
         Result validationResult = ValidateData(newTitle, newBackgroundColor);
         if (validationResult.HasErrors)
             return validationResult;
-        
+
         title = newTitle;
         backgroundColor = newBackgroundColor;
         return new();
