@@ -79,19 +79,24 @@ public class Category
     private static void ValidateColor(string color, Result result)
     {
         string attr = "Category.BackgroundColor";
+        if (string.IsNullOrEmpty(color))
+        {
+            result.AddError(attr, "Color cannot be empty.");
+            return;
+        }
         if (!StartsWithHash(color))
         {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'");
+            result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'.");
         }
 
         if (!HasValidLength(color))
         {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters");
+            result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters.");
         }
 
         if (!IsValidColorCode(color))
         {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Each character is between 0 and f");
+            result.AddError(attr, "Color must be on hex format: '#000000'. Each character is between 0 and f.");
         }
     }
 
