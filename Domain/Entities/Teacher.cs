@@ -10,6 +10,7 @@ public class Teacher
 
     public static Result<Teacher> Create(string name)
     {
+        name = name?.Trim(' ');
         Teacher teacher = new(name, new List<Category>());
         Result validationResult = Validate(name);
 

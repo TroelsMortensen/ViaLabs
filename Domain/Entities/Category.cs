@@ -26,6 +26,7 @@ public class Category
 
     public static Result<Category> Create(string title, string backgroundColor)
     {
+        title = title?.Trim(' ');
         Result validationResult = ValidateData(title, backgroundColor);
 
         return validationResult.HasErrors
