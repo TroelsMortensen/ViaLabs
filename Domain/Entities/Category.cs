@@ -84,14 +84,16 @@ public class Category
             result.AddError(attr, "Color cannot be empty.");
             return;
         }
-        if (!StartsWithHash(color))
-        {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'.");
-        }
-
+        
+        //TODO someday use regex.
         if (!HasValidLength(color))
         {
             result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters.");
+        }
+        
+        if (!StartsWithHash(color))
+        {
+            result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'.");
         }
 
         if (!IsValidColorCode(color))

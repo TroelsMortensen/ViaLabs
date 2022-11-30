@@ -63,9 +63,9 @@ public class CategoryTests
 
     [TestCase("!000000")]
     [TestCase("@000000")]
-    [TestCase("$000000")]
+    [TestCase("$000")]
     [TestCase("%000000")]
-    [TestCase("/000000")]
+    [TestCase("/000")]
     public void ColorMustStartWithHashRainy(string color)
     {
         Result<Category> result = Category.Create("Title", color);
@@ -81,7 +81,7 @@ public class CategoryTests
     }
 
     [Test]
-    public void ColorStartsWithHashIsGood3DigitsSunny()
+    public void ColorStartsWithHashAnd3DigitsSunny()
     {
         Result<Category> result = Category.Create("Title", "#000");
         Assert.False(result.HasErrors);
@@ -96,6 +96,9 @@ public class CategoryTests
     [TestCase("#zzz")]
     [TestCase("#zzzZZZ")]
     [TestCase("#lkjeri")]
+    [TestCase("#a8#")]
+    [TestCase("#3bf6&!")]
+    [TestCase("#\\\\\\")]
     public void ColorMustBeBetween0AndFRainy(string color)
     {
         Result<Category> result = Category.Create("Title", color);
@@ -186,7 +189,6 @@ public class CategoryTests
         Assert.That(category.Title, Is.EqualTo("Abc"));
         Assert.That(category.BackgroundColor, Is.EqualTo("#999"));
     }
-
 
     #endregion
 }
