@@ -79,6 +79,23 @@ public class Category
         return result;
     }
 
+    private static Result ValidateTitle(string title)
+    {
+        string attr = "Category.Title";
+        Result result = new();
+        
+        if (string.IsNullOrEmpty(title))
+        {
+            result.AddError(attr, "Title cannot be empty");
+            return result;
+        }
+
+        result.ThenValidate(title.Length >= 3, attr, "Title must be 3 or more characters")
+            .ThenValidate(title.Length <= 25, attr, "Title must be less than 25 characters");
+
+        return result;
+    }
+
     private static Result ValidateColor(string color)
     {
         string attr = "Category.BackgroundColor";
@@ -139,23 +156,6 @@ public class Category
         return color[0] == '#';
     }
 
-    private static Result ValidateTitle(string title)
-    {
-        string attr = "Category.Title";
-        Result result = new();
-        
-        if (string.IsNullOrEmpty(title))
-        {
-            result.AddError(attr, "Title cannot be empty");
-            return result;
-        }
-
-        result.ThenValidate(title.Length >= 3, attr, "Title must be 3 or more characters")
-            .ThenValidate(title.Length <= 25, attr, "Title must be less than 25 characters");
-
-        return result;
-    }
-
     public Result Update(string newTitle, string newBackgroundColor)
     {
         Result validationResult = ValidateData(newTitle, newBackgroundColor);
@@ -164,6 +164,6 @@ public class Category
 
         title = newTitle;
         backgroundColor = newBackgroundColor;
-        return new();
+        return validationResult;
     }
 }
