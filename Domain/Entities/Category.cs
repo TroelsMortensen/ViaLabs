@@ -97,20 +97,6 @@ public class Category
         return result;
 
         //TODO someday use regex.
-        // if (!HasValidLength(color))
-        // {
-        //     result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters.");
-        // }
-
-        // if (!StartsWithHash(color))
-        // {
-        //     result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'.");
-        // }
-        //
-        // if (!IsValidColorCode(color))
-        // {
-        //     result.AddError(attr, "Color must be on hex format: '#000000'. Each character is between 0 and f.");
-        // }
     }
 
     private static bool IsValidColorCode(string color)
@@ -180,5 +166,4 @@ public class Category
         backgroundColor = newBackgroundColor;
         return new();
     }
-    
 }
