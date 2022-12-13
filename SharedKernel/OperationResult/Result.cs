@@ -27,6 +27,53 @@ public class Result
     {
         return string.Join(".\n", Errors.Select(error => error.Message));
     }
+
+    public static Result Validation()
+    {
+        return new Result();
+    }
+
+    
+    // Didn't like this
+    
+    // Attempt at Fluent result.
+    // public Result IfSuccessThen(Func<bool> exp, string attribute, string msg)
+    // {
+    //     if (HasErrors)
+    //     {
+    //         return this;
+    //     }
+    //
+    //     bool validationResult = exp();
+    //     if (!validationResult)
+    //     {
+    //         errors.Add(new Error(attribute, msg));
+    //     }
+    //
+    //     return this;
+    // }
+    
+    public Result ThenValidate(bool expShouldBeTrue, string attribute, string errorMessage)
+    {
+        if (!expShouldBeTrue)
+        {
+            errors.Add(new Error(attribute, errorMessage));
+        }
+
+        return this;
+    }
+
+    // Don't need this yet
+    // public Result IfFailure()
+    // {
+    // }
+    public void AddResults(params Result[] results)
+    {
+        foreach (Result result in results)
+        {
+            AddErrors(result.errors);
+        }
+    }
 }
 
 public class Result<T> : Result

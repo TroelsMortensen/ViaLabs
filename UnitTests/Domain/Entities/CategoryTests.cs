@@ -171,7 +171,7 @@ public class CategoryTests
     [TestCase("#abcdef")]
     [TestCase("#024357")]
     [TestCase("#AbCdEf")]
-    public void CategoryCreate_InputValidColorsAndTitle_ReturnsCategory(string color)
+    public void CategoryCreate_InputValidColors_ReturnsCategory(string color)
     {
         Result<Category> result = Category.Create("Title", color);
         Assert.False(result.HasErrors);
@@ -179,6 +179,23 @@ public class CategoryTests
     
     #endregion
 
+    #region Category both arguments tests
+
+    [TestCase("", "")]
+    [TestCase("ab", "k3n")]
+    [TestCase("a", "123")]
+    [TestCase(null, "#a3p")]
+    [TestCase("1", "#a3p2jk3j1k23lj2l3kj123k2j3")]
+    public void CategoryCreate_BothInputInvalidTitleAndColor_ReturnsError(string title, string color)
+    {
+        Result<Category> result = Category.Create(title, color);
+        Assert.True(result.HasErrors);
+        Assert.True(result.Errors.Any(error => error.Attribute.Equals("Category.Title")));
+        Assert.True(result.Errors.Any(error => error.Attribute.Equals("Category.BackgroundColor")));
+    }
+
+    #endregion
+    
     #region Category.Update tests
 
     [TestCase("abcd", "#015983")]

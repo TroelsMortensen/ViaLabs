@@ -26,7 +26,7 @@ public class Category
 
     public static Result<Category> Create(string title, string backgroundColor)
     {
-        title = title?.Trim(' ');
+        title = title == null ? "" : title.Trim(' ');
         Result validationResult = ValidateData(title, backgroundColor);
 
         return validationResult.HasErrors
@@ -70,37 +70,47 @@ public class Category
     private static Result ValidateData(string title, string backgroundColor)
     {
         Result result = new();
-
-        ValidateTitle(title, result);
-        ValidateColor(backgroundColor, result);
-
+        
+        Result titleValidationResult = ValidateTitle(title);
+        Result backgroundColorValidationResult = ValidateColor(backgroundColor);
+        
+        result.AddResults(titleValidationResult, backgroundColorValidationResult);
+        
         return result;
     }
 
-    private static void ValidateColor(string color, Result result)
+    private static Result ValidateColor(string color)
     {
         string attr = "Category.BackgroundColor";
+        Result result = new();
+        
         if (string.IsNullOrEmpty(color))
         {
             result.AddError(attr, "Color cannot be empty.");
-            return;
-        }
-        
-        //TODO someday use regex.
-        if (!HasValidLength(color))
-        {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters.");
-        }
-        
-        if (!StartsWithHash(color))
-        {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'.");
+            return result;
         }
 
-        if (!IsValidColorCode(color))
-        {
-            result.AddError(attr, "Color must be on hex format: '#000000'. Each character is between 0 and f.");
-        }
+        result.ThenValidate(HasValidLength(color), attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters.")
+            .ThenValidate(StartsWithHash(color), attr, "Color must be on hex format: '#000000'. Must start with '#'.")
+            .ThenValidate(IsValidColorCode(color), attr, "Color must be on hex format: '#000000'. Each character is between 0 and f.");
+
+        return result;
+
+        //TODO someday use regex.
+        // if (!HasValidLength(color))
+        // {
+        //     result.AddError(attr, "Color must be on hex format: '#000000'. Length must be 4 or 7 characters.");
+        // }
+
+        // if (!StartsWithHash(color))
+        // {
+        //     result.AddError(attr, "Color must be on hex format: '#000000'. Must start with '#'.");
+        // }
+        //
+        // if (!IsValidColorCode(color))
+        // {
+        //     result.AddError(attr, "Color must be on hex format: '#000000'. Each character is between 0 and f.");
+        // }
     }
 
     private static bool IsValidColorCode(string color)
@@ -143,24 +153,21 @@ public class Category
         return color[0] == '#';
     }
 
-    private static void ValidateTitle(string title, Result result)
+    private static Result ValidateTitle(string title)
     {
         string attr = "Category.Title";
+        Result result = new();
+        
         if (string.IsNullOrEmpty(title))
         {
             result.AddError(attr, "Title cannot be empty");
-            return;
+            return result;
         }
 
-        if (title.Length < 3)
-        {
-            result.AddError(attr, "Title must be 3 or more characters");
-        }
+        result.ThenValidate(title.Length >= 3, attr, "Title must be 3 or more characters")
+            .ThenValidate(title.Length <= 25, attr, "Title must be less than 25 characters");
 
-        if (title.Length > 25)
-        {
-            result.AddError(attr, "Title must be less than 25 characters");
-        }
+        return result;
     }
 
     public Result Update(string newTitle, string newBackgroundColor)
