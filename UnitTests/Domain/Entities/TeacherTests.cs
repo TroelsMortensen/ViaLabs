@@ -10,8 +10,12 @@ public class TeacherTests
     public void TeacherCreate_NameIsNull_ReturnsError()
     {
         Result<Teacher> result = Teacher.Create(null);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+        });
     }
 
     [TestCase("")]
@@ -20,8 +24,11 @@ public class TeacherTests
     public void TeacherCreate_NameIsLessThan3Letters_ReturnsError(string name)
     {
         Result<Teacher> result = Teacher.Create(name);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors, "1");
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"), "2");
+        });
     }
 
     [TestCase(" ")]
@@ -30,8 +37,11 @@ public class TeacherTests
     public void TeacherCreate_NameIsOnlySpaces_ReturnsError(string name)
     {
         Result<Teacher> result = Teacher.Create(name);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+        });
     }
 
     [TestCase(" abc ")]
@@ -42,7 +52,7 @@ public class TeacherTests
         var result = Teacher.Create(name);
         Assert.That(result.Value.Name, Is.EqualTo(name.Trim(' ')));
     }
-    
+
     [TestCase("abc")]
     [TestCase("abcefgh")]
     [TestCase("abcefghijklmnop")]
@@ -58,7 +68,10 @@ public class TeacherTests
     public void TeacherCreate_NameMoreThan15Letters_ReturnsError(string name)
     {
         Result<Teacher> result = Teacher.Create(name);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Teacher.Name"));
+        });
     }
 }

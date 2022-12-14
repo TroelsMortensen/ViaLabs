@@ -6,13 +6,11 @@ namespace UnitTests.Domain.Entities;
 [TestFixture]
 public class CategoryTests
 {
-
-
     #region Category.Title tests
+
     /**
      * Testing Category.Tilte below
      */
-    
     [Test]
     public void CategoryCreate_NullTitle_ReturnsError()
     {
@@ -20,7 +18,7 @@ public class CategoryTests
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
-    
+
     [Test]
     public void CategoryCreate_EmptyTitle_ReturnsError()
     {
@@ -28,7 +26,7 @@ public class CategoryTests
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
-    
+
     [TestCase("a")]
     [TestCase("ab")]
     public void CategoryCreate_TitleLessThan3Letters_ReturnsError(string name)
@@ -56,8 +54,8 @@ public class CategoryTests
         var result = Category.Create(title, "#000000");
         Assert.That(result.Value.Title, Is.EqualTo(title.Trim(' ')));
     }
-    
-    
+
+
     [TestCase("abc")]
     [TestCase("abcefgh")]
     [TestCase("abcefghijklmnopqrstuvxyz1")]
@@ -76,7 +74,7 @@ public class CategoryTests
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
-    
+
     #endregion
 
     #region Category.BackgroundColor tests
@@ -89,8 +87,11 @@ public class CategoryTests
     public void CategoryCreate_ColorStartsNotWithHash_ReturnsError(string color)
     {
         Result<Category> result = Category.Create("Title", color);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        });
     }
 
     [Test]
@@ -115,10 +116,13 @@ public class CategoryTests
     public void CategoryCreate_ColorContainsEmptySpaces_ReturnsError(string color)
     {
         Result<Category> result = Category.Create("Title", color);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor")); 
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        });
     }
-    
+
     [TestCase("#GGG")]
     [TestCase("#GGGGGG")]
     [TestCase("#ggg")]
@@ -134,11 +138,14 @@ public class CategoryTests
     public void CategoryCreate_ColorIsBetween0AndF_ReturnsError(string color)
     {
         Result<Category> result = Category.Create("Title", color);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        });
     }
 
-    
+
     [TestCase("#")]
     [TestCase("#0")]
     [TestCase("#00")]
@@ -149,10 +156,13 @@ public class CategoryTests
     public void CategoryCreate_ColorLengthNot4Or7_ReturnsError(string color)
     {
         Result<Category> result = Category.Create("Title", color);
-        Assert.True(result.HasErrors);
-        Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.BackgroundColor"));
+        });
     }
-    
+
     [TestCase("#000")]
     [TestCase("#000000")]
     public void CategoryCreate_ColorLengthIs4Or7_ReturnsCategory(string color)
@@ -176,7 +186,7 @@ public class CategoryTests
         Result<Category> result = Category.Create("Title", color);
         Assert.False(result.HasErrors);
     }
-    
+
     #endregion
 
     #region Category both arguments tests
@@ -189,13 +199,16 @@ public class CategoryTests
     public void CategoryCreate_BothInputInvalidTitleAndColor_ReturnsError(string title, string color)
     {
         Result<Category> result = Category.Create(title, color);
-        Assert.True(result.HasErrors);
-        Assert.True(result.Errors.Any(error => error.Attribute.Equals("Category.Title")));
-        Assert.True(result.Errors.Any(error => error.Attribute.Equals("Category.BackgroundColor")));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.True(result.Errors.Any(error => error.Attribute.Equals("Category.Title")));
+            Assert.True(result.Errors.Any(error => error.Attribute.Equals("Category.BackgroundColor")));
+        });
     }
 
     #endregion
-    
+
     #region Category.Update tests
 
     [TestCase("abcd", "#015983")]
@@ -207,9 +220,13 @@ public class CategoryTests
         Category category = Category.Create("Abc", "#999").Value;
         // act
         Result result = category.Update(title, color);
-        Assert.False(result.HasErrors);
-        Assert.That(category.Title, Is.EqualTo(title));
-        Assert.That(category.BackgroundColor, Is.EqualTo(color));
+
+        Assert.Multiple(() =>
+        {
+            Assert.False(result.HasErrors);
+            Assert.That(category.Title, Is.EqualTo(title));
+            Assert.That(category.BackgroundColor, Is.EqualTo(color));
+        });
     }
 
     [TestCase("ab", "#090909")]
@@ -232,11 +249,14 @@ public class CategoryTests
         Category category = Category.Create("Abc", "#999").Value;
         // act
         Result result = category.Update(title, color);
-        
+
         //assert
-        Assert.True(result.HasErrors);
-        Assert.That(category.Title, Is.EqualTo("Abc"));
-        Assert.That(category.BackgroundColor, Is.EqualTo("#999"));
+        Assert.Multiple(() =>
+        {
+            Assert.True(result.HasErrors);
+            Assert.That(category.Title, Is.EqualTo("Abc"));
+            Assert.That(category.BackgroundColor, Is.EqualTo("#999"));
+        });
     }
 
     #endregion
