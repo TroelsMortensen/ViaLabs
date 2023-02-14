@@ -5,7 +5,7 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-internal class GetCategoryOverviewByTeacher : IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>>
+internal class GetCategoryOverviewByTeacher : IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>>
 {
     private readonly JsonDataContext context;
 
@@ -22,7 +22,7 @@ internal class GetCategoryOverviewByTeacher : IQueryHandler<ProfileInfoQuery, IC
     //     return Task.FromResult(categoryDtos);
     // }
 
-    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> Query(ProfileInfoQuery query)
+    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> Query(GetProfileInfo query)
     {
         string teacher = query.TeacherName;
         // get all categories for teacher

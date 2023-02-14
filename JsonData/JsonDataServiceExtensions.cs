@@ -26,7 +26,7 @@ public static class JsonDataServiceExtensions
 
     private static void AddForProfileView(IServiceCollection services)
     {
-        services.AddScoped<IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>>, GetCategoryOverviewByTeacher>();
+        services.AddScoped<IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>>, GetCategoryOverviewByTeacher>();
     }
 
     private static void AddRepositories(IServiceCollection services)

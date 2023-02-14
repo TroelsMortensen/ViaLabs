@@ -17,16 +17,16 @@ public class ProfileStateContainer
 
     // TODO public Action< Type { get; set; }  external resource added
 
-    private readonly IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider;
+    private readonly IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider;
 
-    public ProfileStateContainer(IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider)
+    public ProfileStateContainer(IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider)
     {
         this.categoryOverviewDataProvider = categoryOverviewDataProvider;
     }
 
     public async Task PopulateAsync(string teacher)
     {
-        CategoriesWithGuidesAndResources = await categoryOverviewDataProvider.Query(new ProfileInfoQuery(teacher));
+        CategoriesWithGuidesAndResources = await categoryOverviewDataProvider.Query(new GetProfileInfo(teacher));
     }
 
     public void AddCategory(CategoryDto categoryDto)

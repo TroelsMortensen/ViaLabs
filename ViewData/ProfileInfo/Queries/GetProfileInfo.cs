@@ -1,3 +1,3 @@
 ﻿namespace ViewData.ProfileInfo.Queries;
 
-public record ProfileInfoQuery(string TeacherName);
+public record GetProfileInfo(string TeacherName);
