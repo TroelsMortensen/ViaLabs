@@ -1,11 +1,11 @@
-﻿@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@using Application.Features.ProfileDataLogic.LogicContracts
+﻿@using Application.CommandUseCases.CategoryHandlers.CategoryDelete
+@using Application.HandlerContracts
 @using BlazorServerUI.StateContainers.Profile
 @using BlazorServerUI.Popups
-@using Application.Features.CategoryDelete
-@using SharedKernel.OperationResult
+@using Domain.OperationResult
+@namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 
-@inject ICategoryDeleteHandler categoryDeleteHandler
+@inject ICommandHandler<DeleteCategoryCommand> deleteCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
@@ -59,7 +59,7 @@
 
     private async Task DeleteCategory()
     {
-        Result result = await categoryDeleteHandler.DeleteAsync(CategoryId);
+        Result result = await deleteCategoryHandler.Handle(new DeleteCategoryCommand());
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();

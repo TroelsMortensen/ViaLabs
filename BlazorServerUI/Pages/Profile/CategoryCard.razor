@@ -1,17 +1,11 @@
-﻿@using BlazorServerUI.Pages.Profile.RadialMenuItems
-@using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs
-@using Application.Features.ProfileDataLogic.DTOs.GuideDTOs
-@using Application.Features.ProfileDataLogic.LogicContracts
-@using Application.Features.ProfileDataLogic.ProviderContracts
-@using BlazorServerUI.StateContainers.Profile
-@using Domain.Exceptions
-@using Application.Features.ProfileDataLogic.DTOs
-@using Application.Features.SharedDtos
-@using BlazorServerUI.Popups
-
-@inject NavigationManager navMgr
+﻿@inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
 
+@using BlazorServerUI.StateContainers.Profile
+@using Domain.Exceptions
+@using BlazorServerUI.Popups
+@using BlazorServerUI.Pages.Profile.RadialMenuItems
+@using ViewData.ProfileInfo.DTOs
 @implements IDisposable
 
 <div class="category-card" style="background-color: @(Category == null ? "#fff" : Category.BackgroundColor)">
@@ -110,7 +104,7 @@
         </div>
     }
     <div style="margin-top: 15px">
-        <button class="positive-color vialab-button" style="margin-right: 20px" @onclick="UpdateResource">Accept Changes</button>
+        <button class="positive-color vialab-button" style="margin-right: 20px" @onclick="UpdateExternalResource">Accept Changes</button>
         <button class="cancel-color vialab-button" style="margin-right: 20px" @onclick="CloseEditResourceDialog">Cancel</button>
         <button class="progress-button vialab-button"
                 @onmousedown="DeleteButtonDown"
@@ -237,12 +231,12 @@
         editResourceMsg = "";
     }
 
-    private async Task UpdateResource()
+    private async Task UpdateExternalResource()
     {
         try
         {
             throw new NotImplementedException();
-            ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
+            // ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
     // await extResLogic.UpdateAsync(request!); TODO
             throw new NotImplementedException();
     // profileStateContainer.UpdateResource(resourceBeingEdited!);

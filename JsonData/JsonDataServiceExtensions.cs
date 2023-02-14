@@ -1,15 +1,11 @@
-﻿using Application.Features.CategoryOverview;
-using Application.Features.DisplayProfileInfo;
-using Application.Features.DisplayProfileInfo.DataProvider;
-using Application.Features.ProfileDataLogic.ProviderContracts;
-using Application.RepositoryContracts;
-using JsonData.Context;
+﻿using Application.RepositoryContracts;
 using JsonData.JsonSerializationUtils;
-using JsonData.ProviderImpls;
-using JsonData.ProviderImpls.CategoryOverview;
-using JsonData.ProviderImpls.ProfileInfoProviderImpls;
+using JsonData.QueryImpls.ProfileViewQueries;
 using JsonData.Repositories;
 using Microsoft.Extensions.DependencyInjection;
+using ViewData;
+using ViewData.ProfileInfo.DTOs;
+using ViewData.ProfileInfo.Queries;
 
 namespace JsonData;
 
@@ -19,17 +15,18 @@ public static class JsonDataServiceExtensions
     {
         AddDataAccess(services);
         AddRepositories(services);
-        AddProviders(services);
+        AddQueryHandlers(services);
         
     }
 
-    private static void AddProviders(IServiceCollection services)
+    private static void AddQueryHandlers(IServiceCollection services)
     {
-        services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
-        services.AddScoped<ICategoryOverviewDataProvider, JsonCategoryOverviewDataProvider>();
-        // services.AddScoped<ICategoryProvider, JsonCategoryProvider>();
-        // services.AddScoped<IProfileDataProvider, JsonProfileDataProvider>();
-        // services.AddScoped<IGuideProvider, JsonGuideProvider>();
+        AddForProfileView(services);
+    }
+
+    private static void AddForProfileView(IServiceCollection services)
+    {
+        services.AddScoped<IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>>, GetCategoryOverviewByTeacher>();
     }
 
     private static void AddRepositories(IServiceCollection services)

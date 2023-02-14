@@ -1,8 +1,6 @@
-﻿using Application.Features.CategoryOverview;
-using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs;
-using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
-using Application.Features.ProfileDataLogic.ProviderContracts;
-using Application.Features.SharedDtos;
+﻿using ViewData;
+using ViewData.ProfileInfo.DTOs;
+using ViewData.ProfileInfo.Queries;
 
 namespace BlazorServerUI.StateContainers.Profile;
 
@@ -19,16 +17,16 @@ public class ProfileStateContainer
 
     // TODO public Action< Type { get; set; }  external resource added
 
-    private readonly ICategoryOverviewDataProvider categoryOverviewDataProvider;
+    private readonly IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider;
 
-    public ProfileStateContainer(ICategoryOverviewDataProvider categoryOverviewDataProvider)
+    public ProfileStateContainer(IQueryHandler<ProfileInfoQuery, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider)
     {
         this.categoryOverviewDataProvider = categoryOverviewDataProvider;
     }
 
     public async Task PopulateAsync(string teacher)
     {
-        CategoriesWithGuidesAndResources = await categoryOverviewDataProvider.GetCategoriesWithGuideHeadersByTeacherAsync(teacher);
+        CategoriesWithGuidesAndResources = await categoryOverviewDataProvider.Query(new ProfileInfoQuery(teacher));
     }
 
     public void AddCategory(CategoryDto categoryDto)

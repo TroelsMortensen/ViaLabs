@@ -1,12 +1,11 @@
-﻿@using Application.Features.ProfileDataLogic.LogicContracts
+﻿@using Application.CommandUseCases.CategoryHandlers.CategoryUpdate
+@using Application.HandlerContracts
 @using BlazorServerUI.StateContainers.Profile
-@using JsonData.Repositories
-@using Application.Features.SharedDtos
+@using Domain.OperationResult
 @using BlazorServerUI.Popups
-@using Application.Features.CategoryUpdate
-@using SharedKernel.OperationResult
+@using ViewData.ProfileInfo.DTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICategoryUpdateHandler categoryUpdateHandler
+@inject ICommandHandler<UpdateCategoryCommand> updateCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
@@ -68,9 +67,9 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        UpdateCategoryRequest to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
+        UpdateCategoryCommand to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
 
-        Result result = await categoryUpdateHandler.UpdateAsync(to);
+        Result result = await updateCategoryHandler.Handle(to);
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();

@@ -1,13 +1,8 @@
-﻿@using Application.Features.ProfileDataLogic.ProviderContracts
-@using BlazorServerUI.StateContainers.Profile
-@using Application.Features.CategoryOverview
-@using Application.Features.SharedDtos
-@using BlazorServerUI.Popups
-
-@inject ICategoryOverviewDataProvider categoryOverviewDataProvider
-@inject NavigationManager navMgr
+﻿@inject NavigationManager navMgr
 @inject ProfileStateContainer profileStateContainer
 
+@using BlazorServerUI.StateContainers.Profile
+@using ViewData.ProfileInfo.DTOs
 @implements IDisposable
 <div class="guides-container">
 

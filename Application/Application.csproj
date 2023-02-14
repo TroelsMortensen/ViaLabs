@@ -15,4 +15,9 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="CommandUseCases\GuideHandlers" />
+      <Folder Include="QueryUseCases\SharedDtos" />
+    </ItemGroup>
+
 </Project>

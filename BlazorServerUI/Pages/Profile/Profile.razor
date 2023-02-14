@@ -1,11 +1,9 @@
 ﻿@page "/Profile"
-@using Application.Features.DisplayProfileInfo.Logic
-@using Application.Features.DisplayProfileInfo.DataProvider
-@using Application.Features.DisplayProfileInfo.DTOs
+@using ViewData.ProfileInfo.Queries
+@using ViewData.ProfileInfo.DTOs
+@using ViewData
 @using BlazorServerUI.StateContainers.Profile
-@using SharedKernel.OperationResult
-@inject IProfileDataHandler profileDataHandler
-@inject IProfileDataProvider profileDataProvider
+@inject IQueryHandler<GetTeacher, TeacherHeaderDto> teacherQueryHandler
 @inject ProfileStateContainer profileStateContainer
 
 <div style="display:flex; justify-content: space-evenly">
@@ -14,7 +12,7 @@
 <div style="display:flex; justify-content: space-evenly">
     @if (approvedTeacher is not null)
     {
-        <CategoriesOverview/> 
+        <CategoriesOverview/>
     }
 </div>
 
@@ -31,23 +29,29 @@
     {
         AuthenticationState authState = await AuthStateTask;
         userName = authState.User.Identity?.Name!;
-        isViaTeacher = profileDataHandler.IsViaTeacher(userName);
-        
+        isViaTeacher = IsViaTeacher();
+
         if (!isViaTeacher) return;
 
-        Result<TeacherHeaderDto> result = await profileDataProvider.GetTeacherAsync(userName);
-        if (result.HasErrors)
-        {
-            // TODO handle these errors somehow?
-            return;
-        }
-        
-        approvedTeacher = result.Value;
+        approvedTeacher = await teacherQueryHandler.Query(new GetTeacher(userName));
+
         if (approvedTeacher != null)
         {
             await profileStateContainer.PopulateAsync(approvedTeacher.Name);
         }
     // TODO catch exceptions here, and show toast error message
+    }
+
+    private bool IsViaTeacher()
+    {
+        if (string.IsNullOrEmpty(userName)) return false;
+
+        return IsViaAccount(userName);
+    }
+
+    private static bool IsViaAccount(string userName)
+    {
+        return userName.StartsWith("VIA\\");
     }
 
 }

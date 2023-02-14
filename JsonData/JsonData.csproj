@@ -13,11 +13,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="ProviderImpls\CreateCategory" />
-      <Folder Include="ProviderImpls\DisplayProfileInfo" />
+      <ProjectReference Include="..\ViewData\ViewData.csproj" />
     </ItemGroup>
 
 </Project>

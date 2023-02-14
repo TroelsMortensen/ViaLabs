@@ -1,10 +1,5 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
-@using System.Text.Json
-@using Application.Features.ProfileDataLogic.DTOs.ExternalResourceDTOs
-@using Application.Features.ProfileDataLogic.LogicContracts
-@using Application.Features.SharedDtos
-@using BlazorServerUI.Popups
-
+@using ViewData.ProfileInfo.DTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 
 @* @inject IExternalResourceLogic extResLogic *@
@@ -55,7 +50,7 @@
     private bool showAddExtResModal;
     private string errorMsg = String.Empty;
 
-    private ExtResCreationRequest extRes = new();
+    private ExternalResourceDisplayDto extRes;
 
 
     private void OpenNewExtResourceDialog()
@@ -69,8 +64,8 @@
         AuthenticationState authState = await AuthStateTask;
         string? teacher = authState.User.Identity!.Name;
 
-        extRes.OwnerId = teacher!;
-        extRes.CategoryId = Category?.Id;
+        // extRes.OwnerId = teacher!;
+        // extRes.CategoryId = Category?.Id;
 
             throw new NotImplementedException();
     // ExternalResourceDisplayDto created = await extResLogic.CreateAsync(extRes); TODO
@@ -86,7 +81,7 @@
 
     private void Close()
     {
-        extRes = new();
+        // extRes = new();
         errorMsg = String.Empty;
         showAddExtResModal = false;
     }

@@ -1,4 +1,4 @@
-﻿using SharedKernel.OperationResult;
+﻿using Domain.OperationResult;
 
 namespace Domain.Entities;
 

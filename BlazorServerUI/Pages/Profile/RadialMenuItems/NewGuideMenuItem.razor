@@ -1,8 +1,5 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
-@using Application.Features.ProfileDataLogic.DTOs.GuideDTOs
-@using Application.Features.ProfileDataLogic.LogicContracts
-@using Application.Features.SharedDtos
-@using BlazorServerUI.Popups
+@using ViewData.ProfileInfo.DTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 @* @inject IGuideLogic guideLogic *@
 @inject ProfileStateContainer profileStateContainer
@@ -59,7 +56,7 @@
     {
         AuthenticationState authState = await AuthStateTask;
         string? teacher = authState.User.Identity!.Name;
-        GuideCreationDto guide = new(newGuideTitle, teacher!, Category?.Id);
+        // GuideCreationDto guide = new(newGuideTitle, teacher!, Category?.Id);
 
         try
         {

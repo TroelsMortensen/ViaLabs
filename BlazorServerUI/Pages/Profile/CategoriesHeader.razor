@@ -1,11 +1,10 @@
-﻿@using BlazorServerUI.StateContainers.Profile
-@using System.Drawing
-@using Application.Features.CategoryCreate
-@using Application.Features.ProfileDataLogic.LogicContracts
-@using Application.Features.SharedDtos
+﻿@using Application.CommandUseCases.CategoryHandlers.CategoryCreate
+@using BlazorServerUI.StateContainers.Profile
 @using BlazorServerUI.Popups
-@using SharedKernel.OperationResult
-@inject ICategoryCreateHandler categoryCreateHandler
+@using System.Drawing
+@using Application.HandlerContracts
+@using Domain.OperationResult
+@inject ICommandHandler<CreateCategoryCommand> createCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 
 <hr/>
@@ -61,18 +60,19 @@
         AuthenticationState authState = await AuthenticationState;
         string teacherName = authState.User.Identity!.Name!;
 
-        CategoryCreateRequest categoryCreate = new(categoryTitle, teacherName, backgroundColor);
+        CreateCategoryCommand createCategory = new(categoryTitle, teacherName, backgroundColor);
 
 
-        Result<CategoryDto> result = await categoryCreateHandler.CreateAsync(categoryCreate);
+        Result result = await createCategoryHandler.Handle(createCategory);
 
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-
-        profileStateContainer.AddCategory(result.Value);
+        // Result<CategoryDto> resultDto = await IQuer
+        throw new Exception("Create query handlers here");
+        // profileStateContainer.AddCategory(result.Value);
 
 
         showModal = false;

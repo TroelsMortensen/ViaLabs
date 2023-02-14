@@ -1,5 +1,5 @@
 ﻿using Domain.Entities;
-using SharedKernel.OperationResult;
+using Domain.OperationResult;
 
 namespace UnitTests.Domain.Entities;
 
