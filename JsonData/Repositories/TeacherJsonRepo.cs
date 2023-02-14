@@ -5,11 +5,11 @@ using JsonData.Context;
 
 namespace JsonData.Repositories;
 
-public class TeacherJsonRepo : ITeacherRepo
+internal class TeacherJsonRepo : ITeacherRepo
 {
-    private CollectionsDataContext context;
+    private readonly JsonDataContext context;
 
-    public TeacherJsonRepo(CollectionsDataContext context)
+    internal TeacherJsonRepo(JsonDataContext context)
     {
         this.context = context;
     }

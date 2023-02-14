@@ -1,15 +1,22 @@
-﻿using System.Text.Json;
+﻿using System.Collections;
 using Domain.Entities;
 using JsonData.JsonSerializationUtils;
 
 namespace JsonData.Context;
 
-public class JsonCollectionDataManager : ICollectionDataManager
+internal class JsonDataContext : IDisposable
 {
     private readonly IJsonHelper jsonHelper;
     private readonly string path = "vialabs.json";
 
-    public JsonCollectionDataManager(IJsonHelper jsonHelper)
+    private ViaLabData? Data { get; set; }
+    internal ICollection<Teacher> Teachers => Data.Teachers;
+    internal ICollection<Category> Categories => Data.Categories;
+    internal ICollection<Guide> Guides => Data.Guides;
+
+    internal ICollection<ExternalResource> ExternalResources => Data.ExternalResources;
+
+    internal JsonDataContext(IJsonHelper jsonHelper)
     {
         this.jsonHelper = jsonHelper;
         
@@ -25,22 +32,36 @@ public class JsonCollectionDataManager : ICollectionDataManager
             };
             string vldAsJson = jsonHelper.Serialize(vld);
             File.WriteAllText(path, vldAsJson);
+        } else
+        {
+            Data = LoadData();
         }
     }
 
-    public ViaLabData LoadData()
+    internal void SaveChanges()
+    {
+        SaveData();
+        Data = null;
+    }  
+    
+    private ViaLabData LoadData()
     {
         string vldAsJson = File.ReadAllText(path);
         ViaLabData data = jsonHelper.Deserialize<ViaLabData>(vldAsJson);
         return data;
     }
 
-    public void SaveData(ViaLabData viaLabData)
+    private void SaveData()
     {
-        if (viaLabData is null) 
+        if (Data is null) 
             throw new NullReferenceException("You are trying to save non-existing data. Severe server error");
         
-        string vldAsJson = jsonHelper.Serialize(viaLabData);
+        string vldAsJson = jsonHelper.Serialize(Data);
         File.WriteAllText(path, vldAsJson);
+    }
+
+    public void Dispose()
+    {
+        Data = null;
     }
 }

@@ -10,11 +10,11 @@ namespace Application.Features.ProfileDataLogic.LogicImpls;
 
 public class ExternalResourceLogic : IExternalResourceLogic
 {
-    private readonly IRepoManager repoManager;
+    private readonly IUnitOfWork unitOfWork;
 
-    public ExternalResourceLogic(IRepoManager repoManager)
+    public ExternalResourceLogic(IUnitOfWork unitOfWork)
     {
-        this.repoManager = repoManager;
+        this.unitOfWork = unitOfWork;
     }
 
     public async Task<ExternalResourceDisplayDto> CreateAsync(ExtResCreationRequest request)

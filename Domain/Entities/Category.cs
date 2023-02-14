@@ -4,29 +4,18 @@ namespace Domain.Entities;
 
 public class Category
 {
-    // private fields to be able to update.
-    private string title = null!;
-    private string backgroundColor = null!;
-    public Guid Id { get; init; }
+    public Guid Id { get; private set; }
 
-    public string Title
-    {
-        get => title;
-        init => title = value;
-    }
+    public string Title { get; private set; }
 
-    public string BackgroundColor
-    {
-        get => backgroundColor;
-        init => backgroundColor = value;
-    }
+    public string BackgroundColor { get; private set; }
 
-    public ICollection<Guide> Guides { get; init; }
-    public ICollection<ExternalResource> ExternalResources { get; init; }
+    public string Owner { get; private set; }
 
-    public static Result<Category> Create(string title, string backgroundColor)
+    public static Result<Category> Create(string title, string backgroundColor, string owningTeacher)
     {
         title = title == null ? "" : title.Trim(' ');
+
         Result validationResult = ValidateData(title, backgroundColor);
 
         return validationResult.HasErrors
@@ -35,20 +24,17 @@ public class Category
                 new Category(
                     Guid.NewGuid(),
                     title,
-                    backgroundColor,
-                    new List<Guide>(),
-                    new List<ExternalResource>())
+                    backgroundColor, 
+                    owningTeacher)
             );
     }
 
-    private Category(Guid id, string title, string backgroundColor, ICollection<Guide> guides,
-        ICollection<ExternalResource> externalResources)
+    private Category(Guid id, string title, string backgroundColor, string owningTeacher)
     {
         Id = id;
         Title = title;
-        Guides = guides;
-        ExternalResources = externalResources;
         BackgroundColor = backgroundColor;
+        Owner = owningTeacher;
     }
 
     // public void AddGuide(Guide guide)
@@ -70,12 +56,12 @@ public class Category
     private static Result ValidateData(string title, string backgroundColor)
     {
         Result result = new();
-        
+
         Result titleValidationResult = ValidateTitle(title);
         Result backgroundColorValidationResult = ValidateColor(backgroundColor);
-        
+
         result.AddResults(titleValidationResult, backgroundColorValidationResult);
-        
+
         return result;
     }
 
@@ -83,7 +69,7 @@ public class Category
     {
         string attr = "Category.Title";
         Result result = new();
-        
+
         if (string.IsNullOrEmpty(title))
         {
             result.AddError(attr, "Title cannot be empty");
@@ -100,7 +86,7 @@ public class Category
     {
         string attr = "Category.BackgroundColor";
         Result result = new();
-        
+
         if (string.IsNullOrEmpty(color))
         {
             result.AddError(attr, "Color cannot be empty.");
@@ -162,8 +148,9 @@ public class Category
         if (validationResult.HasErrors)
             return validationResult;
 
-        title = newTitle;
-        backgroundColor = newBackgroundColor;
-        return validationResult;
+        Title = newTitle;
+        BackgroundColor = newBackgroundColor;
+
+        return Result.Success();
     }
 }

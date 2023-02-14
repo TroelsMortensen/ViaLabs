@@ -1,9 +1,13 @@
-﻿namespace Application.RepositoryContracts;
+﻿using Domain.Entities;
+
+namespace Application.RepositoryContracts;
 
 public interface IGuideRepo
 {
-    // Task CreateAsync(Guide guide);
+    Task CreateAsync(Guide guide);
+
+    Task<Guide> GetAsync(Guid id);
     // Task UpdateAsync(Guide guide);
-    // Task DeleteAsync(Guid id);
-    // Task UnParentGuidesFromCategory(Guid categoryId); // TODO this functionality should be moved to the repo impl
+    Task DeleteAsync(Guid id);
+    Task<ICollection<Guide>> GetByCategoryAsync(Guid id);
 }

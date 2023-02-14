@@ -6,23 +6,25 @@ namespace Application.Features.CategoryUpdate;
 
 public class CategoryUpdateHandler : ICategoryUpdateHandler
 {
-    private readonly IRepoManager repoManager;
+    private readonly IUnitOfWork unitOfWork;
+    private readonly ICategoryRepo categoryRepo;
 
-    public CategoryUpdateHandler(IRepoManager repoManager)
+    public CategoryUpdateHandler(IUnitOfWork unitOfWork, ICategoryRepo categoryRepo)
     {
-        this.repoManager = repoManager;
+        this.unitOfWork = unitOfWork;
+        this.categoryRepo = categoryRepo;
     }
 
     public async Task<Result> UpdateAsync(UpdateCategoryRequest request)
     {
-        Category catBeingUpdated = await repoManager.CategoryRepo.GetCategoryByIdAsync(request.Id);
+        Category catBeingUpdated = await categoryRepo.GetAsync(request.Id);
         Result result = catBeingUpdated.Update(request.Title, request.BackgroundColor);
         if (result.HasErrors)
         {
             return result;
         }
 
-        await repoManager.CategoryRepo.UpdateAsync(catBeingUpdated);
+        await unitOfWork.SaveChanges();
         
         return result;
     }

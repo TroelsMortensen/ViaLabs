@@ -4,41 +4,32 @@ using JsonData.Context;
 
 namespace JsonData.Repositories;
 
-public class ExternalResourceJsonRepo : IExternalResourceRepo
+internal class ExternalResourceJsonRepo : IExternalResourceRepo
 {
-    private readonly CollectionsDataContext context;
+    private readonly JsonDataContext context;
 
-    public ExternalResourceJsonRepo(CollectionsDataContext context)
+    internal ExternalResourceJsonRepo(JsonDataContext context)
     {
         this.context = context;
     }
 
 
-    public Task AddToCategory(ExternalResource externalResource, Guid categoryId)
+    public Task AddAsync(ExternalResource externalResource)
     {
         throw new NotImplementedException();
     }
 
-    public Task UpdateAsync(ExternalResource edited)
+    public Task<ExternalResource> GetAsync(Guid id)
     {
-        ExternalResource first = context.ExternalResources.First(resource => resource.Id.Equals(edited.Id));
-        // TODO delete, then add
-        first.Update(edited.Title, edited.Description, edited.Url);
-        throw new NotImplementedException("not done yet");
-        return Task.CompletedTask;
+        throw new NotImplementedException();
     }
 
-    // public Task UnParentResourcesFromCategory(Guid categoryId)
-    // {
-    //     context.ExternalResources
-    //         .Where(er => er.CategoryId.Equals(categoryId))
-    //         .ToList()
-    //         .ForEach(er => er.DetachFromCategory());
-    //
-    //     return Task.CompletedTask;
-    // }
-
     public Task DeleteAsync(Guid dtoId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task<ICollection<ExternalResource>> GetByCategoryAsync(Guid id)
     {
         throw new NotImplementedException();
     }

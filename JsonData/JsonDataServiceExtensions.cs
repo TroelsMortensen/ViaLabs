@@ -8,7 +8,6 @@ using JsonData.JsonSerializationUtils;
 using JsonData.ProviderImpls;
 using JsonData.ProviderImpls.CategoryOverview;
 using JsonData.ProviderImpls.ProfileInfoProviderImpls;
-using JsonData.ProviderImpls.ProfileProviderImpls;
 using JsonData.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -39,13 +38,11 @@ public static class JsonDataServiceExtensions
         services.AddScoped<ICategoryRepo, CategoryJsonRepo>();
         services.AddScoped<IGuideRepo, GuideJsonRepo>();
         services.AddScoped<IExternalResourceRepo, ExternalResourceJsonRepo>();
-        services.AddScoped<IRepoManager, JsonRepoManagerImpl>();
+        services.AddScoped<IUnitOfWork, JsonUnitOfWorkImpl>();
     }
 
     private static void AddDataAccess(IServiceCollection services)
     {
-        services.AddScoped<CollectionsDataContext>();
-        services.AddScoped<ICollectionDataManager, JsonCollectionDataManager>();
         services.AddScoped<IJsonHelper, SystemNetJsonSerializerHelper>();
     }
 }

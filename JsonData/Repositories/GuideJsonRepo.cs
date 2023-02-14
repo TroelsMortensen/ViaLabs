@@ -1,14 +1,15 @@
 ﻿using Application.RepositoryContracts;
 using Domain.Entities;
+using Domain.Exceptions;
 using JsonData.Context;
 
 namespace JsonData.Repositories;
 
-public class GuideJsonRepo : IGuideRepo
+internal class GuideJsonRepo : IGuideRepo
 {
-    private readonly CollectionsDataContext context;
+    private readonly JsonDataContext context;
 
-    public GuideJsonRepo(CollectionsDataContext context)
+    internal GuideJsonRepo(JsonDataContext context)
     {
         this.context = context;
     }
@@ -19,12 +20,23 @@ public class GuideJsonRepo : IGuideRepo
         return Task.CompletedTask;
     }
 
-    public Task UpdateAsync(Guide guide)
+    public Task<Guide> GetAsync(Guid id)
     {
-        Guide first = context.Guides.First(g => g.Id.Equals(guide.Id));
-        first.Update(guide);
-        return Task.CompletedTask;
+        Guide? guide = context.Guides.SingleOrDefault(guide => guide.Id.Equals(id));
+        if (guide == null)
+        {
+            throw new NotFoundException($"Guide with id {id} not found!");
+        }
+
+        return Task.FromResult(guide);
     }
+
+    // public Task UpdateAsync(Guide guide)
+    // {
+    //     Guide first = context.Guides.First(g => g.Id.Equals(guide.Id));
+    //     first.Update(guide);
+    //     return Task.CompletedTask;
+    // }
 
     public Task DeleteAsync(Guid id)
     {
@@ -34,6 +46,11 @@ public class GuideJsonRepo : IGuideRepo
             throw new Exception("Nothing was removed, due to some error");
         }
         return Task.CompletedTask;
+    }
+
+    public Task<ICollection<Guide>> GetByCategoryAsync(Guid id)
+    {
+        throw new NotImplementedException();
     }
 
     // public Task UnParentGuidesFromCategory(Guid categoryId)

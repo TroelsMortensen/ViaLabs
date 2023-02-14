@@ -9,11 +9,13 @@ public class Guide
 
     public ICollection<Slide> Slides { get; private set; } = new List<Slide>();
 
+    public Guid Category { get; private set; }
     public Guide(string title, bool isPublished, bool displayStepNums)
     {
         Title = title;
         IsPublished = isPublished;
         IsDisplayingStepNums = displayStepNums;
+        throw new Exception("Change to factory method, remember parent category");
     }
 
     public void Update(Guide guide)

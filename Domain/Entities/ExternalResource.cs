@@ -4,16 +4,21 @@ namespace Domain.Entities;
 
 public class ExternalResource
 {
-    public Guid Id { get; private set; } = Guid.NewGuid();
+    public Guid Id { get; private set; } 
     public string Title { get; private set; }
     public string Url { get; private set; }
     public string? Description { get; private set; }
+    
+    public Guid Category { get; private set; }
 
-    public ExternalResource(string title, string url)
+    public ExternalResource(string title, string url, Guid parentCategory)
     {
         Title = title;
         Url = url;
+        Id = Guid.NewGuid();
+        Category = parentCategory;
         ValidateData(title, url);
+        throw new Exception("Do factory method");
     }
 
     public void SetDescription(string desc)

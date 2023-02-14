@@ -1,16 +1,15 @@
-﻿using Application.Features.ProfileDataLogic.DTOs.GuideDTOs;
-using Application.Features.ProfileDataLogic.ProviderContracts;
+﻿using Application.Features.ProfileDataLogic.ProviderContracts;
 using JsonData.Context;
 
-namespace JsonData.ProviderImpls.ProfileProviderImpls;
+namespace JsonData.ProviderImpls.ProfileInfoProviderImpls;
 
-public class JsonGuideProvider : IGuideProvider
+internal class JsonGuideProvider : IGuideProvider
 {
 
-    private readonly CollectionsDataContext context;
+    private readonly JsonDataContext context;
 
 
-    public JsonGuideProvider(CollectionsDataContext context)
+    internal JsonGuideProvider(JsonDataContext context)
     {
         this.context = context;
     }

@@ -8,11 +8,11 @@ namespace Application.Features.ProfileDataLogic.LogicImpls;
 
 public class GuideLogic : IGuideLogic
 {
-    private readonly IRepoManager repoManager;
+    private readonly IUnitOfWork unitOfWork;
 
-    public GuideLogic(IRepoManager repoManager)
+    public GuideLogic(IUnitOfWork unitOfWork)
     {
-        this.repoManager = repoManager;
+        this.unitOfWork = unitOfWork;
     }
 
     public async Task<GuideHeaderDto> CreateGuideAsync(GuideCreationDto guide)

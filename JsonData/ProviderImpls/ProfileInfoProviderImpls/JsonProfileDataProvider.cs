@@ -8,29 +8,29 @@ using SharedKernel.OperationResult;
 
 namespace JsonData.ProviderImpls.ProfileInfoProviderImpls;
 
-public class JsonProfileDataProvider : IProfileDataProvider
+internal class JsonProfileDataProvider : IProfileDataProvider
 {
-    private readonly CollectionsDataContext context;
+    private readonly JsonDataContext context;
 
-    public JsonProfileDataProvider(CollectionsDataContext context)
+    internal JsonProfileDataProvider(JsonDataContext context)
     {
         this.context = context;
     }
 
     public Task<Result<TeacherHeaderDto>> GetTeacherAsync(string userName)
     {
-        Result<TeacherHeaderDto> opResult = new();
         Teacher? teacher = context.Teachers.SingleOrDefault(t => t.Name.Equals(userName));
 
         if (teacher is null)
         {
-            opResult.AddError("User Name", ($"Did not find teacher by name {userName}"));
-            return Task.FromResult(opResult);
+            var errorResult = new Result<TeacherHeaderDto>("User Name", $"Did not find teacher by name {userName}");
+            return Task.FromResult(errorResult);
         }
 
-        TeacherHeaderDto result = new (teacher.Name);
-        opResult.Value = result;
+        TeacherHeaderDto resultDto = new(teacher.Name);
+
+        Result<TeacherHeaderDto> result = new Result<TeacherHeaderDto>(resultDto);
         
-        return Task.FromResult(opResult);
+        return Task.FromResult(result);
     }
 }

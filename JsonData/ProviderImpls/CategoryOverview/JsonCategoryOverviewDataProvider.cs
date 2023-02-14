@@ -6,11 +6,11 @@ using JsonData.Context;
 
 namespace JsonData.ProviderImpls.CategoryOverview;
 
-public class JsonCategoryOverviewDataProvider : ICategoryOverviewDataProvider
+internal class JsonCategoryOverviewDataProvider : ICategoryOverviewDataProvider
 {
-    private readonly CollectionsDataContext context;
+    private readonly JsonDataContext context;
 
-    public JsonCategoryOverviewDataProvider(CollectionsDataContext context)
+    internal JsonCategoryOverviewDataProvider(JsonDataContext context)
     {
         this.context = context;
     }
@@ -26,14 +26,14 @@ public class JsonCategoryOverviewDataProvider : ICategoryOverviewDataProvider
     public Task<ICollection<CategoryWithGuidesAndResourcesDto>> GetCategoriesWithGuideHeadersByTeacherAsync(string teacher)
     {
         // get all categories for teacher
-        ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuidesAndExRes = context.Teachers
-            .First(t => t.Name.Equals(teacher))
+        ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuidesAndExRes = context
             .Categories
+            .Where(category => category.Owner.Equals(teacher))
             .Select(c =>
                 new CategoryWithGuidesAndResourcesDto(
                     new CategoryDto(c.Id, c.Title, c.BackgroundColor),
-                    c.Guides.Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList(),
-                    c.ExternalResources.Select(er => new ExternalResourceDisplayDto(er.Id, er.Title, er.Url, er.Description)).ToList()
+                    context.Guides.Where(guide => guide.Category.Equals(c.Id)).Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList(),
+                    context.ExternalResources.Where(ext => ext.Category.Equals(c.Id)).Select(er => new ExternalResourceDisplayDto(er.Id, er.Title, er.Url, er.Description)).ToList()
                 )
             )
             .ToList();

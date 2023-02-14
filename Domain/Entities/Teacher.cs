@@ -4,19 +4,17 @@ namespace Domain.Entities;
 
 public class Teacher
 {
-    public string Name { get; init; }
-
-    public ICollection<Category> Categories { get; init; } // make private? :/ some day
+    public string Name { get; }
 
     public static Result<Teacher> Create(string name)
     {
         name = name?.Trim(' ');
-        Teacher teacher = new(name, new List<Category>());
+        Teacher teacher = new(name);
         Result validationResult = Validate(name);
 
         return validationResult.HasErrors ? new(validationResult.Errors) : new(teacher);
     }
-    
+
     private static Result Validate(string name)
     {
         Result result = new();
@@ -40,10 +38,9 @@ public class Teacher
         return result;
     }
 
-    private Teacher(string name, ICollection<Category> categories)
+    private Teacher(string name)
     {
         Name = name;
-        Categories = categories;
     }
 
     private Teacher()
