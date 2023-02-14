@@ -5,11 +5,11 @@ using JsonData.Context;
 
 namespace JsonData.Repositories;
 
-internal class GuideJsonRepo : IGuideRepo
+public class GuideJsonRepo : IGuideRepo
 {
     private readonly JsonDataContext context;
 
-    internal GuideJsonRepo(JsonDataContext context)
+    public GuideJsonRepo(JsonDataContext context)
     {
         this.context = context;
     }

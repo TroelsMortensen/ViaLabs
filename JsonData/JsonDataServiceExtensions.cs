@@ -1,4 +1,5 @@
 ﻿using Application.RepositoryContracts;
+using JsonData.Context;
 using JsonData.JsonSerializationUtils;
 using JsonData.QueryImpls.ProfileViewQueries;
 using JsonData.Repositories;
@@ -40,6 +41,7 @@ public static class JsonDataServiceExtensions
 
     private static void AddDataAccess(IServiceCollection services)
     {
+        services.AddScoped<JsonDataContext>();
         services.AddScoped<IJsonHelper, SystemNetJsonSerializerHelper>();
     }
 }

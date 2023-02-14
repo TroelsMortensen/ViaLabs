@@ -3,7 +3,7 @@ using JsonData.Context;
 
 namespace JsonData.Repositories;
 
-internal class JsonUnitOfWorkImpl : IUnitOfWork
+public class JsonUnitOfWorkImpl : IUnitOfWork
 {
 
     private readonly JsonDataContext context;
@@ -16,7 +16,7 @@ internal class JsonUnitOfWorkImpl : IUnitOfWork
     }
 
 
-    internal JsonUnitOfWorkImpl(JsonDataContext context)
+    public JsonUnitOfWorkImpl(JsonDataContext context)
     {
         this.context = context;
     }

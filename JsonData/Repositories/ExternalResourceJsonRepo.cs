@@ -4,11 +4,11 @@ using JsonData.Context;
 
 namespace JsonData.Repositories;
 
-internal class ExternalResourceJsonRepo : IExternalResourceRepo
+public class ExternalResourceJsonRepo : IExternalResourceRepo
 {
     private readonly JsonDataContext context;
 
-    internal ExternalResourceJsonRepo(JsonDataContext context)
+    public ExternalResourceJsonRepo(JsonDataContext context)
     {
         this.context = context;
     }

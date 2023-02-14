@@ -5,11 +5,11 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-internal class GetCategoryOverviewByTeacher : IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>>
+public class GetCategoryOverviewByTeacher : IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>>
 {
     private readonly JsonDataContext context;
 
-    internal GetCategoryOverviewByTeacher(JsonDataContext context)
+    public GetCategoryOverviewByTeacher(JsonDataContext context)
     {
         this.context = context;
     }

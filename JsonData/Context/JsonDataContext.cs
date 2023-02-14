@@ -4,7 +4,7 @@ using JsonData.JsonSerializationUtils;
 
 namespace JsonData.Context;
 
-internal class JsonDataContext : IDisposable
+public class JsonDataContext : IDisposable
 {
     private readonly IJsonHelper jsonHelper;
     private readonly string path = "vialabs.json";
@@ -16,7 +16,7 @@ internal class JsonDataContext : IDisposable
 
     internal ICollection<ExternalResource> ExternalResources => Data.ExternalResources;
 
-    internal JsonDataContext(IJsonHelper jsonHelper)
+    public JsonDataContext(IJsonHelper jsonHelper)
     {
         this.jsonHelper = jsonHelper;
         

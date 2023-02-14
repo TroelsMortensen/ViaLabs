@@ -1,6 +1,4 @@
 ﻿
-using Domain.OperationResult;
-
 namespace ViewData;
 
 public interface IQueryHandler<TQuery, TResultValue>
