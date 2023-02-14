@@ -2,7 +2,7 @@
 using System.Text.RegularExpressions;
 using Markdig;
 
-namespace Application.MarkdownConvert;
+namespace BlazorServerUI.MarkdownConvert;
 
 public class MarkdigAdapter 
 {
