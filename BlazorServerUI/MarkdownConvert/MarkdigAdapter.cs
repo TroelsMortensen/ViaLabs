@@ -1,18 +1,33 @@
 ﻿using System.Text;
-using System.Text.RegularExpressions;
+using BlazorServerUI.MarkdownConvert.SubHandlers;
 using Markdig;
 
 namespace BlazorServerUI.MarkdownConvert;
 
-public class MarkdigAdapter 
+public class MarkdigAdapter
 {
+    private readonly Action<StringBuilder>[] postProcessors =
+    {
+        AddLineNumberCssClassToCodeTag.Handle,
+        MoveLineHighlightingAttributes.Handle,
+        InsertNumberedRingSteps.Handle,
+        
+    };
+
     public string ConvertMdToHtml(string mdContent)
     {
-        if(string.IsNullOrEmpty(mdContent)) return String.Empty;
+        if (string.IsNullOrEmpty(mdContent)) return String.Empty;
 
         MarkdownPipeline pipeline = new MarkdownPipelineBuilder().UseAdvancedExtensions().Build();
         string mdAsHtml = Markdown.ToHtml(mdContent, pipeline);
-        return mdAsHtml;
+
+        StringBuilder builder = new();
+        foreach (var processor in postProcessors)
+        {
+            processor(builder);
+        }
+    
+        return builder.ToString();
     }
 
     // public void GenerateHtmlPageFromMdFiles(string pathToMdSteps, string basePagePath)
@@ -27,36 +42,36 @@ public class MarkdigAdapter
     //     WriteFinalPageToFile(pathToMdSteps, mainBuilder);
     // }
 
-    private void InsertNumberedRingSteps(StringBuilder mainBuilder)
-    {
-        Regex pattern = new(@"\(\(\d*\)\)");
-        MatchCollection matchCollection = pattern.Matches(mainBuilder.ToString());
-        foreach (Match match in matchCollection)
-        {
-            string theMatch = match.Value;
-            string stepNumber = theMatch.Replace("((", "").Replace("))", "");
-            string replacementHtml = $"<span class=\"numberCircle\"><span>{stepNumber}</span></span>";
-            mainBuilder.Replace(theMatch, replacementHtml);
-        }
-    }
+    // public void InsertNumberedRingSteps(StringBuilder mainBuilder)
+    // {
+    //     Regex pattern = new(@"\(\(\d*\)\)");
+    //     MatchCollection matchCollection = pattern.Matches(mainBuilder.ToString());
+    //     foreach (Match match in matchCollection)
+    //     {
+    //         string theMatch = match.Value;
+    //         string stepNumber = theMatch.Replace("((", "").Replace("))", "");
+    //         string replacementHtml = $"<span class=\"numberCircle\"><span>{stepNumber}</span></span>";
+    //         mainBuilder.Replace(theMatch, replacementHtml);
+    //     }
+    // }
 
-    private void MoveLineHighlightingAttributes(StringBuilder mainBuilder)
-    {
-        // Regex pattern = new Regex("<pre><code class=\"line-numbers language-(?<language>[a-z]){0,15}\\{\\d\\}\">");
-        Regex pattern = new Regex("<pre><code class=\"line-numbers language-[a-z]{0,15}{(.*?)}\">");
-        MatchCollection matchCollection = pattern.Matches(mainBuilder.ToString());
-        foreach (Match match in matchCollection)
-        {
-            string existingHtml = match.Value;
-            // Regex regex = new Regex("{(.*?)}");
-            // Match dataLineValueMatch = regex.Match(existingHtml);
-            string dataLineValue = match.Groups[1].Value;
-
-            string replacementHtml = Regex.Replace(existingHtml, @"{(.*?)}", "");
-            replacementHtml = replacementHtml.Replace("pre", $"pre data-line=\"{dataLineValue}\"");
-            mainBuilder.Replace(existingHtml, replacementHtml);
-        }
-    }
+    // private void MoveLineHighlightingAttributes(StringBuilder mainBuilder)
+    // {
+    //     // Regex pattern = new Regex("<pre><code class=\"line-numbers language-(?<language>[a-z]){0,15}\\{\\d\\}\">");
+    //     Regex pattern = new Regex("<pre><code class=\"line-numbers language-[a-z]{0,15}{(.*?)}\">");
+    //     MatchCollection matchCollection = pattern.Matches(mainBuilder.ToString());
+    //     foreach (Match match in matchCollection)
+    //     {
+    //         string existingHtml = match.Value;
+    //         // Regex regex = new Regex("{(.*?)}");
+    //         // Match dataLineValueMatch = regex.Match(existingHtml);
+    //         string dataLineValue = match.Groups[1].Value;
+    //
+    //         string replacementHtml = Regex.Replace(existingHtml, @"{(.*?)}", "");
+    //         replacementHtml = replacementHtml.Replace("pre", $"pre data-line=\"{dataLineValue}\"");
+    //         mainBuilder.Replace(existingHtml, replacementHtml);
+    //     }
+    // }
 
     private void AddLineNumberClassToCodeTag(StringBuilder basePage)
     {
