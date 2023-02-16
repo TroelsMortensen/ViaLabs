@@ -5,7 +5,7 @@ using Domain.OperationResult;
 
 namespace Application.CommandUseCases.CategoryHandlers.CategoryCreate;
 
-public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand>
+public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand, Guid>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly ICategoryRepo categoryRepo;
@@ -16,23 +16,19 @@ public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand>
         this.categoryRepo = categoryRepo;
     }
 
-    public async Task<Result> Handle(CreateCategoryCommand command)
+    public async Task<Result<Guid>> Handle(CreateCategoryCommand command)
     {
-        // bool categoryIsFree = await ValidateTitleIsFree(request.Title);
-
-        // if (categoryIsFree)
-        //     return new("Category.Title", "Category title already in use");
-        
         Result<Category> newCatResult = Category.Create(command.Title, command.BackgroundColor, command.OwningTeacher);
+        
         if (newCatResult.HasErrors)
-            return Result.Failure(newCatResult.Errors);
+            return Result.Failure<Guid>(newCatResult.Errors);
 
         Category category = newCatResult.Value;
         await categoryRepo.AddAsync(category);
         await unitOfWork.SaveChanges();
         // CategoryDto categoryDto = new(category.Id, category.Title, category.BackgroundColor);
-
-        return Result.Success();
+        
+        return Result.Success(category.Id);
     }
 
     // private async Task<bool> ValidateTitleIsFree(string categoryTitle, string teacherName)

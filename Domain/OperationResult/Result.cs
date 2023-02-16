@@ -9,6 +9,11 @@ public class Result
         return new Result();
     }
     
+    public static Result<TV> Success<TV>(TV value)
+    {
+        return new Result<TV>(value);
+    }
+
     public Result()
     {
     }
@@ -23,36 +28,11 @@ public class Result
     public IEnumerable<Error> Errors => errors.AsReadOnly();
     public bool HasErrors => Errors.Any();
 
-    public string
-        GetCombinedErrorMessage() // convenience method, which should probably not actually be used. Errors display format should be defined in UI.
+    // convenience method, which should probably not actually be used. Errors display format should be defined in UI.
+    public string GetCombinedErrorMessage() 
     {
         return string.Join(".\n", Errors.Select(error => error.Message));
     }
-
-    public static Result Validation()
-    {
-        return new Result();
-    }
-
-
-    // Didn't like this
-
-    // Attempt at Fluent result.
-    // public Result IfSuccessThen(Func<bool> exp, string attribute, string msg)
-    // {
-    //     if (HasErrors)
-    //     {
-    //         return this;
-    //     }
-    //
-    //     bool validationResult = exp();
-    //     if (!validationResult)
-    //     {
-    //         errors.Add(new Error(attribute, msg));
-    //     }
-    //
-    //     return this;
-    // }
 
     public Result ThenValidate(bool expShouldBeTrue, string attribute, string errorMessage)
     {
@@ -64,10 +44,6 @@ public class Result
         return this;
     }
 
-    // Don't need this yet
-    // public Result IfFailure()
-    // {
-    // }
     public void AddResults(params Result[] results)
     {
         foreach (Result result in results)
@@ -76,11 +52,15 @@ public class Result
         }
     }
 
-
     public static Result Failure(IEnumerable<Error> enumerable)
     {
         Result result = new(enumerable);
         return result;
+    }
+    
+    public static Result<TV> Failure<TV>(IEnumerable<Error> enumerable)
+    {
+        return new Result<TV>(enumerable);
     }
 }
 
@@ -91,11 +71,13 @@ public class Result<T> : Result
     public Result(IEnumerable<Error> errors) : base(errors)
     {
     }
-    
+
     public Result(T tvalue)
     {
         value = tvalue;
     }
+
+
 
     private Result()
     {

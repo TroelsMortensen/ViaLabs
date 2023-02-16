@@ -27,7 +27,7 @@ public static class ServiceExtensions
 
     private static void AddCategoryHandlers(IServiceCollection services)
     {
-        services.AddScoped<ICommandHandler<CreateCategoryCommand>, CategoryCreateHandler>();
+        services.AddScoped<ICommandHandler<CreateCategoryCommand, Guid>, CategoryCreateHandler>();
         services.AddScoped<ICommandHandler<UpdateCategoryCommand>, CategoryUpdateHandler>();
         services.AddScoped<ICommandHandler<DeleteCategoryCommand>, CategoryDeleteHandler>();
     }

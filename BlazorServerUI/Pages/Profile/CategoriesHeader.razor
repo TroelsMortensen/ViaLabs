@@ -4,8 +4,13 @@
 @using System.Drawing
 @using Application.HandlerContracts
 @using Domain.OperationResult
-@inject ICommandHandler<CreateCategoryCommand> createCategoryHandler
+@using JsonData.QueryImpls.ProfileViewQueries
+@using ViewData
+@using ViewData.ProfileInfo.DTOs
+@using ViewData.ProfileInfo.Queries
+@inject ICommandHandler<CreateCategoryCommand, Guid> createCategoryHandler
 @inject ProfileStateContainer profileStateContainer
+@inject IQueryHandler<GetSingleCategoryInfo, CategoryDto> categoryQueryHandler
 
 <hr/>
 <div style="display:flex; justify-content: center">
@@ -63,14 +68,14 @@
         CreateCategoryCommand createCategory = new(categoryTitle, teacherName, backgroundColor);
 
 
-        Result result = await createCategoryHandler.Handle(createCategory);
+        Result<Guid> result = await createCategoryHandler.Handle(createCategory);
 
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        // Result<CategoryDto> resultDto = await IQuer
+        CategoryDto resultDto = await categoryQueryHandler.Query(new GetSingleCategoryInfo(result.Value));
         throw new Exception("Create query handlers here");
         // profileStateContainer.AddCategory(result.Value);
 
