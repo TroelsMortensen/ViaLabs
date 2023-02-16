@@ -1,10 +1,12 @@
-﻿using Domain.OperationResult;
+﻿using System.Text.Json.Serialization;
+using Domain.OperationResult;
 
 namespace Domain.Entities;
 
 public class Teacher
 {
-    public string Name { get; }
+    
+    public string Name { get; private set; }
 
     public static Result<Teacher> Create(string name)
     {

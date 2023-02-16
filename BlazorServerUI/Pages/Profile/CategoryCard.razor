@@ -33,7 +33,7 @@
     <hr/>
     <h5 style="font-style: italic">Guides</h5>
     <div style="text-align: left">
-        @if (guides == null || !guides.Any())
+        @if (!guides.Any())
         {
             <p style="margin-left: 15px;">
                 No guides yet..
@@ -61,7 +61,7 @@
     <h5 style="font-style: italic">External Resources</h5>
     <div style="text-align: left">
 
-        @if (externalResources != null && externalResources.Any())
+        @if (externalResources.Any())
         {
             foreach (ExternalResourceDisplayDto resource in externalResources)
             {
@@ -129,8 +129,8 @@
 
     private CategoryDto? Category { get; set; }
 
-    private ICollection<GuideHeaderDto> guides = null!;
-    private ICollection<ExternalResourceDisplayDto> externalResources = null!;
+    private ICollection<GuideHeaderDto> guides = new List<GuideHeaderDto>();
+    private ICollection<ExternalResourceDisplayDto> externalResources = new List<ExternalResourceDisplayDto>();
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
@@ -236,7 +236,7 @@
         try
         {
             throw new NotImplementedException();
-            // ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
+    // ExtResUpdateRequest request = new ExtResUpdateRequest(resourceBeingEdited.Id, resourceBeingEdited.Title, resourceBeingEdited.Url, resourceBeingEdited.Description);
     // await extResLogic.UpdateAsync(request!); TODO
             throw new NotImplementedException();
     // profileStateContainer.UpdateResource(resourceBeingEdited!);

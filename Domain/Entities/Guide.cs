@@ -10,7 +10,12 @@ public class Guide
     public ICollection<Slide> Slides { get; private set; } = new List<Slide>();
 
     public Guid Category { get; private set; }
-    public Guide(string title, bool isPublished, bool displayStepNums)
+
+    private Guide()
+    {
+        
+    }
+    private Guide(string title, bool isPublished, bool displayStepNums)
     {
         Title = title;
         IsPublished = isPublished;

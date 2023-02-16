@@ -11,7 +11,9 @@ public class ExternalResource
     
     public Guid Category { get; private set; }
 
-    public ExternalResource(string title, string url, Guid parentCategory)
+    private ExternalResource(){}
+    
+    private ExternalResource(string title, string url, Guid parentCategory)
     {
         Title = title;
         Url = url;
