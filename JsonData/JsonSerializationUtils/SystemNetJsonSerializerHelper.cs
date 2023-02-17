@@ -53,6 +53,9 @@ public class SystemNetJsonSerializerHelper : IJsonHelper
         }
     }
 
+    // https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/custom-contracts
+    // https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/immutability?pivots=dotnet-7-0
+    // https://stackoverflow.com/questions/69448540/net-core-the-json-property-name-for-collides-with-another-property
     static void AddPrivatePropertiesModifier(JsonTypeInfo jsonTypeInfo)
     {
         if (jsonTypeInfo.Kind != JsonTypeInfoKind.Object)
