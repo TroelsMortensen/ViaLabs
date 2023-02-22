@@ -7,11 +7,11 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class GetTeacherForProfileView : IQueryHandler<TeacherQuery, TeacherDto>
+public class TeacherForProfileViewQueryHandler : IQueryHandler<TeacherQuery, TeacherDto>
 {
     private readonly JsonDataContext context;
 
-    public GetTeacherForProfileView(JsonDataContext context)
+    public TeacherForProfileViewQueryHandler(JsonDataContext context)
     {
         this.context = context;
     }

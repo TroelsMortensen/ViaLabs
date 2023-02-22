@@ -5,24 +5,18 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class GetCategoryOverviewByTeacher : IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>>
+public class ProfileInfoOverviewQueryHandler : IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesDto>>
 {
     private readonly JsonDataContext context;
 
-    public GetCategoryOverviewByTeacher(JsonDataContext context)
+    public ProfileInfoOverviewQueryHandler(JsonDataContext context)
     {
         this.context = context;
     }
 
-    // public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
-    // {
-    //     context.Teachers.First(t => t.Name.Equals(teacherName)).Categories.Select();
-    //     ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacherName))
-    //         .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
-    //     return Task.FromResult(categoryDtos);
-    // }
+    
 
-    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> Query(GetProfileInfo query)
+    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> Query(ProfileInfoOverviewQuery query)
     {
         string teacher = query.TeacherName;
         // get all categories for teacher
@@ -41,6 +35,14 @@ public class GetCategoryOverviewByTeacher : IQueryHandler<GetProfileInfo, IColle
         return Task.FromResult(categoriesWithGuidesAndExRes);
     }
 
+    // public Task<ICollection<CategoryDto>> GetCategoryCardsDTOAsync(string teacherName)
+    // {
+    //     context.Teachers.First(t => t.Name.Equals(teacherName)).Categories.Select();
+    //     ICollection<CategoryDto> categoryDtos = context.Categories.Where(c => c.OwnerId.Equals(teacherName))
+    //         .Select(c => new CategoryDto(c.Id, c.Title, c.BackgroundColor)).ToList();
+    //     return Task.FromResult(categoryDtos);
+    // }
+    
     // private CategoryWithGuidesAndResourcesDto CreateUnCategorized(string teacher)
     // {
     //     CategoryWithGuidesAndResourcesDto unCatCwg = new();

@@ -77,7 +77,7 @@
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        CategoryDto resultDto = await CategoryQueryHandler.Query<SingleCategoryInfoQuery, CategoryDto>(new SingleCategoryInfoQuery(createCategory.Id));
+        CategoryDto resultDto = await CategoryQueryHandler.Query(new SingleCategoryInfoQuery(createCategory.Id));
         throw new Exception("Create query handlers here");
         // profileStateContainer.AddCategory(result.Value);
 

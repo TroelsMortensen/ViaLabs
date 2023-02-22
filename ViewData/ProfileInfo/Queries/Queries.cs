@@ -1,7 +1,9 @@
-﻿namespace ViewData.ProfileInfo.Queries;
+﻿using ViewData.ProfileInfo.DTOs;
 
-public record struct TeacherQuery(string TeacherName);
+namespace ViewData.ProfileInfo.Queries;
 
-public record struct GetProfileInfo(string TeacherName);
+public record TeacherQuery(string TeacherName) : IQuery<TeacherDto>;
 
-public record struct SingleCategoryInfoQuery(Guid id);
+public record ProfileInfoOverviewQuery(string TeacherName) : IQuery<ICollection<CategoryWithGuidesAndResourcesDto>>;
+
+public record SingleCategoryInfoQuery(Guid Id) : IQuery<CategoryDto>;

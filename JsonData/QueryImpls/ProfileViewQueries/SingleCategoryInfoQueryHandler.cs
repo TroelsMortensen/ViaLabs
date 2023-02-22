@@ -5,18 +5,18 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class SingleCategoryInfoQuery : IQueryHandler<ViewData.ProfileInfo.Queries.SingleCategoryInfoQuery, CategoryDto>
+public class SingleCategoryInfoQueryHandler : IQueryHandler<SingleCategoryInfoQuery, CategoryDto>
 {
 
     private readonly JsonDataContext context;
 
 
-    public SingleCategoryInfoQuery(JsonDataContext context)
+    public SingleCategoryInfoQueryHandler(JsonDataContext context)
     {
         this.context = context;
     }
 
-    public Task<CategoryDto> Query(ViewData.ProfileInfo.Queries.SingleCategoryInfoQuery query)
+    public Task<CategoryDto> Query(SingleCategoryInfoQuery query)
     {
         throw new NotImplementedException();
     }

@@ -1,6 +1,8 @@
-﻿namespace Dispatcher;
+﻿using ViewData;
+
+namespace Dispatcher;
 
 public interface IQueryDispatcher
 {
-    Task<TResult> Query<TQuery, TResult>(TQuery query) where TQuery : struct;
+    Task<TResult> Query<TResult>(IQuery<TResult> query);
 }

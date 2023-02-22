@@ -34,7 +34,7 @@
 
         if (!isViaTeacher) return;
 
-        approvedTeacher = await QueryDispatcher.Query<TeacherQuery, TeacherDto>(new TeacherQuery(userName));
+        approvedTeacher = await QueryDispatcher.Query(new TeacherQuery(userName));
 
         if (approvedTeacher != null)
         {
