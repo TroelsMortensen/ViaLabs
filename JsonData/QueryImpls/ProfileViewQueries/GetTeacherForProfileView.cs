@@ -7,7 +7,7 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class GetTeacherForProfileView : IQueryHandler<GetTeacher, TeacherHeaderDto>
+public class GetTeacherForProfileView : IQueryHandler<TeacherQuery, TeacherDto>
 {
     private readonly JsonDataContext context;
 
@@ -16,7 +16,7 @@ public class GetTeacherForProfileView : IQueryHandler<GetTeacher, TeacherHeaderD
         this.context = context;
     }
 
-    public Task<TeacherHeaderDto> Query(GetTeacher query)
+    public Task<TeacherDto> Query(TeacherQuery query)
     {
         Teacher? teacher = context.Teachers
             .SingleOrDefault(teacher => teacher.Name.Equals(query.TeacherName));
@@ -25,7 +25,7 @@ public class GetTeacherForProfileView : IQueryHandler<GetTeacher, TeacherHeaderD
             throw new NotFoundException($"Teacher with name {query.TeacherName} was not found.");
         }
 
-        TeacherHeaderDto resultDto = new(teacher.Name);
+        TeacherDto resultDto = new(teacher.Name);
         return Task.FromResult(resultDto);
     }
 }

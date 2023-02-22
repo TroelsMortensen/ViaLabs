@@ -3,6 +3,7 @@ using BlazorServerUI.Popups;
 using BlazorServerUI.StateContainers.Profile;
 using Dispatcher;
 using Dispatcher.Command;
+using Dispatcher.Query;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 
@@ -22,14 +23,25 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // Add custom services
-builder.Services.AddScoped<ICommandDispatcher, CommandDispatcherWithServiceProvider>();
+{
+    {
+        // add dispatchers
+        builder.Services.AddScoped<ICommandDispatcher, CommandDispatcherWithServiceProvider>();
+        builder.Services.AddScoped<IQueryDispatcher, QueryDispatcherWithServiceProvider>();
+    }
+    
+    {
+        // add layers
+        builder.Services.AddApplicationLayerServices();
+        builder.Services.AddJsonDataAccess();
+    }
 
-builder.Services.AddApplicationLayerServices();
-builder.Services.AddJsonDataAccess();
-
-builder.Services.AddScoped<SnackBarHandler>();
-builder.Services.AddScoped<ProfileStateContainer>();
-
+    {
+        // blazor services
+        builder.Services.AddScoped<SnackBarHandler>();
+        builder.Services.AddScoped<ProfileStateContainer>();
+    }
+}
 // End custom services
 
 WebApplication app = builder.Build();

@@ -1,5 +1,5 @@
-﻿@inject NavigationManager navMgr
-@inject ProfileStateContainer profileStateContainer
+﻿@inject NavigationManager NavMgr
+@inject ProfileStateContainer ProfileStateContainer
 
 @using BlazorServerUI.StateContainers.Profile
 @using Domain.Exceptions
@@ -48,7 +48,7 @@
                         <div class="guide-title">
                             <img class="new-item-icon hidable"
                                  src="icons/edit.gif"
-                                 @onclick='() => navMgr.NavigateTo("/EditGuide/" + guide.Id)'
+                                 @onclick='() => NavMgr.NavigateTo("/EditGuide/" + guide.Id)'
                                  title="Edit Guide"/>
                             <a href="/Guide/@guide.Id" title="View Guide" class="movable-title">@guide.Title</a>
                         </div>
@@ -145,18 +145,18 @@
 
     protected override void OnInitialized()
     {
-        categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuidesAndResources.First(c =>
+        categoryWithGuidesAndResourcesDto = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c =>
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
         Category = categoryWithGuidesAndResourcesDto.Category;
         guides = categoryWithGuidesAndResourcesDto.Guides;
         externalResources = categoryWithGuidesAndResourcesDto.ExternalResources;
-        profileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
-        profileStateContainer.OnGuideAdded += ReactToCategoryUpdated;
-        profileStateContainer.OnExtResourceAdded += ReactToCategoryUpdated;
-        profileStateContainer.OnExtResourceUpdated += ReactToCategoryUpdated;
+        ProfileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
+        ProfileStateContainer.OnGuideAdded += ReactToCategoryUpdated;
+        ProfileStateContainer.OnExtResourceAdded += ReactToCategoryUpdated;
+        ProfileStateContainer.OnExtResourceUpdated += ReactToCategoryUpdated;
         if (Category == null)
         {
-            profileStateContainer.OnCategoryDeleted += StateHasChanged;
+            ProfileStateContainer.OnCategoryDeleted += StateHasChanged;
         }
     }
 
@@ -292,7 +292,7 @@
     {
         throw new NotImplementedException();
     // await extResLogic.DeleteAsync(resourceBeingEdited!.Id); TODO
-        profileStateContainer.DeleteResource(resourceBeingEdited.Id);
+        ProfileStateContainer.DeleteResource(resourceBeingEdited.Id);
         SnackBarHandler.ShowSnackMessage("Resource deleted!", SnackBarHandler.SnackType.Negative);
     }
 

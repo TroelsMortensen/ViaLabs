@@ -9,9 +9,10 @@
 @using ViewData
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
+@using SingleCategoryInfoQuery = ViewData.ProfileInfo.Queries.SingleCategoryInfoQuery
 @inject ICommandDispatcher CommandDispatcher
 @inject ProfileStateContainer ProfileStateContainer
-@inject IQueryHandler<GetSingleCategoryInfo, CategoryDto> CategoryQueryHandler
+@inject IQueryDispatcher CategoryQueryHandler
 
 <hr/>
 <div style="display:flex; justify-content: center">
@@ -76,7 +77,7 @@
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        CategoryDto resultDto = await CategoryQueryHandler.Query(new GetSingleCategoryInfo(createCategory.Id));
+        CategoryDto resultDto = await CategoryQueryHandler.Query<SingleCategoryInfoQuery, CategoryDto>(new SingleCategoryInfoQuery(createCategory.Id));
         throw new Exception("Create query handlers here");
         // profileStateContainer.AddCategory(result.Value);
 

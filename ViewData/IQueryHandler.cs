@@ -1,7 +1,7 @@
 ﻿
 namespace ViewData;
 
-public interface IQueryHandler<TQuery, TResultValue>
+public interface IQueryHandler<TQuery, TResult>
 {
-    Task<TResultValue> Query(TQuery query);
+    Task<TResult> Query(TQuery query);
 }

@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ViewData;
 using ViewData.ProfileInfo.DTOs;
 using ViewData.ProfileInfo.Queries;
-using GetTeacher = ViewData.ProfileInfo.Queries.GetTeacher;
+using SingleCategoryInfoQuery = ViewData.ProfileInfo.Queries.SingleCategoryInfoQuery;
 
 namespace JsonData;
 
@@ -28,8 +28,8 @@ public static class JsonDataServiceExtensions
     private static void AddForProfileView(IServiceCollection services)
     {
         services.AddScoped<IQueryHandler<GetProfileInfo, ICollection<CategoryWithGuidesAndResourcesDto>>, GetCategoryOverviewByTeacher>();
-        services.AddScoped<IQueryHandler<GetTeacher, TeacherHeaderDto>, GetTeacherForProfileView>();
-        services.AddScoped<IQueryHandler<GetSingleCategoryInfo, CategoryDto>, SingleCategoryInfoQuery>();
+        services.AddScoped<IQueryHandler<TeacherQuery, TeacherDto>, GetTeacherForProfileView>();
+        services.AddScoped<IQueryHandler<SingleCategoryInfoQuery, CategoryDto>, QueryImpls.ProfileViewQueries.SingleCategoryInfoQuery>();
     }
 
     private static void AddRepositories(IServiceCollection services)

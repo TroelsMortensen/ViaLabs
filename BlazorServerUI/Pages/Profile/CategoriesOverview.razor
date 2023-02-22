@@ -1,5 +1,5 @@
-﻿@inject NavigationManager navMgr
-@inject ProfileStateContainer profileStateContainer
+﻿@inject NavigationManager NavMgr
+@inject ProfileStateContainer ProfileStateContainer
 
 @using BlazorServerUI.StateContainers.Profile
 @using ViewData.ProfileInfo.DTOs
@@ -14,7 +14,7 @@
             <div class="guide-coloumn">
                 @{
                     int idx = 0;
-                    foreach (CategoryWithGuidesAndResourcesDto cwg in profileStateContainer.CategoriesWithGuidesAndResources)
+                    foreach (CategoryWithGuidesAndResourcesDto cwg in ProfileStateContainer.CategoriesWithGuidesAndResources)
                     {
                         if (idx % 2 == i)
                         {
@@ -34,8 +34,8 @@
 
     protected override void OnInitialized()
     {
-        profileStateContainer.OnCategoryAdded += ReactToCategoryAdded;
-        profileStateContainer.OnCategoryDeleted += ReactToCategoryDeleted;
+        ProfileStateContainer.OnCategoryAdded += ReactToCategoryAdded;
+        ProfileStateContainer.OnCategoryDeleted += ReactToCategoryDeleted;
     // TODO ReactToCategoryUpdated ??
     }
 
@@ -52,8 +52,8 @@
 
     public void Dispose()
     {
-        profileStateContainer.OnCategoryAdded -= ReactToCategoryAdded;
-        profileStateContainer.OnCategoryDeleted -= StateHasChanged;
+        ProfileStateContainer.OnCategoryAdded -= ReactToCategoryAdded;
+        ProfileStateContainer.OnCategoryDeleted -= StateHasChanged;
     // TODO ReactToCategoryUpdated ??
     }
 

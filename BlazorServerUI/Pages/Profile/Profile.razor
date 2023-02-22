@@ -3,8 +3,9 @@
 @using ViewData.ProfileInfo.DTOs
 @using ViewData
 @using BlazorServerUI.StateContainers.Profile
-@inject IQueryHandler<GetTeacher, TeacherHeaderDto> teacherQueryHandler
-@inject ProfileStateContainer profileStateContainer
+@using Dispatcher
+@inject IQueryDispatcher QueryDispatcher
+@inject ProfileStateContainer ProfileStateContainer
 
 <div style="display:flex; justify-content: space-evenly">
     <ProfileCard ApprovedTeacher="@approvedTeacher" UserName="@userName" IsViaTeacher="@isViaTeacher"/>
@@ -23,7 +24,7 @@
 
     private string userName = String.Empty;
     private bool isViaTeacher;
-    private TeacherHeaderDto? approvedTeacher;
+    private TeacherDto? approvedTeacher;
 
     protected override async Task OnInitializedAsync()
     {
@@ -33,11 +34,11 @@
 
         if (!isViaTeacher) return;
 
-        approvedTeacher = await teacherQueryHandler.Query(new GetTeacher(userName));
+        approvedTeacher = await QueryDispatcher.Query<TeacherQuery, TeacherDto>(new TeacherQuery(userName));
 
         if (approvedTeacher != null)
         {
-            await profileStateContainer.PopulateAsync(approvedTeacher.Name);
+            await ProfileStateContainer.PopulateAsync(approvedTeacher.Name);
         }
     // TODO catch exceptions here, and show toast error message
     }
