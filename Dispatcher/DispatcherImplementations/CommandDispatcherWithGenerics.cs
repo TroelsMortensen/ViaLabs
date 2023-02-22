@@ -29,7 +29,7 @@ public class CommandDispatcherWithGenerics : ICommandDispatcher
         // get the type of the interface, now with the command type as generic type parameter
         Type handlerInterfaceWithCommandType = handlerInterfaceType.MakeGenericType(command.GetType());
 
-
+        ;
         // find all classes, which implements
         Type[] typesOfImplementingClasses = Assembly.GetExecutingAssembly().GetTypes()
             .Where(t => t.IsClass && t.GetInterfaces().Contains(handlerInterfaceWithCommandType))
@@ -58,6 +58,19 @@ public class CommandDispatcherWithGenerics : ICommandDispatcher
         }
 
         throw new CommandDispatcherException("I should never reach this line");
+    }
+
+    private void Method<TCommand>(TCommand command) where TCommand : class
+    {
+        
+        // get type of this interface
+        Type handlerInterfaceType = typeof(ICommandHandler<>);
+
+        // get the type of the interface, now with the command type as generic type parameter
+        Type handlerInterfaceWithCommandType = handlerInterfaceType.MakeGenericType(command.GetType());
+
+        ICommandHandler<TCommand>? commandHandler = serviceProvider.GetService(handlerInterfaceWithCommandType) as ICommandHandler<TCommand>;
+        
     }
 }
 
