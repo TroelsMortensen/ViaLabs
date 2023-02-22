@@ -1,9 +1,8 @@
 ﻿using Application.HandlerContracts;
 using Application.RepositoryContracts;
-using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.CommandUseCases.CategoryHandlers.CategoryUpdate;
+namespace Application.UseCases.CategoryUseCases.CategoryUpdate;
 
 public class CategoryUpdateHandler : ICommandHandler<UpdateCategoryCommand>
 {
@@ -18,7 +17,7 @@ public class CategoryUpdateHandler : ICommandHandler<UpdateCategoryCommand>
 
     public async Task<Result> Handle(UpdateCategoryCommand request)
     {
-        Category catBeingUpdated = await categoryRepo.GetAsync(request.Id);
+        Domain.Entities.Category catBeingUpdated = await categoryRepo.GetAsync(request.Id);
         Result result = catBeingUpdated.Update(request.Title, request.BackgroundColor);
         if (result.HasErrors)
         {

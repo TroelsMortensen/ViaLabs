@@ -14,7 +14,7 @@ public class CategoryTests
     [Test]
     public void CategoryCreate_NullTitle_ReturnsError()
     {
-        Result<Category> result = Category.Create(null, "#000000", "");
+        Result<Category> result = Category.Create(null, "#000000", "", Guid.NewGuid());
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
@@ -22,7 +22,7 @@ public class CategoryTests
     [Test]
     public void CategoryCreate_EmptyTitle_ReturnsError()
     {
-        Result<Category> result = Category.Create("", "#000000", "");
+        Result<Category> result = Category.Create("", "#000000", "", Guid.NewGuid());
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
@@ -31,7 +31,7 @@ public class CategoryTests
     [TestCase("ab")]
     public void CategoryCreate_TitleLessThan3Letters_ReturnsError(string name)
     {
-        var result = Category.Create(name, "#000000", "");
+        var result = Category.Create(name, "#000000", "", Guid.NewGuid());
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
@@ -41,7 +41,7 @@ public class CategoryTests
     [TestCase("       ")]
     public void CategoryCreate_TitleIsJustEmptySpaces_ReturnsError(string title)
     {
-        var result = Category.Create(title, "#000000", "");
+        var result = Category.Create(title, "#000000", "", Guid.NewGuid());
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
@@ -51,7 +51,7 @@ public class CategoryTests
     [TestCase(" abcasf  ")]
     public void CategoryCreate_TitleHasLeadingAndOrTrailingSpaces_ReturnsCategoryWithTrimmedTitle(string title)
     {
-        var result = Category.Create(title, "#000000", "");
+        var result = Category.Create(title, "#000000", "", Guid.NewGuid());
         Assert.That(result.Value.Title, Is.EqualTo(title.Trim(' ')));
     }
 
@@ -61,7 +61,7 @@ public class CategoryTests
     [TestCase("abcefghijklmnopqrstuvxyz1")]
     public void CategoryCreate_TitleBetween3And15Letters_ReturnsCategory(string title)
     {
-        var result = Category.Create(title, "#000000", "");
+        var result = Category.Create(title, "#000000", "", Guid.NewGuid());
         Assert.False(result.HasErrors);
     }
 
@@ -70,7 +70,7 @@ public class CategoryTests
     [TestCase("abcefghijklmnopqrstuvxyz1fksdjaflkdjsælfjsailoæfjiaj3jfæ983")]
     public void CategoryCreate_TitleIsMoreThan25Letters_ReturnsError(string title)
     {
-        var result = Category.Create(title, "#000000", "");
+        var result = Category.Create(title, "#000000", "", Guid.NewGuid());
         Assert.True(result.HasErrors);
         Assert.That(result.Errors.First().Attribute, Is.EqualTo("Category.Title"));
     }
@@ -86,7 +86,7 @@ public class CategoryTests
     [TestCase("/000")]
     public void CategoryCreate_ColorStartsNotWithHash_ReturnsError(string color)
     {
-        Result<Category> result = Category.Create("Title", color, "");
+        Result<Category> result = Category.Create("Title", color, "", Guid.NewGuid());
         Assert.Multiple(() =>
         {
             Assert.True(result.HasErrors);
@@ -97,14 +97,14 @@ public class CategoryTests
     [Test]
     public void CategoryCreate_ColorStartsWithHas_ReturnsCategory()
     {
-        Result<Category> result = Category.Create("Title", "#000000", "");
+        Result<Category> result = Category.Create("Title", "#000000", "", Guid.NewGuid());
         Assert.False(result.HasErrors);
     }
 
     [Test]
     public void CategoryCreate_ColorStartsWithHashAndHas3Digits_ReturnsCategory()
     {
-        Result<Category> result = Category.Create("Title", "#000", "");
+        Result<Category> result = Category.Create("Title", "#000", "", Guid.NewGuid());
         Assert.False(result.HasErrors);
     }
 
@@ -115,7 +115,7 @@ public class CategoryTests
     [TestCase("#4 a32b")]
     public void CategoryCreate_ColorContainsEmptySpaces_ReturnsError(string color)
     {
-        Result<Category> result = Category.Create("Title", color, "");
+        Result<Category> result = Category.Create("Title", color, "", Guid.NewGuid());
         Assert.Multiple(() =>
         {
             Assert.True(result.HasErrors);
@@ -137,7 +137,7 @@ public class CategoryTests
     [TestCase("#\\\\\\")]
     public void CategoryCreate_ColorIsBetween0AndF_ReturnsError(string color)
     {
-        Result<Category> result = Category.Create("Title", color, "");
+        Result<Category> result = Category.Create("Title", color, "", Guid.NewGuid());
         Assert.Multiple(() =>
         {
             Assert.True(result.HasErrors);
@@ -155,7 +155,7 @@ public class CategoryTests
     [TestCase("#00000000000")]
     public void CategoryCreate_ColorLengthNot4Or7_ReturnsError(string color)
     {
-        Result<Category> result = Category.Create("Title", color, "");
+        Result<Category> result = Category.Create("Title", color, "", Guid.NewGuid());
         Assert.Multiple(() =>
         {
             Assert.True(result.HasErrors);
@@ -167,7 +167,7 @@ public class CategoryTests
     [TestCase("#000000")]
     public void CategoryCreate_ColorLengthIs4Or7_ReturnsCategory(string color)
     {
-        Result<Category> result = Category.Create("Title", color, "");
+        Result<Category> result = Category.Create("Title", color, "", Guid.NewGuid());
         Assert.False(result.HasErrors);
     }
 
@@ -183,7 +183,7 @@ public class CategoryTests
     [TestCase("#AbCdEf")]
     public void CategoryCreate_InputValidColors_ReturnsCategory(string color)
     {
-        Result<Category> result = Category.Create("Title", color, "");
+        Result<Category> result = Category.Create("Title", color, "", Guid.NewGuid());
         Assert.False(result.HasErrors);
     }
 
@@ -198,7 +198,7 @@ public class CategoryTests
     [TestCase("1", "#a3p2jk3j1k23lj2l3kj123k2j3")]
     public void CategoryCreate_BothInputInvalidTitleAndColor_ReturnsError(string title, string color)
     {
-        Result<Category> result = Category.Create(title, color, "");
+        Result<Category> result = Category.Create(title, color, "", Guid.NewGuid());
         Assert.Multiple(() =>
         {
             Assert.True(result.HasErrors);
@@ -217,7 +217,7 @@ public class CategoryTests
     public void CategoryUpdate_InputValidTitleAndColor_CategoryIsUpdated(string title, string color)
     {
         // arrange
-        Category category = Category.Create("Abc", "#999", "").Value;
+        Category category = Category.Create("Abc", "#999", "", Guid.NewGuid()).Value;
         // act
         Result result = category.Update(title, color);
 
@@ -246,7 +246,7 @@ public class CategoryTests
     [TestCase("cbad", null)]
     public void CategoryUpdate_InputInvalidTitleAndColor_ReturnsErrorAndDataNotUpdated(string title, string color)
     {
-        Category category = Category.Create("Abc", "#999", "").Value;
+        Category category = Category.Create("Abc", "#999", "", Guid.NewGuid()).Value;
         // act
         Result result = category.Update(title, color);
 

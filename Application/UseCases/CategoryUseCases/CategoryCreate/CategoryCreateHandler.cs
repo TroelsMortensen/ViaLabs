@@ -1,11 +1,10 @@
 ﻿using Application.HandlerContracts;
 using Application.RepositoryContracts;
-using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.CommandUseCases.CategoryHandlers.CategoryCreate;
+namespace Application.UseCases.CategoryUseCases.CategoryCreate;
 
-public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand, Guid>
+public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly ICategoryRepo categoryRepo;
@@ -16,14 +15,14 @@ public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand, Guid
         this.categoryRepo = categoryRepo;
     }
 
-    public async Task<Result<Guid>> Handle(CreateCategoryCommand command)
+    public async Task<Result> Handle(CreateCategoryCommand command)
     {
-        Result<Category> newCatResult = Category.Create(command.Title, command.BackgroundColor, command.OwningTeacher);
+        Result<Domain.Entities.Category> newCatResult = Domain.Entities.Category.Create(command.Title, command.BackgroundColor, command.OwningTeacher, command.Id);
         
         if (newCatResult.HasErrors)
-            return Result.Failure<Guid>(newCatResult.Errors);
+            return Result.Failure(newCatResult.Errors);
 
-        Category category = newCatResult.Value;
+        Domain.Entities.Category category = newCatResult.Value;
         await categoryRepo.AddAsync(category);
         await unitOfWork.SaveChanges();
         // CategoryDto categoryDto = new(category.Id, category.Title, category.BackgroundColor);

@@ -1,6 +1,8 @@
 using Application;
 using BlazorServerUI.Popups;
 using BlazorServerUI.StateContainers.Profile;
+using Dispatcher;
+using Dispatcher.DispatcherImplementations;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 
@@ -20,6 +22,8 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // Add custom services
+builder.Services.AddScoped<ICommandDispatcher, CommandDispatcherWithOverloadMethods>();
+
 builder.Services.AddApplicationLayerServices();
 builder.Services.AddJsonDataAccess();
 

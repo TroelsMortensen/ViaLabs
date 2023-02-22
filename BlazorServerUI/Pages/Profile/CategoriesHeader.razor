@@ -1,14 +1,14 @@
-﻿@using Application.CommandUseCases.CategoryHandlers.CategoryCreate
-@using BlazorServerUI.StateContainers.Profile
+﻿@using BlazorServerUI.StateContainers.Profile
 @using BlazorServerUI.Popups
 @using System.Drawing
 @using Application.HandlerContracts
+@using Application.UseCases.CategoryUseCases.CategoryCreate
 @using Domain.OperationResult
 @using JsonData.QueryImpls.ProfileViewQueries
 @using ViewData
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
-@inject ICommandHandler<CreateCategoryCommand, Guid> createCategoryHandler
+@inject ICommandHandler<CreateCategoryCommand> createCategoryHandler
 @inject ProfileStateContainer profileStateContainer
 @inject IQueryHandler<GetSingleCategoryInfo, CategoryDto> categoryQueryHandler
 
@@ -65,17 +65,17 @@
         AuthenticationState authState = await AuthenticationState;
         string teacherName = authState.User.Identity!.Name!;
 
-        CreateCategoryCommand createCategory = new(categoryTitle, teacherName, backgroundColor);
+        CreateCategoryCommand createCategory = new(categoryTitle, teacherName, backgroundColor, Guid.NewGuid());
 
 
-        Result<Guid> result = await createCategoryHandler.Handle(createCategory);
+        Result result = await createCategoryHandler.Handle(createCategory);
 
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        CategoryDto resultDto = await categoryQueryHandler.Query(new GetSingleCategoryInfo(result.Value));
+        CategoryDto resultDto = await categoryQueryHandler.Query(new GetSingleCategoryInfo(createCategory.Id));
         throw new Exception("Create query handlers here");
         // profileStateContainer.AddCategory(result.Value);
 

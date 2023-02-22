@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.CommandUseCases.CategoryHandlers.CategoryDelete;
+namespace Application.UseCases.CategoryUseCases.CategoryDelete;
 
 public class CategoryDeleteHandler : ICommandHandler<DeleteCategoryCommand>
 {

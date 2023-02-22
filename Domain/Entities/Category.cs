@@ -12,7 +12,7 @@ public class Category
 
     public string Owner { get; private set; }
 
-    public static Result<Category> Create(string title, string backgroundColor, string owningTeacher)
+    public static Result<Category> Create(string title, string backgroundColor, string owningTeacher, Guid id)
     {
         title = title == null ? "" : title.Trim(' ');
 
@@ -22,7 +22,7 @@ public class Category
             ? new Result<Category>(validationResult.Errors)
             : new(
                 new Category(
-                    Guid.NewGuid(),
+                    id,
                     title,
                     backgroundColor, 
                     owningTeacher)
