@@ -1,3 +1,3 @@
 ﻿namespace Application.UseCases.CategoryUseCases.CategoryDelete;
 
-public record struct DeleteCategoryCommand(Guid Id);
+public record DeleteCategoryCommand(Guid Id);
