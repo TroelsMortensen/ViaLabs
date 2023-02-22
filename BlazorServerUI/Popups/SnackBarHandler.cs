@@ -13,8 +13,18 @@ public class SnackBarHandler
     public static event Action<string, SnackType> OnSnackMsg = null!;
 
 
-    public static void ShowSnackMessage(string msg, SnackType snackType = SnackType.Positive)
+    public static void ShowSuccess(string msg)
     {
-        OnSnackMsg.Invoke(msg, snackType);
+        OnSnackMsg.Invoke(msg, SnackType.Positive);
+    }
+
+    public static void ShowInfo(string msg)
+    {
+        OnSnackMsg.Invoke(msg, SnackType.Neutral);
+    }
+
+    public static void ShowError(string msg)
+    {
+        OnSnackMsg.Invoke(msg, SnackType.Negative);
     }
 }
