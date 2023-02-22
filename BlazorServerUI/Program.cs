@@ -22,7 +22,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 
 // Add custom services
-builder.Services.AddScoped<ICommandDispatcher, CommandDispatcherWithSwitch>();
+builder.Services.AddScoped<ICommandDispatcher, CommandDispatcherWithServiceProvider>();
 
 builder.Services.AddApplicationLayerServices();
 builder.Services.AddJsonDataAccess();

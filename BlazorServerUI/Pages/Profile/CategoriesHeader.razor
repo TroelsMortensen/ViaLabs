@@ -3,14 +3,15 @@
 @using System.Drawing
 @using Application.HandlerContracts
 @using Application.UseCases.CategoryUseCases.CategoryCreate
+@using Dispatcher
 @using Domain.OperationResult
 @using JsonData.QueryImpls.ProfileViewQueries
 @using ViewData
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
-@inject ICommandHandler<CreateCategoryCommand> createCategoryHandler
-@inject ProfileStateContainer profileStateContainer
-@inject IQueryHandler<GetSingleCategoryInfo, CategoryDto> categoryQueryHandler
+@inject ICommandDispatcher CommandDispatcher
+@inject ProfileStateContainer ProfileStateContainer
+@inject IQueryHandler<GetSingleCategoryInfo, CategoryDto> CategoryQueryHandler
 
 <hr/>
 <div style="display:flex; justify-content: center">
@@ -68,14 +69,14 @@
         CreateCategoryCommand createCategory = new(categoryTitle, teacherName, backgroundColor, Guid.NewGuid());
 
 
-        Result result = await createCategoryHandler.Handle(createCategory);
+        Result result = await CommandDispatcher.Dispatch(createCategory);
 
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        CategoryDto resultDto = await categoryQueryHandler.Query(new GetSingleCategoryInfo(createCategory.Id));
+        CategoryDto resultDto = await CategoryQueryHandler.Query(new GetSingleCategoryInfo(createCategory.Id));
         throw new Exception("Create query handlers here");
         // profileStateContainer.AddCategory(result.Value);
 
