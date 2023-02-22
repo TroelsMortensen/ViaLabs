@@ -5,8 +5,8 @@
 @using Domain.OperationResult
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
 
-@inject ICommandHandler<DeleteCategoryCommand> deleteCategoryHandler
-@inject ProfileStateContainer profileStateContainer
+@inject ICommandHandler<DeleteCategoryCommand> DeleteCategoryHandler
+@inject ProfileStateContainer ProfileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-4" : "item-closed")"
      src="icons/DeleteCategory.svg"
@@ -59,13 +59,13 @@
 
     private async Task DeleteCategory()
     {
-        Result result = await deleteCategoryHandler.Handle(new DeleteCategoryCommand());
+        Result result = await DeleteCategoryHandler.Handle(new DeleteCategoryCommand());
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        profileStateContainer.DeleteCategory(CategoryId);
+        ProfileStateContainer.DeleteCategory(CategoryId);
         SnackBarHandler.ShowSnackMessage("Category deleted!");
     }
 

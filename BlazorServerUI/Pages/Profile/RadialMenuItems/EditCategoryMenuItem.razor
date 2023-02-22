@@ -5,8 +5,8 @@
 @using BlazorServerUI.Popups
 @using ViewData.ProfileInfo.DTOs
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@inject ICommandHandler<UpdateCategoryCommand> updateCategoryHandler
-@inject ProfileStateContainer profileStateContainer
+@inject ICommandHandler<UpdateCategoryCommand> UpdateCategoryHandler
+@inject ProfileStateContainer ProfileStateContainer
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-1" : "item-closed")"
      src="icons/EditCategory.svg"
@@ -55,7 +55,7 @@
 
     private void ShowEditCategory()
     {
-        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = profileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category.Id.Equals(CategoryId));
+        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category.Id.Equals(CategoryId));
         categoryDto = categoryWithGuidesAndResourcesDto.Category;
         editedCategoryTitle = categoryDto.Title;
         editedBackgroundColor = categoryDto.BackgroundColor;
@@ -69,7 +69,7 @@
         errorLabel = string.Empty;
         UpdateCategoryCommand to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
 
-        Result result = await updateCategoryHandler.Handle(to);
+        Result result = await UpdateCategoryHandler.Handle(to);
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
@@ -83,7 +83,7 @@
 
         SnackBarHandler.ShowSnackMessage("Category edited");
 
-        profileStateContainer.UpdateCategory(categoryDto.Id);
+        ProfileStateContainer.UpdateCategory(categoryDto.Id);
     }
 
 }
