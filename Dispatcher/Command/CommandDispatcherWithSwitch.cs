@@ -1,5 +1,4 @@
 ﻿using Application.HandlerContracts;
-using Application.RepositoryContracts;
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
@@ -7,7 +6,7 @@ using Dispatcher.Exceptions;
 using Domain.OperationResult;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dispatcher.DispatcherImplementations;
+namespace Dispatcher.Command;
 
 public class CommandDispatcherWithSwitch : ICommandDispatcher
 {

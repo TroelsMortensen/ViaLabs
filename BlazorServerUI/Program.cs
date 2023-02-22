@@ -2,7 +2,7 @@ using Application;
 using BlazorServerUI.Popups;
 using BlazorServerUI.StateContainers.Profile;
 using Dispatcher;
-using Dispatcher.DispatcherImplementations;
+using Dispatcher.Command;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 

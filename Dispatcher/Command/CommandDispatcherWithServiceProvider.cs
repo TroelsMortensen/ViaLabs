@@ -2,7 +2,7 @@
 using Dispatcher.Exceptions;
 using Domain.OperationResult;
 
-namespace Dispatcher.DispatcherImplementations;
+namespace Dispatcher.Command;
 
 public class CommandDispatcherWithServiceProvider : ICommandDispatcher
 {

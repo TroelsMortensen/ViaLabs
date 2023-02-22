@@ -3,7 +3,7 @@ using Application.HandlerContracts;
 using Dispatcher.Exceptions;
 using Domain.OperationResult;
 
-namespace Dispatcher.DispatcherImplementations;
+namespace Dispatcher.Command;
 
 /**
  * From here
