@@ -8,6 +8,9 @@ namespace Dispatcher.DispatcherImplementations;
 /**
  * From here
  * https://medium.com/swlh/dynamic-command-dispatching-in-c-d3abe21b3d1b
+ *
+ * NOT YET ACTUALLY WORKING.
+ * TODO missing dynamically creating arguments for my command handler constructors. Someday.
  */
 public class CommandDispatcherWithGenerics : ICommandDispatcher
 {
