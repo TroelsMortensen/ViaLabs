@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using ViewData;
 using ViewData.ProfileInfo.DTOs;
 using ViewData.ProfileInfo.Queries;
-using SingleCategoryInfoQuery = ViewData.ProfileInfo.Queries.SingleCategoryInfoQuery;
 
 namespace JsonData;
 
@@ -29,7 +28,7 @@ public static class JsonDataServiceExtensions
     {
         services.AddScoped<IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesDto>>, ProfileInfoOverviewQueryHandler>();
         services.AddScoped<IQueryHandler<TeacherQuery, TeacherDto>, TeacherForProfileViewQueryHandler>();
-        services.AddScoped<IQueryHandler<SingleCategoryInfoQuery, CategoryDto>, SingleCategoryInfoQueryHandler>();
+        services.AddScoped<IQueryHandler<CategoryInfoByIdQuery, CategoryDto>, CategoryInfoByIdQueryHandler>();
     }
 
     private static void AddRepositories(IServiceCollection services)
