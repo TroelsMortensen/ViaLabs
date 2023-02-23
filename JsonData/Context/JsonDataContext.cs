@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Domain.Entities;
+﻿using Domain.Entities;
 using JsonData.JsonSerializationUtils;
 
 namespace JsonData.Context;
@@ -9,7 +8,13 @@ public class JsonDataContext : IDisposable
     private readonly IJsonHelper jsonHelper;
     private readonly string path = "vialabs.json";
 
-    private ViaLabData? Data { get; set; }
+    private ViaLabData? data;
+    private ViaLabData? Data
+    {
+        get => data ??= LoadData(); // auto-completed into this from larger get body.
+        set => data = value;
+    }
+
     internal ICollection<Teacher> Teachers => Data.Teachers;
     internal ICollection<Category> Categories => Data.Categories;
     internal ICollection<Guide> Guides => Data.Guides;
