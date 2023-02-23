@@ -107,7 +107,7 @@
         <button class="positive-color vialab-button" style="margin-right: 20px" @onclick="UpdateExternalResource">Accept Changes</button>
         <button class="cancel-color vialab-button" style="margin-right: 20px" @onclick="CloseEditResourceDialog">Cancel</button>
         <button class="progress-button vialab-button"
-                @onmousedown="DeleteButtonDown"
+                @onmousedown="DeleteExternalResourceButtonDown"
                 @onmouseup="() => isHolding = false"
                 @onmouseout="() => isHolding = false">
             <div class="progress-button-filler" style="width:@progress%"></div>
@@ -255,7 +255,7 @@
         editResourceMsg = "";
     }
 
-    private async Task DeleteButtonDown()
+    private async Task DeleteExternalResourceButtonDown()
     {
         isHolding = true;
         await UpdateProgressBar();

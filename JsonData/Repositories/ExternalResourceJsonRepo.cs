@@ -31,6 +31,9 @@ public class ExternalResourceJsonRepo : IExternalResourceRepo
 
     public Task<ICollection<ExternalResource>> GetByCategoryAsync(Guid id)
     {
-        throw new NotImplementedException();
+        ICollection<ExternalResource> resources = context.ExternalResources
+            .Where(extRes => extRes.CategoryId.Equals(id))
+            .ToList();
+        return Task.FromResult(resources);
     }
 }

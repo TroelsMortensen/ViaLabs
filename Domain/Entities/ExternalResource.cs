@@ -9,16 +9,16 @@ public class ExternalResource
     public string Url { get; private set; }
     public string? Description { get; private set; }
     
-    public Guid Category { get; private set; }
+    public Guid CategoryId { get; private set; }
 
     private ExternalResource(){}
     
-    private ExternalResource(string title, string url, Guid parentCategory)
+    private ExternalResource(string title, string url, Guid parentCategoryId)
     {
         Title = title;
         Url = url;
         Id = Guid.NewGuid();
-        Category = parentCategory;
+        CategoryId = parentCategoryId;
         ValidateData(title, url);
         throw new Exception("Do factory method");
     }

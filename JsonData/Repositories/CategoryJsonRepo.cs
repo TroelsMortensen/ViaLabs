@@ -51,11 +51,11 @@ public class CategoryJsonRepo : ICategoryRepo
             throw new NotFoundException($"Could not find category with id {categoryId}");
         }
 
-        bool categoryWasRemoved = context.Categories.Remove(categoryToDelete!);
+        bool categoryWasRemoved = context.Categories.Remove(categoryToDelete);
 
         if (!categoryWasRemoved)
         {
-            throw new NotFoundException($"Could not find category with id {categoryId}");
+            throw new NotFoundException($"Could not find category with id {categoryId}. We shouldn't reach this, but if so, stuff's messed up!");
         }
     
         return Task.CompletedTask;

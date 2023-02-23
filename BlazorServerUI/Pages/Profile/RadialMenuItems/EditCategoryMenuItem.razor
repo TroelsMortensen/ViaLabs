@@ -47,7 +47,7 @@
 
     private string? editedCategoryTitle;
 
-    private CategoryDto categoryDto;
+    private CategoryDto categoryDto = null!;
     private string? editedBackgroundColor;
     private string errorLabel = string.Empty;
     private bool showEditCategoryModal;
@@ -55,7 +55,7 @@
 
     private void ShowEditCategory()
     {
-        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category.Id.Equals(CategoryId));
+        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category.Id.Equals(CategoryId));
         categoryDto = categoryWithGuidesAndResourcesDto.Category;
         editedCategoryTitle = categoryDto.Title;
         editedBackgroundColor = categoryDto.BackgroundColor;

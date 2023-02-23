@@ -26,8 +26,8 @@ public class ProfileInfoOverviewQueryHandler : IQueryHandler<ProfileInfoOverview
             .Select(c =>
                 new CategoryWithGuidesAndResourcesDto(
                     new CategoryDto(c.Id, c.Title, c.BackgroundColor),
-                    context.Guides.Where(guide => guide.Category.Equals(c.Id)).Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList(),
-                    context.ExternalResources.Where(ext => ext.Category.Equals(c.Id)).Select(er => new ExternalResourceDisplayDto(er.Id, er.Title, er.Url, er.Description)).ToList()
+                    context.Guides.Where(guide => guide.CategoryId.Equals(c.Id)).Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList(),
+                    context.ExternalResources.Where(ext => ext.CategoryId.Equals(c.Id)).Select(er => new ExternalResourceDisplayDto(er.Id, er.Title, er.Url, er.Description)).ToList()
                 )
             )
             .ToList();

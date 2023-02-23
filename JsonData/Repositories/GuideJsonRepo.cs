@@ -50,7 +50,8 @@ public class GuideJsonRepo : IGuideRepo
 
     public Task<ICollection<Guide>> GetByCategoryAsync(Guid id)
     {
-        throw new NotImplementedException();
+        ICollection<Guide> categories = context.Guides.Where(guide => guide.CategoryId.Equals(id)).ToList();
+        return Task.FromResult(categories);
     }
 
     // public Task UnParentGuidesFromCategory(Guid categoryId)

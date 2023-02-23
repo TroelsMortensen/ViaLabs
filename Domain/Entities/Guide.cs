@@ -9,7 +9,7 @@ public class Guide
 
     public ICollection<Slide> Slides { get; private set; } = new List<Slide>();
 
-    public Guid Category { get; private set; }
+    public Guid CategoryId { get; private set; }
 
     private Guide()
     {
