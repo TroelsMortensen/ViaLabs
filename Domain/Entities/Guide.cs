@@ -1,4 +1,6 @@
-﻿namespace Domain.Entities;
+﻿using Domain.OperationResult;
+
+namespace Domain.Entities;
 
 public class Guide
 {
@@ -10,25 +12,39 @@ public class Guide
     public ICollection<Slide> Slides { get; private set; } = new List<Slide>();
 
     public Guid CategoryId { get; private set; }
+    
+    public Guid TeacherId { get; private set; }
 
-    private Guide()
+    public static Result<Guide> Create(Guid guideId, string title, Guid categoryId, Guid teacherId)
+    {
+        Result validationResult = Validate(guideId, title, categoryId, teacherId);
+        if (validationResult.HasErrors)
+        {
+            return Result.Failure<Guide>(validationResult.Errors);
+        }
+
+        Guide guide = new Guide(guideId, title, categoryId, teacherId);
+        return Result.Success(guide);
+    }
+
+    private static Result Validate(Guid guideId, string title, Guid categoryId, Guid teacherId)
+    {
+        // TODO actually do some validation here
+        return Result.Success();
+    }
+    private Guide() // for json/db
     {
         
     }
-    private Guide(string title, bool isPublished, bool displayStepNums)
-    {
-        Title = title;
-        IsPublished = isPublished;
-        IsDisplayingStepNums = displayStepNums;
-        throw new Exception("Change to factory method, remember parent category");
-    }
 
-    public void Update(Guide guide)
+    private Guide(Guid guideId, string title, Guid categoryId, Guid teacherId)
     {
-        Title = guide.Title;
-        IsPublished = guide.IsPublished;
-        IsDisplayingStepNums = guide.IsDisplayingStepNums;
-        throw new Exception("Missing domain validation here");
+        Id = guideId;
+        Title = title;
+        CategoryId = categoryId;
+        TeacherId = teacherId;
+        IsPublished = false;
+        IsDisplayingStepNums = false;
     }
 
     public void Publish()
@@ -41,14 +57,17 @@ public class Guide
         IsPublished = false;
     }
 
-    public void DisplayStepNums(bool shouldDisplay)
+    public void DisplayStepNums()
     {
-        IsDisplayingStepNums = shouldDisplay;
+        IsDisplayingStepNums = true;
     }
 
-    public void AddSlide(Slide s)
+    public void HideStepNums()
+    {
+        IsDisplayingStepNums = false;
+    }
+    public void AddSlide(Slide s, int index)
     {
         Slides.Add(s);
     }
-    
 }
