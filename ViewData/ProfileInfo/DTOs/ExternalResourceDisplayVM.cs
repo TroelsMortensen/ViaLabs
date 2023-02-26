@@ -1,8 +1,8 @@
 ﻿namespace ViewData.ProfileInfo.DTOs;
 
-public class ExternalResourceDisplayDto
+public class ExternalResourceDisplayVM
 {
-    public ExternalResourceDisplayDto(Guid id, string title, string url, string? description)
+    public ExternalResourceDisplayVM(Guid id, string title, string url, string? description)
     {
         Id = id;
         Title = title;

@@ -42,7 +42,7 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public CategoryDto? Category { get; set; }
+    public CategoryVM? Category { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -50,7 +50,7 @@
     private bool showAddExtResModal;
     private string errorMsg = String.Empty;
 
-    private ExternalResourceDisplayDto extRes;
+    private ExternalResourceDisplayVM extRes;
 
 
     private void OpenNewExtResourceDialog()

@@ -47,7 +47,7 @@
 
     private string? editedCategoryTitle;
 
-    private CategoryDto categoryDto = null!;
+    private CategoryVM categoryVm = null!;
     private string? editedBackgroundColor;
     private string errorLabel = string.Empty;
     private bool showEditCategoryModal;
@@ -55,10 +55,10 @@
 
     private void ShowEditCategory()
     {
-        CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category.Id.Equals(CategoryId));
-        categoryDto = categoryWithGuidesAndResourcesDto.Category;
-        editedCategoryTitle = categoryDto.Title;
-        editedBackgroundColor = categoryDto.BackgroundColor;
+        CategoryWithGuidesAndResourcesVM categoryWithGuidesAndResourcesVm = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c => c.Category.Id.Equals(CategoryId));
+        categoryVm = categoryWithGuidesAndResourcesVm.Category;
+        editedCategoryTitle = categoryVm.Title;
+        editedBackgroundColor = categoryVm.BackgroundColor;
 
         showEditCategoryModal = true;
         errorLabel = string.Empty;
@@ -67,7 +67,7 @@
     private async Task UpdateCategory()
     {
         errorLabel = string.Empty;
-        UpdateCategoryCommand to = new(categoryDto.Id, editedCategoryTitle!, editedBackgroundColor!);
+        UpdateCategoryCommand to = new(categoryVm.Id, editedCategoryTitle!, editedBackgroundColor!);
 
         Result result = await UpdateCategoryHandler.Handle(to);
         if (result.HasErrors)
@@ -76,14 +76,14 @@
             return;
         }
 
-        categoryDto.Title = editedCategoryTitle!;
-        categoryDto.BackgroundColor = editedBackgroundColor!;
+        categoryVm.Title = editedCategoryTitle!;
+        categoryVm.BackgroundColor = editedBackgroundColor!;
 
         showEditCategoryModal = false;
 
         SnackBarHandler.ShowSuccess("Category edited");
 
-        ProfileStateContainer.UpdateCategory(categoryDto.Id);
+        ProfileStateContainer.UpdateCategory(categoryVm.Id);
     }
 
 }

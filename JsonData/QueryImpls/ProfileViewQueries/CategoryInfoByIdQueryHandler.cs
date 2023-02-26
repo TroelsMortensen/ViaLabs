@@ -5,7 +5,7 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class CategoryInfoByIdQueryHandler : IQueryHandler<CategoryInfoByIdQuery, CategoryDto>
+public class CategoryInfoByIdQueryHandler : IQueryHandler<CategoryInfoByIdQuery, CategoryVM>
 {
 
     private readonly JsonDataContext context;
@@ -16,10 +16,10 @@ public class CategoryInfoByIdQueryHandler : IQueryHandler<CategoryInfoByIdQuery,
         this.context = context;
     }
 
-    public Task<CategoryDto> Query(CategoryInfoByIdQuery byIdQuery)
+    public Task<CategoryVM> Query(CategoryInfoByIdQuery byIdQuery)
     {
-        CategoryDto result = context.Categories.Where(category => category.Id.Equals(byIdQuery.Id))
-            .Select(cat => new CategoryDto(cat.Id, cat.Title, cat.BackgroundColor))
+        CategoryVM result = context.Categories.Where(category => category.Id.Equals(byIdQuery.Id))
+            .Select(cat => new CategoryVM(cat.Id, cat.Title, cat.BackgroundColor))
             .First();
         return Task.FromResult(result);
     }

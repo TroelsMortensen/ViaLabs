@@ -14,11 +14,11 @@
             <div class="guide-coloumn">
                 @{
                     int idx = 0;
-                    foreach (CategoryWithGuidesAndResourcesDto cwg in ProfileStateContainer.CategoriesWithGuidesAndResources)
+                    foreach (CategoryWithGuidesAndResourcesVM cwg in ProfileStateContainer.CategoriesWithGuidesAndResources)
                     {
                         if (idx % 2 == i)
                         {
-                            CategoryDto? tmp = cwg.Category;
+                            CategoryVM? tmp = cwg.Category;
                             <CategoryCard CategoryId="@tmp?.Id" />
                         }
                         idx++;

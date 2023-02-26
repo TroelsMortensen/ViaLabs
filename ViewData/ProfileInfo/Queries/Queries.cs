@@ -2,10 +2,10 @@
 
 namespace ViewData.ProfileInfo.Queries;
 
-public record TeacherQuery(string TeacherName) : IQuery<TeacherDto>;
+public record TeacherQuery(string TeacherName) : IQuery<TeacherVM>;
 
-public record ProfileInfoOverviewQuery(string TeacherName) : IQuery<ICollection<CategoryWithGuidesAndResourcesDto>>;
+public record ProfileInfoOverviewQuery(string TeacherName) : IQuery<ICollection<CategoryWithGuidesAndResourcesVM>>;
 
-public record CategoryInfoByIdQuery(Guid Id) : IQuery<CategoryDto>;
+public record CategoryInfoByIdQuery(Guid Id) : IQuery<CategoryVM>;
 
-public record GuideHeaderQuery(Guid Id) : IQuery<GuideHeaderDto>;
+public record GuideHeaderQuery(Guid Id) : IQuery<GuideHeaderVM>;

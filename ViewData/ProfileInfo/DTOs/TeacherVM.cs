@@ -1,3 +1,3 @@
 ﻿namespace ViewData.ProfileInfo.DTOs;
 
-public record TeacherDto(string Name);
+public record TeacherVM(string Name);

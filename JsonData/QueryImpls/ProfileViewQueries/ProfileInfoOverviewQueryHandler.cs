@@ -5,7 +5,7 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class ProfileInfoOverviewQueryHandler : IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesDto>>
+public class ProfileInfoOverviewQueryHandler : IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesVM>>
 {
     private readonly JsonDataContext context;
 
@@ -16,18 +16,18 @@ public class ProfileInfoOverviewQueryHandler : IQueryHandler<ProfileInfoOverview
 
     
 
-    public Task<ICollection<CategoryWithGuidesAndResourcesDto>> Query(ProfileInfoOverviewQuery query)
+    public Task<ICollection<CategoryWithGuidesAndResourcesVM>> Query(ProfileInfoOverviewQuery query)
     {
         string teacher = query.TeacherName;
         // get all categories for teacher
-        ICollection<CategoryWithGuidesAndResourcesDto> categoriesWithGuidesAndExRes = context
+        ICollection<CategoryWithGuidesAndResourcesVM> categoriesWithGuidesAndExRes = context
             .Categories
             .Where(category => category.Owner.Equals(teacher))
             .Select(c =>
-                new CategoryWithGuidesAndResourcesDto(
-                    new CategoryDto(c.Id, c.Title, c.BackgroundColor),
-                    context.Guides.Where(guide => guide.CategoryId.Equals(c.Id)).Select(g => new GuideHeaderDto(g.Id, g.Title)).ToList(),
-                    context.ExternalResources.Where(ext => ext.CategoryId.Equals(c.Id)).Select(er => new ExternalResourceDisplayDto(er.Id, er.Title, er.Url, er.Description)).ToList()
+                new CategoryWithGuidesAndResourcesVM(
+                    new CategoryVM(c.Id, c.Title, c.BackgroundColor),
+                    context.Guides.Where(guide => guide.CategoryId.Equals(c.Id)).Select(g => new GuideHeaderVM(g.Id, g.Title)).ToList(),
+                    context.ExternalResources.Where(ext => ext.CategoryId.Equals(c.Id)).Select(er => new ExternalResourceDisplayVM(er.Id, er.Title, er.Url, er.Description)).ToList()
                 )
             )
             .ToList();

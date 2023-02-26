@@ -44,7 +44,7 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public CategoryDto Category { get; set; }
+    public CategoryVM Category { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -67,8 +67,8 @@
         {
             throw new Exception("Teacher not correctly logged in.");
         }
-        TeacherDto teacherDto = await QueryDispatcher.Query(new TeacherQuery(teacher));
-        CreateGuideCommand createGuideCommand = new(Guid.NewGuid(), Category.Id, newGuideTitle, teacherDto.Name);
+        TeacherVM teacherVm = await QueryDispatcher.Query(new TeacherQuery(teacher));
+        CreateGuideCommand createGuideCommand = new(Guid.NewGuid(), Category.Id, newGuideTitle, teacherVm.Name);
 
         Result result = await CommandDispatcher.Dispatch(createGuideCommand);
         if (result.HasErrors)
@@ -76,7 +76,7 @@
             createGuideErrorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        GuideHeaderDto created = await QueryDispatcher.Query(new GuideHeaderQuery(createGuideCommand.GuideId));
+        GuideHeaderVM created = await QueryDispatcher.Query(new GuideHeaderQuery(createGuideCommand.GuideId));
 
     // GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide); TODO
 

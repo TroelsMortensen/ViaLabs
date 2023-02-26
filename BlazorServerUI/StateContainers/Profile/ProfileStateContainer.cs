@@ -6,7 +6,7 @@ namespace BlazorServerUI.StateContainers.Profile;
 
 public class ProfileStateContainer
 {
-    public ICollection<CategoryWithGuidesAndResourcesDto> CategoriesWithGuidesAndResources { get; set; } = null!;
+    public ICollection<CategoryWithGuidesAndResourcesVM> CategoriesWithGuidesAndResources { get; set; } = null!;
 
     public Action OnCategoryAdded { get; set; } = null!;
     public Action OnCategoryDeleted { get; set; } = null!;
@@ -17,9 +17,9 @@ public class ProfileStateContainer
 
     // TODO public Action< Type { get; set; }  external resource added
 
-    private readonly IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider;
+    private readonly IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesVM>> categoryOverviewDataProvider;
 
-    public ProfileStateContainer(IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesDto>> categoryOverviewDataProvider)
+    public ProfileStateContainer(IQueryHandler<ProfileInfoOverviewQuery, ICollection<CategoryWithGuidesAndResourcesVM>> categoryOverviewDataProvider)
     {
         this.categoryOverviewDataProvider = categoryOverviewDataProvider;
     }
@@ -29,17 +29,17 @@ public class ProfileStateContainer
         CategoriesWithGuidesAndResources = await categoryOverviewDataProvider.Query(new ProfileInfoOverviewQuery(teacher));
     }
 
-    public void AddCategory(CategoryDto categoryDto)
+    public void AddCategory(CategoryVM categoryVm)
     {
-        CategoryWithGuidesAndResourcesDto c = new(categoryDto, new List<GuideHeaderDto>(), new List<ExternalResourceDisplayDto>());
+        CategoryWithGuidesAndResourcesVM c = new(categoryVm, new List<GuideHeaderVM>(), new List<ExternalResourceDisplayVM>());
         
         CategoriesWithGuidesAndResources.Add(c);
         OnCategoryAdded?.Invoke();
     }
 
-    public void AddGuideToCategory(GuideHeaderDto created, CategoryDto? category)
+    public void AddGuideToCategory(GuideHeaderVM created, CategoryVM? category)
     {
-        CategoryWithGuidesAndResourcesDto cwgw = category != null
+        CategoryWithGuidesAndResourcesVM cwgw = category != null
             ? CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
             : CategoriesWithGuidesAndResources.First(c => c.Category == null);
 
@@ -49,7 +49,7 @@ public class ProfileStateContainer
 
     public void DeleteCategory(Guid categoryId)
     {
-        CategoryWithGuidesAndResourcesDto cwgw = CategoriesWithGuidesAndResources.First(c => c.Category.Id.Equals(categoryId));
+        CategoryWithGuidesAndResourcesVM cwgw = CategoriesWithGuidesAndResources.First(c => c.Category.Id.Equals(categoryId));
         // ICollection<GuideHeaderDto> guideHeaderDtos = cwgw.Guides;
         // ICollection<ExternalResourceDisplayDto> exResDtos = cwgw.ExternalResources;
 
@@ -69,9 +69,9 @@ public class ProfileStateContainer
         OnCategoryDeleted.Invoke();
     }
 
-    public void AddExternalResourceToCategory(ExternalResourceDisplayDto created, CategoryDto? category)
+    public void AddExternalResourceToCategory(ExternalResourceDisplayVM created, CategoryVM? category)
     {
-        CategoryWithGuidesAndResourcesDto cwgw = category != null
+        CategoryWithGuidesAndResourcesVM cwgw = category != null
             ? CategoriesWithGuidesAndResources.First(c => c.Category != null && c.Category!.Id.Equals(category.Id))
             : CategoriesWithGuidesAndResources.First(c => c.Category == null);
 
@@ -80,7 +80,7 @@ public class ProfileStateContainer
         OnExtResourceAdded?.Invoke(category?.Id);
     }
 
-    public void UpdateResource(ExternalResourceDisplayDto resource)
+    public void UpdateResource(ExternalResourceDisplayVM resource)
     {
         throw new NotImplementedException();
         // CategoryWithGuidesAndResourcesDto cwgar =

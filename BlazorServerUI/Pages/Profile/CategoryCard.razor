@@ -44,7 +44,7 @@
         else
         {
             <ul style="list-style: none; margin-left: -20px">
-                @foreach (GuideHeaderDto guide in guides)
+                @foreach (GuideHeaderVM guide in guides)
                 {
                     <li>
                         <div class="guide-title">
@@ -65,7 +65,7 @@
 
         @if (externalResources.Any())
         {
-            foreach (ExternalResourceDisplayDto resource in externalResources)
+            foreach (ExternalResourceDisplayVM resource in externalResources)
             {
                 <div class="resource-block" style="text-align: left; padding-left: 15px">
                     <img class="new-item-icon hidable"
@@ -129,10 +129,10 @@
     [Parameter]
     public Guid? CategoryId { get; set; }
 
-    private CategoryDto? Category { get; set; }
+    private CategoryVM? Category { get; set; }
 
-    private ICollection<GuideHeaderDto> guides = new List<GuideHeaderDto>();
-    private ICollection<ExternalResourceDisplayDto> externalResources = new List<ExternalResourceDisplayDto>();
+    private ICollection<GuideHeaderVM> guides = new List<GuideHeaderVM>();
+    private ICollection<ExternalResourceDisplayVM> externalResources = new List<ExternalResourceDisplayVM>();
     private bool showMenu = false;
     private bool isInteracting = false;
     private bool delayedCloseIsActive = false;
@@ -140,18 +140,18 @@
     private bool isHolding;
     private int progress;
 
-    private CategoryWithGuidesAndResourcesDto categoryWithGuidesAndResourcesDto = null!;
+    private CategoryWithGuidesAndResourcesVM categoryWithGuidesAndResourcesVm = null!;
 
-    private ExternalResourceDisplayDto? resourceBeingEdited;
+    private ExternalResourceDisplayVM? resourceBeingEdited;
     private string editResourceMsg = "";
 
     protected override void OnInitialized()
     {
-        categoryWithGuidesAndResourcesDto = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c =>
+        categoryWithGuidesAndResourcesVm = ProfileStateContainer.CategoriesWithGuidesAndResources.First(c =>
             (c.Category != null && c.Category.Id.Equals(CategoryId)) || (c.Category == null && CategoryId == null));
-        Category = categoryWithGuidesAndResourcesDto.Category;
-        guides = categoryWithGuidesAndResourcesDto.Guides;
-        externalResources = categoryWithGuidesAndResourcesDto.ExternalResources;
+        Category = categoryWithGuidesAndResourcesVm.Category;
+        guides = categoryWithGuidesAndResourcesVm.Guides;
+        externalResources = categoryWithGuidesAndResourcesVm.ExternalResources;
         ProfileStateContainer.OnCategoryUpdated += ReactToCategoryUpdated;
         ProfileStateContainer.OnGuideAdded += ReactToCategoryUpdated;
         ProfileStateContainer.OnExtResourceAdded += ReactToCategoryUpdated;
@@ -224,7 +224,7 @@
     // }
     }
 
-    private void OpenEditResource(ExternalResourceDisplayDto resource)
+    private void OpenEditResource(ExternalResourceDisplayVM resource)
     {
         progress = 0;
 

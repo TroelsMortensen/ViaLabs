@@ -6,7 +6,7 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.ProfileViewQueries;
 
-public class GuideHeaderDtoQueryHandler : IQueryHandler<GuideHeaderQuery, GuideHeaderDto>
+public class GuideHeaderDtoQueryHandler : IQueryHandler<GuideHeaderQuery, GuideHeaderVM>
 {
     private readonly JsonDataContext context;
 
@@ -15,10 +15,10 @@ public class GuideHeaderDtoQueryHandler : IQueryHandler<GuideHeaderQuery, GuideH
         this.context = context;
     }
 
-    public Task<GuideHeaderDto> Query(GuideHeaderQuery query)
+    public Task<GuideHeaderVM> Query(GuideHeaderQuery query)
     {
-        GuideHeaderDto? guideHeader = context.Guides
-            .Select(guide => new GuideHeaderDto(guide.Id, guide.Title))
+        GuideHeaderVM? guideHeader = context.Guides
+            .Select(guide => new GuideHeaderVM(guide.Id, guide.Title))
             .FirstOrDefault(dto => dto.Id.Equals(query.Id));
         if (guideHeader == null)
         {
