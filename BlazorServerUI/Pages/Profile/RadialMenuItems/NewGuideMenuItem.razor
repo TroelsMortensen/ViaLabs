@@ -1,6 +1,7 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
 @using ViewData.ProfileInfo.DTOs
 @using Application.UseCases.GuideUseCases.GuideCreate
+@using BlazorServerUI.Popups
 @using Dispatcher
 @using Domain.OperationResult
 @using ViewData.ProfileInfo.Queries
@@ -75,14 +76,14 @@
             createGuideErrorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        GuideHeaderDto guideHeaderDto = await QueryDispatcher.Query(new GuideHeaderQuery(createGuideCommand.GuideId));
+        GuideHeaderDto created = await QueryDispatcher.Query(new GuideHeaderQuery(createGuideCommand.GuideId));
 
     // GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide); TODO
 
-    // profileStateContainer.AddGuideToCategory(created, Category);
-    // newGuideTitle = String.Empty;
-    // SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
-    // showAddGuideModal = false;
+        ProfileStateContainer.AddGuideToCategory(created, Category);
+        newGuideTitle = String.Empty;
+        SnackBarHandler.ShowSuccess($"Guide \"{created.Title}\" created!");
+        showAddGuideModal = false;
     }
 
     private void Close()
