@@ -1,5 +1,9 @@
-﻿@page "/EditGuide"
+﻿@page "/EditGuide/{GuideId:guid}"
 @using BlazorServerUI.MarkdownConvert
+@using Dispatcher
+@using ViewData.ProfileInfo.DTOs
+@using ViewData.ProfileInfo.Queries
+@inject IQueryDispatcher QueryDispatcher
 
 <div class="outermost-box">
     <div class="top-row-box">
@@ -50,10 +54,20 @@
 
 @code
 {
+    [Parameter]
+    public Guid GuideId { get; set; }
+    
     private string markdownValue = String.Empty;
 
     private MarkupString slideContent;
     private readonly MarkdigAdapter converter = new();
+
+    private GuideDataVM guide = null!;
+    
+    protected override async Task OnInitializedAsync()
+    {
+        guide = await QueryDispatcher.Query(new GuideDataForEditQuery(GuideId));
+    }
 
     private Task MdToHtml(string mdSource)
     {
@@ -89,4 +103,5 @@
     {
         throw new NotImplementedException();
     }
+
 }
