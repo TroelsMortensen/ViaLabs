@@ -23,6 +23,10 @@ public class GuideCreateHandler : ICommandHandler<CreateGuideCommand>
         {
             return Result.Failure(result.Errors);
         }
+
+        Guide newGuide = result.Value;
+        await guideRepo.CreateAsync(newGuide);
+        await unitOfWork.SaveChanges();
         
         return Result.Success();
     }
