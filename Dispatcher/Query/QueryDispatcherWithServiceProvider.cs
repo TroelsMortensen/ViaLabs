@@ -33,7 +33,7 @@ public class QueryDispatcherWithServiceProvider : IQueryDispatcher
           return queryHandler.Query(query);
       }*/
 
-    public Task<TResult> Query<TResult>(IQuery<TResult> q)
+    public Task<TResult> QueryAsync<TResult>(IQuery<TResult> q)
     {
         
         Type queryHandlerInterfaceType = typeof(IQueryHandler<,>);
@@ -48,7 +48,7 @@ public class QueryDispatcherWithServiceProvider : IQueryDispatcher
         }
 
         // TODO not efficient using reflection, but I got annoyed and have left it as is, for now. Will totally come back some day.
-        return (Task<TResult>)queryHandler.GetType().GetMethod(nameof(Query))!.Invoke(queryHandler, new []{q}); 
+        return (Task<TResult>)queryHandler.GetType().GetMethod(nameof(QueryAsync))!.Invoke(queryHandler, new []{q}); 
     }
 
     // private Task<TResult> Query1<TQuery, TResult>(IQuery<TResult> query, TQuery type) where TQuery : IQuery<TResult>

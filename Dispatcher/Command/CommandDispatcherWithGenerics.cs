@@ -21,7 +21,7 @@ public class CommandDispatcherWithGenerics : ICommandDispatcher
         this.serviceProvider = serviceProvider;
     }
 
-    public async Task<Result> Dispatch<TCommand>(TCommand command) where TCommand : class
+    public async Task<Result> DispatchAsync<TCommand>(TCommand command) where TCommand : class
     {
         // get type of this interface
         Type handlerInterfaceType = typeof(ICommandHandler<>);

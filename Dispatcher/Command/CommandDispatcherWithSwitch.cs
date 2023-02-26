@@ -18,7 +18,7 @@ public class CommandDispatcherWithSwitch : ICommandDispatcher
         this.serviceProvider = serviceProvider;
     }
 
-    public Task<Result> Dispatch<TCommand>(TCommand command) where TCommand : class
+    public Task<Result> DispatchAsync<TCommand>(TCommand command) where TCommand : class
     {
         
         switch (command)

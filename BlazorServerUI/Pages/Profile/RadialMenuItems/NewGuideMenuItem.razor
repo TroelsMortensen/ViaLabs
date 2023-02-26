@@ -67,16 +67,16 @@
         {
             throw new Exception("Teacher not correctly logged in.");
         }
-        TeacherVM teacherVm = await QueryDispatcher.Query(new TeacherQuery(teacher));
+        TeacherVM teacherVm = await QueryDispatcher.QueryAsync(new TeacherQuery(teacher));
         CreateGuideCommand createGuideCommand = new(Guid.NewGuid(), Category.Id, newGuideTitle, teacherVm.Name);
 
-        Result result = await CommandDispatcher.Dispatch(createGuideCommand);
+        Result result = await CommandDispatcher.DispatchAsync(createGuideCommand);
         if (result.HasErrors)
         {
             createGuideErrorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        GuideHeaderVM created = await QueryDispatcher.Query(new GuideHeaderQuery(createGuideCommand.GuideId));
+        GuideHeaderVM created = await QueryDispatcher.QueryAsync(new GuideHeaderQuery(createGuideCommand.GuideId));
 
     // GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide); TODO
 

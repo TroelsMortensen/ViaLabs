@@ -4,5 +4,5 @@ namespace Dispatcher;
 
 public interface ICommandDispatcher
 {
-    Task<Result> Dispatch<TCommand>(TCommand command) where TCommand : class;
+    Task<Result> DispatchAsync<TCommand>(TCommand command) where TCommand : class;
 }

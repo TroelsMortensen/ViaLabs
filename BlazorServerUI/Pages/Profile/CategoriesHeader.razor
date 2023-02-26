@@ -69,14 +69,14 @@
 
         CreateCategoryCommand createCategory = new(categoryTitle, teacherName, backgroundColor, Guid.NewGuid());
 
-        Result result = await CommandDispatcher.Dispatch(createCategory);
+        Result result = await CommandDispatcher.DispatchAsync(createCategory);
 
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;
         }
-        CategoryVM resultVm = await CategoryQueryHandler.Query(new SingleCategoryInfoQuery(createCategory.Id));
+        CategoryVM resultVm = await CategoryQueryHandler.QueryAsync(new SingleCategoryInfoQuery(createCategory.Id));
         
         ProfileStateContainer.AddCategory(resultVm);
 

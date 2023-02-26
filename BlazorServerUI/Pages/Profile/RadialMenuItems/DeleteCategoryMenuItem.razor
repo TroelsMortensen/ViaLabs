@@ -60,7 +60,7 @@
 
     private async Task DeleteCategory()
     {
-        Result result = await CommandDispatcher.Dispatch(new DeleteCategoryCommand(CategoryId));
+        Result result = await CommandDispatcher.DispatchAsync(new DeleteCategoryCommand(CategoryId));
         if (result.HasErrors)
         {
             errorLabel = result.GetCombinedErrorMessage();

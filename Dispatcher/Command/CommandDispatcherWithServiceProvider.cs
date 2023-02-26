@@ -13,7 +13,7 @@ public class CommandDispatcherWithServiceProvider : ICommandDispatcher
         this.serviceProvider = serviceProvider;
     }
     
-    public Task<Result> Dispatch<TCommand>(TCommand command) where TCommand : class
+    public Task<Result> DispatchAsync<TCommand>(TCommand command) where TCommand : class
     {
         // get type of this interface
         Type handlerInterfaceType = typeof(ICommandHandler<>);
