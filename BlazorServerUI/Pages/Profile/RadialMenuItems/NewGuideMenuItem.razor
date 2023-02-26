@@ -1,8 +1,14 @@
 ﻿@using BlazorServerUI.StateContainers.Profile
 @using ViewData.ProfileInfo.DTOs
+@using Application.UseCases.GuideUseCases.GuideCreate
+@using Dispatcher
+@using Domain.OperationResult
+@using ViewData.ProfileInfo.Queries
 @namespace BlazorServerUI.Pages.Profile.RadialMenuItems
-@* @inject IGuideLogic guideLogic *@
+
 @inject ProfileStateContainer ProfileStateContainer
+@inject IQueryDispatcher QueryDispatcher
+@inject ICommandDispatcher CommandDispatcher
 
 <img class="new-item-icon hover-enlarge radial-menu-item @(ShowMenu ? "item-open-2" : "item-closed")"
      src="icons/AddGuide.svg"
@@ -37,7 +43,7 @@
     public bool ShowMenu { get; set; }
 
     [Parameter]
-    public CategoryDto? Category { get; set; }
+    public CategoryDto Category { get; set; }
 
     [CascadingParameter]
     public Task<AuthenticationState> AuthStateTask { get; set; } = null!;
@@ -56,22 +62,27 @@
     {
         AuthenticationState authState = await AuthStateTask;
         string? teacher = authState.User.Identity!.Name;
-        // GuideCreationDto guide = new(newGuideTitle, teacher!, Category?.Id);
+        if (teacher == null)
+        {
+            throw new Exception("Teacher not correctly logged in.");
+        }
+        TeacherDto teacherDto = await QueryDispatcher.Query(new TeacherQuery(teacher));
+        CreateGuideCommand createGuideCommand = new(Guid.NewGuid(), Category.Id, newGuideTitle, teacherDto.Name);
 
-        try
+        Result result = await CommandDispatcher.Dispatch(createGuideCommand);
+        if (result.HasErrors)
         {
-            throw new NotImplementedException();
-            // GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide); TODO
-            
-            // profileStateContainer.AddGuideToCategory(created, Category);
-            // newGuideTitle = String.Empty;
-            // SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
-            // showAddGuideModal = false;
+            createGuideErrorLabel = result.GetCombinedErrorMessage();
+            return;
         }
-        catch (Exception e)
-        {
-            createGuideErrorLabel = e.Message;
-        }
+        GuideHeaderDto guideHeaderDto = await QueryDispatcher.Query(new GuideHeaderQuery(createGuideCommand.GuideId));
+
+    // GuideHeaderDto created = await guideLogic.CreateGuideAsync(guide); TODO
+
+    // profileStateContainer.AddGuideToCategory(created, Category);
+    // newGuideTitle = String.Empty;
+    // SnackBarHandler.ShowSnackMessage($"Guide \"{created.Title}\" created!");
+    // showAddGuideModal = false;
     }
 
     private void Close()
