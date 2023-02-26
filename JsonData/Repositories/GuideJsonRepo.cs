@@ -31,13 +31,6 @@ public class GuideJsonRepo : IGuideRepo
         return Task.FromResult(guide);
     }
 
-    // public Task UpdateAsync(Guide guide)
-    // {
-    //     Guide first = context.Guides.First(g => g.Id.Equals(guide.Id));
-    //     first.Update(guide);
-    //     return Task.CompletedTask;
-    // }
-
     public Task DeleteAsync(Guid id)
     {
         int removedCount = context.Guides.ToList().RemoveAll(g => g.Id.Equals(id));
@@ -53,12 +46,5 @@ public class GuideJsonRepo : IGuideRepo
         ICollection<Guide> categories = context.Guides.Where(guide => guide.CategoryId.Equals(id)).ToList();
         return Task.FromResult(categories);
     }
-
-    // public Task UnParentGuidesFromCategory(Guid categoryId)
-    // {
-    //     context.Guides.Where(g => g.CategoryId.Equals(categoryId)).ToList().ForEach(guide => guide.DetachFromCategory());
-    //
-    //     return Task.CompletedTask;
-    // }
 
 }
