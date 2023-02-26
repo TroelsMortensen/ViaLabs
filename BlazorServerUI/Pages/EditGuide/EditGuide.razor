@@ -1,35 +1,52 @@
 ﻿@page "/EditGuide"
 @using BlazorServerUI.MarkdownConvert
 
-<div style="display:flex; width: 100%; justify-content: space-evenly">
-    <div style="min-width: 45%;">
-        <div style="margin:10px">
-            <button>Preview</button>
-            <button>Save</button>
-            <input type="checkbox"/>
-            <label>Autosave</label>
-        </div>
-        <div style="min-width: 45%;">
-                <MarkdownEditor @bind-Value="@markdownValue"
-                                ValueHTMLChanged="@MdToHtml"
-                                CustomButtonClicked="OnCustomButtonClicked"
-                                ImageUploadEndpoint=""
-                                ImageUploadChanged="@OnImageUploadChanged"
-                                ImageUploadStarted="@OnImageUploadStarted"
-                                ImageUploadProgressed="@OnImageUploadProgressed"
-                                ImageUploadEnded="@OnImageUploadEnded"
-                                UploadImage="true">
-                    @* <Toolbar> *@
-                    @*     <MarkdownToolbarButton Name="Test" Icon="fa fa-bolt" Action="MarkdownAction.Bold"/> *@
-                    @*     <MarkdownToolbarButton Separator Name="CustomImageUpload" Icon="fa fa-star" Title="My Image upload" /> *@
-                    @* </Toolbar> *@
-                </MarkdownEditor>
-            </div>
+<div class="outermost-box">
+    <div class="top-row-box">
+
     </div>
-    <div style="min-width: 45%; min-height: 600px; background-color: #e0fbff">
-        @slideContent
+    <div class="content-box">
+        <div class="left-side-box">
+            <div class="guide-details-box">
+                
+            </div>
+            <div class="steps-box">
+                
+            </div>
+        </div>        
+        <div class="right-side-box">
+            <div class="markdown-editor-box"></div>
+            <div class="result-display-box"></div>
+        </div>
     </div>
 </div>
+@* <div style="min-width: 45%;"> *@
+@*     <div style="margin:10px"> *@
+@*         <button>Preview</button> *@
+@*         <button>Save</button> *@
+@*         <input type="checkbox"/> *@
+@*         <label>Autosave</label> *@
+@*     </div> *@
+@*     <div style="min-width: 45%;"> *@
+@*         <MarkdownEditor @bind-Value="@markdownValue" *@
+@*                         ValueHTMLChanged="@MdToHtml" *@
+@*                         CustomButtonClicked="OnCustomButtonClicked" *@
+@*                         ImageUploadEndpoint="" *@
+@*                         ImageUploadChanged="@OnImageUploadChanged" *@
+@*                         ImageUploadStarted="@OnImageUploadStarted" *@
+@*                         ImageUploadProgressed="@OnImageUploadProgressed" *@
+@*                         ImageUploadEnded="@OnImageUploadEnded" *@
+@*                         UploadImage="true"> *@
+@*             $1$ <Toolbar> #1# *@
+@*             $1$     <MarkdownToolbarButton Name="Test" Icon="fa fa-bolt" Action="MarkdownAction.Bold"/> #1# *@
+@*             $1$     <MarkdownToolbarButton Separator Name="CustomImageUpload" Icon="fa fa-star" Title="My Image upload" /> #1# *@
+@*             $1$ </Toolbar> #1# *@
+@*         </MarkdownEditor> *@
+@*     </div> *@
+@* </div> *@
+@* <div style="min-width: 45%; min-height: 600px; background-color: #e0fbff"> *@
+@*     @slideContent *@
+@* </div> *@
 
 @code
 {

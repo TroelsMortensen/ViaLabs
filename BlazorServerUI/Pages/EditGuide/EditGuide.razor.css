@@ -1,0 +1,37 @@
+﻿.outermost-box {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly
+}
+
+.top-row-box {
+
+}
+
+.content-box {
+
+}
+
+.left-side-box {
+
+}
+
+.right-side-box {
+
+}
+
+.guide-details-box {
+
+}
+
+.steps-box {
+
+}
+
+.markdown-editor-box {
+
+}
+
+.result-display-box {
+
+}
