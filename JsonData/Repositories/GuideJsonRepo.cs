@@ -38,6 +38,12 @@ public class GuideJsonRepo : IGuideRepo
         {
             throw new Exception("Nothing was removed, due to some error");
         }
+
+        if (removedCount > 1)
+        {
+            throw new Exception($"Too much was removed, number of items: {removedCount}, this shouldn't be possible.");
+        }
+        
         return Task.CompletedTask;
     }
 
