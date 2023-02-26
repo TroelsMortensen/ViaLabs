@@ -13,9 +13,9 @@ public class Guide
 
     public Guid CategoryId { get; private set; }
     
-    public Guid TeacherId { get; private set; }
+    public string TeacherId { get; private set; }
 
-    public static Result<Guide> Create(Guid guideId, string title, Guid categoryId, Guid teacherId)
+    public static Result<Guide> Create(Guid guideId, string title, Guid categoryId, string teacherId)
     {
         Result validationResult = Validate(guideId, title, categoryId, teacherId);
         if (validationResult.HasErrors)
@@ -27,7 +27,7 @@ public class Guide
         return Result.Success(guide);
     }
 
-    private static Result Validate(Guid guideId, string title, Guid categoryId, Guid teacherId)
+    private static Result Validate(Guid guideId, string title, Guid categoryId, string teacherId)
     {
         // TODO actually do some validation here
         return Result.Success();
@@ -37,7 +37,7 @@ public class Guide
         
     }
 
-    private Guide(Guid guideId, string title, Guid categoryId, Guid teacherId)
+    private Guide(Guid guideId, string title, Guid categoryId, string teacherId)
     {
         Id = guideId;
         Title = title;

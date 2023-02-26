@@ -9,10 +9,8 @@ public class SlideDetails
     
     public Guid SlideContentId { get; private set; }
 
-    public SlideDetails(string title)
+    private SlideDetails() // json/ efc
     {
-        Title = title;
-        throw new Exception("Missing domain validation here");
     }
 
 }

@@ -2,6 +2,7 @@
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
+using Application.UseCases.GuideUseCases.GuideCreate;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;
@@ -11,7 +12,7 @@ public static class ServiceExtensions
     public static void AddApplicationLayerServices(this IServiceCollection services)
     {
         AddCategoryHandlers(services);
-        
+        AddGuideHandlers(services);
         // AddServicesForCategoryOverview(services);
         // services.AddScoped<ITeacherLogic, TeacherLogic>();
         // services.AddScoped<ICategoryLogic, CategoryLogic>();
@@ -19,6 +20,10 @@ public static class ServiceExtensions
         // services.AddScoped<IExternalResourceLogic, ExternalResourceLogic>();
     }
 
+    private static void AddGuideHandlers(IServiceCollection services)
+    {
+        services.AddScoped<ICommandHandler<CreateGuideCommand>, GuideCreateHandler>();
+    }
 
 
     // private static void AddServicesForCategoryOverview(IServiceCollection services)
