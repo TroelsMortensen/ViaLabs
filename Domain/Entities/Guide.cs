@@ -9,7 +9,7 @@ public class Guide
     public bool IsPublished { get; private set; }
     public bool IsDisplayingStepNums { get; private set; }
 
-    public ICollection<Slide> Slides { get; private set; } = new List<Slide>();
+    public ICollection<SlideDetails> Slides { get; private set; } = new List<SlideDetails>();
 
     public Guid CategoryId { get; private set; }
     
@@ -66,7 +66,7 @@ public class Guide
     {
         IsDisplayingStepNums = false;
     }
-    public void AddSlide(Slide s, int index)
+    public void AddSlide(SlideDetails s, int index)
     {
         Slides.Add(s);
     }
