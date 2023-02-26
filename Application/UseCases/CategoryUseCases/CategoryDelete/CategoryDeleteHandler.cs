@@ -29,7 +29,7 @@ public class CategoryDeleteHandler : ICommandHandler<DeleteCategoryCommand>
         if (result.HasErrors) return result;
 
         await categoryRepo.DeleteAsync(command.Id);
-        await unitOfWork.SaveChanges();
+        await unitOfWork.SaveChangesAsync();
 
         return result;
     }

@@ -24,7 +24,7 @@ public class CategoryUpdateHandler : ICommandHandler<UpdateCategoryCommand>
             return result;
         }
 
-        await unitOfWork.SaveChanges();
+        await unitOfWork.SaveChangesAsync();
         
         return result;
     }

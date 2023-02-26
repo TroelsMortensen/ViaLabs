@@ -26,7 +26,7 @@ public class GuideCreateHandler : ICommandHandler<CreateGuideCommand>
 
         Guide newGuide = result.Value;
         await guideRepo.CreateAsync(newGuide);
-        await unitOfWork.SaveChanges();
+        await unitOfWork.SaveChangesAsync();
         
         return Result.Success();
     }

@@ -24,7 +24,7 @@ public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand>
 
         Domain.Entities.Category category = newCatResult.Value;
         await categoryRepo.AddAsync(category);
-        await unitOfWork.SaveChanges();
+        await unitOfWork.SaveChangesAsync();
         // CategoryDto categoryDto = new(category.Id, category.Title, category.BackgroundColor);
         
         return Result.Success(category.Id);
