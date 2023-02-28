@@ -1,27 +1,31 @@
 ﻿.outermost-box {
-    display: flex;
     width: 100%;
-    justify-content: space-evenly
+    justify-content: space-evenly;
+    /*background-color: #00bb00;*/
 }
 
 .top-row-box {
-
+    border: solid 1px;
+    width: 100%;
+    display: flex;
+    padding: 15px;
 }
 
-.top-row-left{
-    
+.top-row-left {
+    align-content: flex-start;
 }
 
-.top-row-right{
-    
+.top-row-right {
+    margin-left: auto;
 }
 
 .content-box {
-
+    width: 100%;
+    margin-top: 15px;
 }
 
 .left-side-box {
-
+    display: inline-block;
 }
 
 .right-side-box {
@@ -29,11 +33,12 @@
 }
 
 .guide-details-box {
-
+    border: solid 1px;
 }
 
 .steps-box {
-
+    border: solid 1px;
+    margin-top: 15px;
 }
 
 .markdown-editor-box {

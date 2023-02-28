@@ -1,6 +1,7 @@
 ﻿using Application.RepositoryContracts;
 using JsonData.Context;
 using JsonData.JsonSerializationUtils;
+using JsonData.QueryImpls.EditGuideViewQueries;
 using JsonData.QueryImpls.ProfileViewQueries;
 using JsonData.Repositories;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,6 +23,12 @@ public static class JsonDataServiceExtensions
     private static void AddQueryHandlers(IServiceCollection services)
     {
         AddForProfileView(services);
+        AddForEditGuideView(services);
+    }
+
+    private static void AddForEditGuideView(IServiceCollection services)
+    {
+        services.AddScoped<IQueryHandler<GuideDataForEditQuery, GuideDataVM>, GuideDataQueryHandler>();
     }
 
     private static void AddForProfileView(IServiceCollection services)

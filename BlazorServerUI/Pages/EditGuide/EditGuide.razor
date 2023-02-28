@@ -7,18 +7,75 @@
 
 <div class="outermost-box">
     <div class="top-row-box">
-        <div class="top-row-left"></div>
-        <div class="top-row-right"></div>
+        <div class="top-row-left">
+            <button class="vialab-button positive-color">Save</button>
+            <label>Last saved: 09:51:23</label>
+        </div>
+        <div class="top-row-right">
+            <button class="vialab-button neutral-color">Publish guide to make it visible</button>
+        </div>
     </div>
     <div class="content-box">
         <div class="left-side-box">
             <div class="guide-details-box">
-                
+                <div style="display: flex; margin: 5px">
+                    <ReactiveInputField WidthWithUnit="122px" GhostText="Title"/>
+                    <div style="margin-left: 3px"></div>
+                    <DropDown>
+                        <option>DNP</option>
+                        <option>SDJ2</option>
+                    </DropDown>
+                    @* <select type="select" style="width: 75px"> *@
+                    @*     <option>DNP</option> *@
+                    @*     <option>SDJ2</option> *@
+                    @* </select> *@
+                </div>
+                <div style="margin: 5px; margin-top: 15px">
+                    <ReactiveInputField WidthWithUnit="200px" GhostText="Optional short description" UseArea="true"/>
+                </div>
+                <div style="margin: 5px">
+                    <input id="show-steps" type="checkbox" style="cursor: pointer"/>
+                    <label for="show-steps" style="cursor: pointer">Show step numbers</label>
+                </div>
             </div>
             <div class="steps-box">
-                
+                <div style="display:flex; border: solid 1px; margin: 3px;">
+                    <label style="margin-left: 5px">0.</label>
+                    <label style="margin-left: 5px">intro</label>
+                    <div style="margin-left:auto">
+                        <img src="icons/UpArrow.svg" style="height: 0.7em;cursor: pointer;display: block;margin-bottom: 1px;"/>
+                        <img src="icons/DownArrow.svg" style="height: 0.7em;cursor: pointer;display: block"/>
+                    </div>
+                </div>
+                <div>
+                    +
+                </div>
+                <div>
+                    <img src="icons/edit.gif" class="new-item-icon"/>
+                    <label>1.</label>
+                    <label>intro</label>
+                </div>
+                <div>
+                    +
+                </div>
+                <div>
+                    <img src="icons/edit.gif" class="new-item-icon"/>
+                    <label>2.</label>
+                    <label>intro</label>
+                </div>
+                <div>
+                    +
+                </div>
+                <div>
+                    <img src="icons/edit.gif" class="new-item-icon"/>
+                    <label>3.</label>
+                    <label>intro</label>
+                </div>
+                <div>
+                    +
+                </div>
             </div>
-        </div>        
+        </div>
         <div class="right-side-box">
             <div class="markdown-editor-box"></div>
             <div class="result-display-box"></div>
@@ -57,14 +114,14 @@
 {
     [Parameter]
     public Guid GuideId { get; set; }
-    
+
     private string markdownValue = String.Empty;
 
     private MarkupString slideContent;
     private readonly MarkdigAdapter converter = new();
 
     private GuideDataVM guide = null!;
-    
+
     protected override async Task OnInitializedAsync()
     {
         guide = await QueryDispatcher.QueryAsync(new GuideDataForEditQuery(GuideId));
