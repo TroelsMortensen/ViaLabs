@@ -39,41 +39,20 @@
                 </div>
             </div>
             <div class="steps-box">
-                <div style="display:flex; border: solid 1px; margin: 3px;">
-                    <label style="margin-left: 5px">0.</label>
-                    <label style="margin-left: 5px">intro</label>
-                    <div style="margin-left:auto">
-                        <img src="icons/UpArrow.svg" style="height: 0.7em;cursor: pointer;display: block;margin-bottom: 1px;"/>
-                        <img src="icons/DownArrow.svg" style="height: 0.7em;cursor: pointer;display: block"/>
+                @for (int i = 0; i < 4; i++)
+                {
+                    <div style="display:flex; border: solid 1px; margin: 3px;">
+                        <label style="margin-left: 5px">@(i).</label>
+                        <label style="margin-left: 5px">intro</label>
+                        <div style="margin-left:auto;padding: 1px">
+                            <img src="icons/UpArrow.svg" style="height: 0.6em;cursor: pointer;display: block;margin-bottom: 3px;" title="Move up"/>
+                            <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
+                        </div>
                     </div>
-                </div>
-                <div>
-                    +
-                </div>
-                <div>
-                    <img src="icons/edit.gif" class="new-item-icon"/>
-                    <label>1.</label>
-                    <label>intro</label>
-                </div>
-                <div>
-                    +
-                </div>
-                <div>
-                    <img src="icons/edit.gif" class="new-item-icon"/>
-                    <label>2.</label>
-                    <label>intro</label>
-                </div>
-                <div>
-                    +
-                </div>
-                <div>
-                    <img src="icons/edit.gif" class="new-item-icon"/>
-                    <label>3.</label>
-                    <label>intro</label>
-                </div>
-                <div>
-                    +
-                </div>
+                    <div>
+                        +
+                    </div>
+                }
             </div>
         </div>
         <div class="right-side-box">
