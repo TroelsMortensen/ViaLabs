@@ -110,4 +110,9 @@ public class Guide
         Title = newTitle;
         return Result.Success();
     }
+
+    public void ChangeCategoryTo(Category category)
+    {
+        CategoryId = category.Id;
+    }
 }

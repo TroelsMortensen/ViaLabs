@@ -1,11 +1,31 @@
 ﻿<div>
-    <select type="select" class="select-box">
-        @ChildContent
+    <select type="select" class="select-box" style="width: @WidthWithUnit" @onchange="@OnChange">
+        @foreach (string key in Values.Keys)
+        {
+            <option value=@key selected="@InitialValue.Equals(key)">@Values[key]</option>
+        }
     </select>
 </div>
 
 @code {
+
     [Parameter]
-    public RenderFragment ChildContent { get; set; }
-    
+    public Dictionary<string, string> Values { get; set; }
+
+    [Parameter]
+    public string WidthWithUnit { get; set; }
+
+    [Parameter]
+    public string InitialValue { get; set; }
+
+    [Parameter]
+    public EventCallback<string> OnValueChange { get; set; }
+
+
+    private async Task OnChange(ChangeEventArgs arg)
+    {
+        string value = arg.Value!.ToString()!;
+        await OnValueChange.InvokeAsync(value);
+    }
+
 }

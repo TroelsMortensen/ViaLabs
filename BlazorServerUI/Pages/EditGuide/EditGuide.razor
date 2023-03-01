@@ -5,6 +5,7 @@
 @using ViewData.ProfileInfo.Queries
 @using Application.UseCases.GuideUseCases.GuideChangeTitle
 @using Domain.OperationResult
+@using Application.UseCases.GuideUseCases.GuideChangeCategory
 @inject IQueryDispatcher QueryDispatcher
 @inject ICommandDispatcher CommandDispatcher
 
@@ -21,20 +22,12 @@
     <div class="content-box">
         <div class="left-side-box">
             <div class="guide-details-box">
-                <div style="display: flex; margin: 5px">
-                    <ReactiveInputField WidthWithUnit="122px" InitialValue="@guideData.Title" OnValueChangeWithReset="ChangeGuideTitle" @ref="TitleTextField"/>
-                    <div style="margin-left: 3px"></div>
-                    <DropDown>
-                        <option>DNP</option>
-                        <option>SDJ2</option>
-                    </DropDown>
-                    @* <select type="select" style="width: 75px"> *@
-                    @*     <option>DNP</option> *@
-                    @*     <option>SDJ2</option> *@
-                    @* </select> *@
-                </div>
-                <div style="margin: 5px; margin-top: 15px">
-                    <ReactiveInputField WidthWithUnit="200px" GhostText="Optional short description" UseArea="true"/>
+                <div style="margin: 5px">
+                    <ReactiveInputField WidthWithUnit="30ch" InitialValue="@guideData.Title" OnValueChangeWithReset="ChangeGuideTitle" />
+                    <div style="margin-top: 15px"></div>
+                    <DropDown WidthWithUnit="30ch" InitialValue="@guideData.CategoryId.ToString()" OnValueChange="ChangeGuideCategory" Values="@guideData.CategoriesByTeacher.ToDictionary(vm => vm.Id.ToString(), vm => vm.Title)"/>
+                    <div style="margin-top: 15px"></div>
+                    <ReactiveInputField WidthWithUnit="200px" GhostText="Optional short description" UseArea="true" InitialValue="@guideData.Description" OnValueChangeWithReset="ChangeGuideDescription"/>
                 </div>
                 <div style="margin: 5px">
                     <input id="show-steps" type="checkbox" style="cursor: pointer"/>
@@ -106,8 +99,7 @@
     private GuideDataVM previousGuideData = null!;
     private string title = "";
 
-    private ReactiveInputField TitleTextField;
-    
+
     protected override async Task OnInitializedAsync()
     {
         guideData = await QueryDispatcher.QueryAsync(new GuideDataForEditQuery(GuideId));
@@ -155,9 +147,8 @@
         Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideTitleCommand(guideData.GuideId, arg));
         if (result.HasErrors)
         {
-            // TODO Display errors here.
+    // TODO Display errors here.
             Console.WriteLine("Error");
-            // TitleTextField.SetDisplayValue(guideData.Title);
             return false;
         }
         guideData.Title = arg;
@@ -165,4 +156,16 @@
         return true;
     }
 
+    private async Task ChangeGuideCategory(string arg)
+    {
+        ChangeGuideCategoryCommand command = new(guideData.GuideId, Guid.Parse(arg));
+        Result result = await CommandDispatcher.DispatchAsync(command);
+    }
+
+
+    private async Task<bool> ChangeGuideDescription(string arg)
+    {
+
+        return false;
+    }
 }

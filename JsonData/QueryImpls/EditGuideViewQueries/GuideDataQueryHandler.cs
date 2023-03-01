@@ -26,12 +26,18 @@ public class GuideDataQueryHandler : IQueryHandler<GuideDataForEditQuery, GuideD
                 CategoryId = guide.CategoryId,
                 Description = guide.Description,
                 StepNumbersVisible = guide.IsDisplayingStepNums,
-                Slides = guide.Slides
+                Slides = guide.Slides,
+                CategoriesByTeacher = context
+                    .Categories
+                    .Where(category => category.Owner.Equals(guide.TeacherId))
+                    .Select(category => new CategoryVM(category.Id, category.Title, category.BackgroundColor))
+                    .ToList()
             }).SingleOrDefault(vm => vm.GuideId.Equals(query.Id));
         if (guideData == null)
         {
             throw new NotFoundException($"Could not find guide with ID {query.Id}");
         }
+
         return Task.FromResult(guideData);
     }
 }
