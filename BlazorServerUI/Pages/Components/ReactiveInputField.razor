@@ -1,7 +1,15 @@
 ﻿<div class="floating-label-group">
     @if (UseArea)
     {
-        <textarea style="width: @WidthWithUnit; height: 90px" class="floating-input" type="text" required @onchange="@OnChange">@InitialValue</textarea>
+        <textarea style="width: @WidthWithUnit; height: 90px" 
+                class="floating-input" 
+                type="text" 
+                required 
+                @onchange="@OnChange"
+                value="@textValue"
+                @onfocus="() => backup = textValue">
+            
+        </textarea>
     }
     else
     {
@@ -10,8 +18,8 @@
                type="text"
                required
                @onchange="@OnChange"
-               value="@InitialValue"
-               @onfocus="() => backup = InitialValue"/>
+               value="@textValue"
+               @onfocus="() => backup = textValue"/>
     }
     <label class="floating-label">@GhostText</label>
 </div>
@@ -37,6 +45,7 @@
     public EventCallback<string> OnValueChange { get; set; }
 
     private string backup = "";
+    private string textValue = "";
 
     private async Task OnChange(ChangeEventArgs args)
     {
@@ -50,12 +59,24 @@
             bool wasSuccess = await OnValueChangeWithReset?.Invoke(s)!;
             if (!wasSuccess)
             {
-                InitialValue = "";
+                // InitialValue = "";
+                textValue = "";
                 await Task.Yield();
-                StateHasChanged();
+                await InvokeAsync(StateHasChanged);
 
-                InitialValue = tmp;
+                // InitialValue = tmp;
+                textValue = tmp;
+                await Task.Yield();
+                await InvokeAsync(StateHasChanged);
+
             }
         }
     }
+
+    protected override void OnParametersSet()
+    {
+        textValue = InitialValue;
+        base.OnParametersSet();
+    }
+
 }
