@@ -5,7 +5,13 @@
     }
     else
     {
-        <input style="width: @WidthWithUnit" class="floating-input" type="text" required @onchange="@OnChange" value="@InitialValue"/>
+        <input style="width: @WidthWithUnit"
+               class="floating-input"
+               type="text"
+               required
+               @onchange="@OnChange"
+               value="@InitialValue"
+               @onfocus="() => backup = InitialValue"/>
     }
     <label class="floating-label">@GhostText</label>
 </div>
@@ -25,22 +31,31 @@
     public string GhostText { get; set; } = "";
 
     [Parameter]
+    public Func<string, Task<bool>>? OnValueChangeWithReset { get; set; }
+
+    [Parameter]
     public EventCallback<string> OnValueChange { get; set; }
-    
+
+    private string backup = "";
+
     private async Task OnChange(ChangeEventArgs args)
     {
-        string? s = args.Value!.ToString();
+        string tmp = backup;
+
+        string s = args.Value!.ToString()!;
         await OnValueChange.InvokeAsync(s);
-    
-        // The following is a weird hack, but without it I cannot reset the value through SetDisplayValue.
-        // It doesn't matter what I set InitialValue to here, it will be ignored.
-        InitialValue = ""; 
-    }
-    
-    public void SetDisplayValue(string s)
-    {
-        InitialValue = s;
-        StateHasChanged();
-        Console.WriteLine($"State was changed here, {s}");
+
+        if (OnValueChangeWithReset != null)
+        {
+            bool wasSuccess = await OnValueChangeWithReset?.Invoke(s)!;
+            if (!wasSuccess)
+            {
+                InitialValue = "";
+                await Task.Yield();
+                StateHasChanged();
+
+                InitialValue = tmp;
+            }
+        }
     }
 }

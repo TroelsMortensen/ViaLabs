@@ -22,7 +22,7 @@
         <div class="left-side-box">
             <div class="guide-details-box">
                 <div style="display: flex; margin: 5px">
-                    <ReactiveInputField WidthWithUnit="122px" InitialValue="@guideData.Title" OnValueChange="ChangeGuideTitle" @ref="TitleTextField"/>
+                    <ReactiveInputField WidthWithUnit="122px" InitialValue="@guideData.Title" OnValueChangeWithReset="ChangeGuideTitle" @ref="TitleTextField"/>
                     <div style="margin-left: 3px"></div>
                     <DropDown>
                         <option>DNP</option>
@@ -150,18 +150,19 @@
         throw new NotImplementedException();
     }
 
-    private async Task ChangeGuideTitle(string arg)
+    private async Task<bool> ChangeGuideTitle(string arg)
     {
         Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideTitleCommand(guideData.GuideId, arg));
         if (result.HasErrors)
         {
             // TODO Display errors here.
             Console.WriteLine("Error");
-            TitleTextField.SetDisplayValue(guideData.Title);
-            return;
+            // TitleTextField.SetDisplayValue(guideData.Title);
+            return false;
         }
         guideData.Title = arg;
         previousGuideData = guideData;
+        return true;
     }
 
 }
