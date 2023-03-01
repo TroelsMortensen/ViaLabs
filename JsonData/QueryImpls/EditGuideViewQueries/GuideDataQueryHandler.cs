@@ -1,4 +1,5 @@
-﻿using JsonData.Context;
+﻿using Domain.Exceptions;
+using JsonData.Context;
 using ViewData;
 using ViewData.ProfileInfo.DTOs;
 using ViewData.ProfileInfo.Queries;
@@ -16,6 +17,21 @@ public class GuideDataQueryHandler : IQueryHandler<GuideDataForEditQuery, GuideD
 
     public Task<GuideDataVM> Query(GuideDataForEditQuery query)
     {
-        return Task.FromResult(new GuideDataVM());
+        GuideDataVM? guideData = context.Guides
+            .Where(guide => guide.Id.Equals(query.Id))
+            .Select(guide => new GuideDataVM
+            {
+                GuideId = guide.Id,
+                Title = guide.Title,
+                CategoryId = guide.CategoryId,
+                Description = guide.Description,
+                StepNumbersVisible = guide.IsDisplayingStepNums,
+                Slides = guide.Slides
+            }).SingleOrDefault(vm => vm.GuideId.Equals(query.Id));
+        if (guideData == null)
+        {
+            throw new NotFoundException($"Could not find guide with ID {query.Id}");
+        }
+        return Task.FromResult(guideData);
     }
 }

@@ -4,6 +4,8 @@ namespace Domain.Entities;
 
 public class Guide
 {
+    
+    private  const int MAX_TITLE_LENGTH = 50;
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public bool IsPublished { get; private set; }
@@ -31,7 +33,7 @@ public class Guide
     private static Result Validate(Guid guideId, string title, Guid categoryId, string teacherId)
     {
         Result result = new ();
-        if (guideId == null)
+        if (guideId == null) // needed?
         {
             result.AddError("Guide.Id", "Guide ID cannot be empty.");
         }
@@ -46,6 +48,12 @@ public class Guide
             result.AddError("Guide.TeacherId", "Teacher ID cannot be empty, a Guide must belong to a Teacher.");
         }
 
+        if (!string.IsNullOrEmpty(title) && title.Length > MAX_TITLE_LENGTH)
+        {
+            // TODO I Have this twice, see ChangeTitle(). Refactor.
+            result.AddError("Guide.Title", "Title cannot exceed 50 characters");
+        }
+        
         return result;
     }
 
@@ -91,5 +99,15 @@ public class Guide
     public void ChangeDescription(string desc)
     {
         Description = desc;
+    }
+
+    public Result ChangeTitle(string newTitle)
+    {
+        if (!string.IsNullOrEmpty(newTitle) && newTitle.Length > MAX_TITLE_LENGTH) 
+        {
+            return Result.Failure("Guide.Title", "Title cannot exceed 50 characters");
+        }
+        Title = newTitle;
+        return Result.Success();
     }
 }

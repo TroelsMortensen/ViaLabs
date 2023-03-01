@@ -3,7 +3,10 @@
 @using Dispatcher
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
+@using Application.UseCases.GuideUseCases.GuideChangeTitle
+@using Domain.OperationResult
 @inject IQueryDispatcher QueryDispatcher
+@inject ICommandDispatcher CommandDispatcher
 
 <div class="outermost-box">
     <div class="top-row-box">
@@ -19,7 +22,7 @@
         <div class="left-side-box">
             <div class="guide-details-box">
                 <div style="display: flex; margin: 5px">
-                    <ReactiveInputField WidthWithUnit="122px" GhostText="Title"/>
+                    <ReactiveInputField WidthWithUnit="122px" InitialValue="@guideData.Title" OnValueChange="ChangeGuideTitle" @ref="TitleTextField"/>
                     <div style="margin-left: 3px"></div>
                     <DropDown>
                         <option>DNP</option>
@@ -99,11 +102,17 @@
     private MarkupString slideContent;
     private readonly MarkdigAdapter converter = new();
 
-    private GuideDataVM guide = null!;
+    private GuideDataVM guideData = null!;
+    private GuideDataVM previousGuideData = null!;
+    private string title = "";
 
+    private ReactiveInputField TitleTextField;
+    
     protected override async Task OnInitializedAsync()
     {
-        guide = await QueryDispatcher.QueryAsync(new GuideDataForEditQuery(GuideId));
+        guideData = await QueryDispatcher.QueryAsync(new GuideDataForEditQuery(GuideId));
+        previousGuideData = guideData;
+        title = guideData.Title;
     }
 
     private Task MdToHtml(string mdSource)
@@ -139,6 +148,20 @@
     private Task OnCustomButtonClicked(MarkdownButtonEventArgs args)
     {
         throw new NotImplementedException();
+    }
+
+    private async Task ChangeGuideTitle(string arg)
+    {
+        Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideTitleCommand(guideData.GuideId, arg));
+        if (result.HasErrors)
+        {
+            // TODO Display errors here.
+            Console.WriteLine("Error");
+            TitleTextField.SetDisplayValue(guideData.Title);
+            return;
+        }
+        guideData.Title = arg;
+        previousGuideData = guideData;
     }
 
 }

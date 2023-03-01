@@ -16,21 +16,31 @@
     public bool UseArea { get; set; } = false;
 
     [Parameter]
-    public string InitialValue { get; set; }
+    public string InitialValue { get; set; } = "";
 
     [Parameter]
     public string WidthWithUnit { get; set; } = "25ch";
 
     [Parameter]
-    public string GhostText { get; set; }
+    public string GhostText { get; set; } = "";
 
     [Parameter]
     public EventCallback<string> OnValueChange { get; set; }
-
+    
     private async Task OnChange(ChangeEventArgs args)
     {
         string? s = args.Value!.ToString();
         await OnValueChange.InvokeAsync(s);
+    
+        // The following is a weird hack, but without it I cannot reset the value through SetDisplayValue.
+        // It doesn't matter what I set InitialValue to here, it will be ignored.
+        InitialValue = ""; 
     }
-
+    
+    public void SetDisplayValue(string s)
+    {
+        InitialValue = s;
+        StateHasChanged();
+        Console.WriteLine($"State was changed here, {s}");
+    }
 }

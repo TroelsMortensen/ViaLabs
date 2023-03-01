@@ -62,6 +62,13 @@ public class Result
     {
         return new Result<TV>(enumerable);
     }
+
+    public static Result Failure(string attribute, string message)
+    {
+        Result result = new Result();
+        result.AddError(attribute, message);
+        return result;
+    }
 }
 
 public class Result<T> : Result
