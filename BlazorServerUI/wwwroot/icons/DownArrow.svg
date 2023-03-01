@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="27.223228mm"
+   height="14.999556mm"
+   viewBox="0 0 27.223228 14.999556"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1 (c68e22c387, 2021-05-23)"
+   sodipodi:docname="DownArrow.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="3.1072952"
+     inkscape:cx="11.263816"
+     inkscape:cy="-0.96546991"
+     inkscape:window-width="1953"
+     inkscape:window-height="1408"
+     inkscape:window-x="5078"
+     inkscape:window-y="0"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-55.244785,-42.983446)">
+    <path
+       id="rect846"
+       style="fill:none;stroke:#000000;stroke-width:2.776;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:15;stroke-dasharray:none;stroke-opacity:1"
+       d="M 56.632785,44.371447 68.856398,56.595059 81.080013,44.371446"
+       sodipodi:nodetypes="ccc" />
+  </g>
+</svg>
