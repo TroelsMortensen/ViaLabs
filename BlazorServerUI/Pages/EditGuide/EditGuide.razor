@@ -6,6 +6,8 @@
 @using Domain.OperationResult
 @using Application.UseCases.GuideUseCases.ChangeTitle
 @using Application.UseCases.GuideUseCases.ChangeCategory
+@using Application.UseCases.GuideUseCases.ChangeDescription
+@using BlazorServerUI.Popups
 @inject IQueryDispatcher QueryDispatcher
 @inject ICommandDispatcher CommandDispatcher
 
@@ -96,15 +98,11 @@
     private readonly MarkdigAdapter converter = new();
 
     private GuideDataVM guideData = null!;
-    private GuideDataVM previousGuideData = null!;
-    private string title = "";
 
 
     protected override async Task OnInitializedAsync()
     {
         guideData = await QueryDispatcher.QueryAsync(new GuideDataForEditQuery(GuideId));
-        previousGuideData = guideData;
-        title = guideData.Title;
     }
 
     private Task MdToHtml(string mdSource)
@@ -147,12 +145,10 @@
         Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideTitleCommand(guideData.GuideId, arg));
         if (result.HasErrors)
         {
-    // TODO Display errors here.
-            Console.WriteLine("Error");
+            SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
             return false;
         }
         guideData.Title = arg;
-        previousGuideData = guideData;
         return true;
     }
 
@@ -165,7 +161,14 @@
 
     private async Task<bool> ChangeGuideDescription(string arg)
     {
-        
-        return false;
+        Console.WriteLine("Here");
+        Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideDescriptionCommand(guideData.GuideId, arg));
+        if (result.HasErrors)
+        {
+            SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
+            return false;
+        }
+        guideData.Description = arg;
+        return true;
     }
 }

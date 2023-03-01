@@ -3,6 +3,7 @@ using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
 using Application.UseCases.GuideUseCases.ChangeCategory;
+using Application.UseCases.GuideUseCases.ChangeDescription;
 using Application.UseCases.GuideUseCases.ChangeTitle;
 using Application.UseCases.GuideUseCases.Create;
 using Microsoft.Extensions.DependencyInjection;
@@ -27,6 +28,7 @@ public static class ServiceExtensions
         services.AddScoped<ICommandHandler<CreateGuideCommand>, GuideCreateHandler>();
         services.AddScoped<ICommandHandler<ChangeGuideTitleCommand>, ChangeGuideTitleHandler>();
         services.AddScoped<ICommandHandler<ChangeGuideCategoryCommand>, ChangeGuideCategoryCommandHandler>();
+        services.AddScoped<ICommandHandler<ChangeGuideDescriptionCommand>, ChangeGuideDescriptionCommandHandler>();
     }
 
 

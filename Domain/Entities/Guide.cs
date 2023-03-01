@@ -4,8 +4,7 @@ namespace Domain.Entities;
 
 public class Guide
 {
-    
-    private  const int MAX_TITLE_LENGTH = 30;
+    private const int MAX_TITLE_LENGTH = 30;
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public bool IsPublished { get; private set; }
@@ -26,13 +25,13 @@ public class Guide
             return Result.Failure<Guide>(validationResult.Errors);
         }
 
-        Guide guide = new (guideId, title, categoryId, teacherId);
+        Guide guide = new(guideId, title, categoryId, teacherId);
         return Result.Success(guide);
     }
 
     private static Result Validate(Guid guideId, string title, Guid categoryId, string teacherId)
     {
-        Result result = new ();
+        Result result = new();
         if (guideId == null) // needed?
         {
             result.AddError("Guide.Id", "Guide ID cannot be empty.");
@@ -53,7 +52,7 @@ public class Guide
             // TODO I Have this twice, see ChangeTitle(). Refactor.
             result.AddError("Guide.Title", "Title cannot exceed 50 characters");
         }
-        
+
         return result;
     }
 
@@ -96,17 +95,30 @@ public class Guide
         Slides.Add(s);
     }
 
-    public void ChangeDescription(string desc)
+    public Result ChangeDescription(string desc)
     {
+        if (string.IsNullOrEmpty(desc))
+        {
+            desc = "";
+        }
+
+        if (desc.Length > 100)
+        {
+            return Result.Failure("Guide.Description", "Description must be less than 100 characters.");
+        }
+
         Description = desc;
+
+        return Result.Success();
     }
 
     public Result ChangeTitle(string newTitle)
     {
-        if (!string.IsNullOrEmpty(newTitle) && newTitle.Length > MAX_TITLE_LENGTH) 
+        if (!string.IsNullOrEmpty(newTitle) && newTitle.Length > MAX_TITLE_LENGTH)
         {
             return Result.Failure("Guide.Title", "Title cannot exceed 50 characters");
         }
+
         Title = newTitle;
         return Result.Success();
     }
