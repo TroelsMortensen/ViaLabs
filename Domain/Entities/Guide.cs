@@ -5,7 +5,7 @@ namespace Domain.Entities;
 public class Guide
 {
     
-    private  const int MAX_TITLE_LENGTH = 50;
+    private  const int MAX_TITLE_LENGTH = 30;
     public Guid Id { get; private set; }
     public string Title { get; private set; }
     public bool IsPublished { get; private set; }
