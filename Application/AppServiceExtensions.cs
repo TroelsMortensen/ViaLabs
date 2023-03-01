@@ -2,9 +2,9 @@
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
-using Application.UseCases.GuideUseCases.GuideChangeCategory;
-using Application.UseCases.GuideUseCases.GuideChangeTitle;
-using Application.UseCases.GuideUseCases.GuideCreate;
+using Application.UseCases.GuideUseCases.ChangeCategory;
+using Application.UseCases.GuideUseCases.ChangeTitle;
+using Application.UseCases.GuideUseCases.Create;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Application;

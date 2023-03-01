@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.GuideUseCases.GuideChangeCategory;
+namespace Application.UseCases.GuideUseCases.ChangeCategory;
 
 public class ChangeGuideCategoryCommandHandler : ICommandHandler<ChangeGuideCategoryCommand>
 {

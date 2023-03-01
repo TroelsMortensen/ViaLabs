@@ -3,9 +3,9 @@
 @using Dispatcher
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
-@using Application.UseCases.GuideUseCases.GuideChangeTitle
 @using Domain.OperationResult
-@using Application.UseCases.GuideUseCases.GuideChangeCategory
+@using Application.UseCases.GuideUseCases.ChangeTitle
+@using Application.UseCases.GuideUseCases.ChangeCategory
 @inject IQueryDispatcher QueryDispatcher
 @inject ICommandDispatcher CommandDispatcher
 
@@ -165,7 +165,7 @@
 
     private async Task<bool> ChangeGuideDescription(string arg)
     {
-
+        
         return false;
     }
 }
