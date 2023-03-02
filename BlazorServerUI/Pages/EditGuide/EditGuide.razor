@@ -7,6 +7,7 @@
 @using Application.UseCases.GuideUseCases.ChangeTitle
 @using Application.UseCases.GuideUseCases.ChangeCategory
 @using Application.UseCases.GuideUseCases.ChangeDescription
+@using Application.UseCases.GuideUseCases.ChangeStepsNumberVisibility
 @using BlazorServerUI.Popups
 @inject IQueryDispatcher QueryDispatcher
 @inject ICommandDispatcher CommandDispatcher
@@ -29,10 +30,10 @@
                     <div style="margin-top: 15px"></div>
                     <DropDown WidthWithUnit="30ch" InitialValue="@guideData.CategoryId.ToString()" OnValueChange="ChangeGuideCategory" Values="@guideData.CategoriesByTeacher.ToDictionary(vm => vm.Id.ToString(), vm => vm.Title)"/>
                     <div style="margin-top: 15px"></div>
-                    <ReactiveInputField WidthWithUnit="200px" GhostText="Optional short description" UseArea="true" InitialValue="@guideData.Description" OnValueChangeWithReset="ChangeGuideDescription"/>
+                    <ReactiveInputField WidthWithUnit="30ch" GhostText="Optional short description" UseArea="true" InitialValue="@guideData.Description" OnValueChangeWithReset="ChangeGuideDescription"/>
                 </div>
                 <div style="margin: 5px">
-                    <input id="show-steps" type="checkbox" style="cursor: pointer"/>
+                    <input id="show-steps" type="checkbox" style="cursor: pointer" @onchange="ChangeDisplayOfStepNumbers" selected="@guideData.StepNumbersVisible"/>
                     <label for="show-steps" style="cursor: pointer">Show step numbers</label>
                 </div>
             </div>
@@ -156,6 +157,10 @@
     {
         ChangeGuideCategoryCommand command = new(guideData.GuideId, Guid.Parse(arg));
         Result result = await CommandDispatcher.DispatchAsync(command);
+        if (result.HasErrors)
+        {
+            SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
+        }
     }
 
 
@@ -170,5 +175,30 @@
         }
         guideData.Description = arg;
         return true;
+    }
+
+    private async Task ChangeDisplayOfStepNumbers(ChangeEventArgs arg)
+    {
+        bool shouldDisplayStepNumbers = bool.Parse(arg.Value!.ToString()!);
+        
+        Result result;
+        if (shouldDisplayStepNumbers)
+        {
+            ShowStepNumbersCommand command = new (guideData.GuideId);
+            result = await CommandDispatcher.DispatchAsync(command);
+        }
+        else
+        {
+            HideStepNumbersCommand command = new (guideData.GuideId);
+            result = await CommandDispatcher.DispatchAsync(command);
+        }
+        
+        
+        if (result.HasErrors)
+        {
+            SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
+            return;
+        }
+        guideData.StepNumbersVisible = shouldDisplayStepNumbers;
     }
 }
