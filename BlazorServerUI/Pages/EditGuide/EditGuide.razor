@@ -52,7 +52,10 @@
                             <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
                         </div>
                     </div>
-                    <div class="add-guide-container">
+
+                    <div class="
+                        @((i < 3) ? "hide-able-icon-container" : "") 
+                        ">
                         <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step"/>
                     </div>
                 }
@@ -99,6 +102,7 @@
 
     private string markdownValue = String.Empty;
 
+    private int x = 3;
     private MarkupString slideContent;
     private readonly MarkdigAdapter converter = new();
 

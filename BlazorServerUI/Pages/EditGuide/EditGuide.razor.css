@@ -61,19 +61,19 @@
     width: 48%;
 }
 
-.add-guide-container {
+.hide-able-icon-container {
     min-height: 10px;
     max-height: 10px;
     /*transition: height 0.5s linear;*/
     text-align: center;
-    transition: all 0.5s ease;
+    transition: all 0.25s ease;
     
 }
 
-.add-guide-container:hover {
+.hide-able-icon-container:hover {
     min-height: 10px;
     max-height: 35px;
-    transition: all 0.5s ease;
+    transition: all 0.25s ease;
     
 }
 
@@ -87,20 +87,20 @@
 
 .add-guide-icon:hover{
     width:30px !important;
-    transition: all 0.15s ease;
+    transition: all 0.25s ease;
 }
 
-.add-guide-container .add-guide-icon {
+.hide-able-icon-container .add-guide-icon {
     visibility: hidden;
     width:0px;
     opacity: 0%;
-    transition: all 0.5s ease;
+    transition: all 0.25s ease;
 
 }
 
-.add-guide-container:hover .add-guide-icon {
+.hide-able-icon-container:hover .add-guide-icon {
     visibility: visible;
-    transition: all 0.5s ease;
+    transition: all 0.25s ease;
     width:25px;
     opacity: 100%;
 
