@@ -62,41 +62,46 @@
 }
 
 .add-guide-container {
-    max-height: 5px;
-    transition: height 0.5s linear;
+    min-height: 10px;
+    max-height: 10px;
+    /*transition: height 0.5s linear;*/
     text-align: center;
+    transition: all 0.5s ease;
+    
 }
 
 .add-guide-container:hover {
-    transition: height 0.5s linear;
+    min-height: 10px;
     max-height: 35px;
+    transition: all 0.5s ease;
+    
 }
 
 .add-guide-icon {
     cursor: pointer;
-    /*display: inline-block;*/
     margin-left: auto;
     margin-right: auto;
-    /*width:25px;*/
-    height:25px;
-    transition: height 1.5s;
+    width:25px;
+    transition: all 0.25s ease;
 }
 
 .add-guide-icon:hover{
-    height:30px;
-    transition: height 1.5s;
+    width:30px !important;
+    transition: all 0.15s ease;
 }
 
 .add-guide-container .add-guide-icon {
     visibility: hidden;
+    width:0px;
     opacity: 0%;
-    transition: visibility,opacity 0.5s linear;
+    transition: all 0.5s ease;
 
 }
 
 .add-guide-container:hover .add-guide-icon {
     visibility: visible;
+    transition: all 0.5s ease;
+    width:25px;
     opacity: 100%;
-    transition: visibility,opacity 0.5s linear;
 
 }
