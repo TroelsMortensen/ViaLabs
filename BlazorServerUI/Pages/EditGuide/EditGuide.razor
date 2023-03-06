@@ -27,7 +27,7 @@
             <div class="guide-details-box">
                 <div style="margin: 5px; margin-top: 20px">
                     <ReactiveInputField WidthWithUnit="30ch" GhostText="Guide Title" InitialValue="@guideData.Title" OnValueChangeWithReset="ChangeGuideTitle"/>
-                    <div style="margin-top: 15px"></div>
+                    <div style="margin-top: 20px"></div>
                     <DropDown WidthWithUnit="30ch" InitialValue="@guideData.CategoryId.ToString()" OnValueChange="ChangeGuideCategory" Values="@guideData.CategoriesByTeacher.ToDictionary(vm => vm.Id.ToString(), vm => vm.Title)"/>
                     <div style="margin-top: 20px"></div>
                     <ReactiveInputField WidthWithUnit="30ch" GhostText="Optional short description" UseArea="true" InitialValue="@guideData.Description" OnValueChangeWithReset="ChangeGuideDescription"/>
@@ -51,8 +51,8 @@
                             <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
                         </div>
                     </div>
-                    <div>
-                        +
+                    <div class="add-guide-container">
+                        <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step"/>
                     </div>
                 }
             </div>

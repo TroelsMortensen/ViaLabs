@@ -32,7 +32,7 @@
 .right-side-box {
     width: 100%;
     min-height: 500px;
-    display:flex;
+    display: flex;
     margin-left: 15px;
 }
 
@@ -43,7 +43,7 @@
 .steps-box {
     border: solid 1px;
     margin-top: 15px;
-    
+
 }
 
 .markdown-editor-box {
@@ -59,4 +59,44 @@
     /*min-width:45%;*/
     margin-left: auto;
     width: 48%;
+}
+
+.add-guide-container {
+    max-height: 5px;
+    transition: height 0.5s linear;
+    text-align: center;
+}
+
+.add-guide-container:hover {
+    transition: height 0.5s linear;
+    max-height: 35px;
+}
+
+.add-guide-icon {
+    cursor: pointer;
+    /*display: inline-block;*/
+    margin-left: auto;
+    margin-right: auto;
+    /*width:25px;*/
+    height:25px;
+    transition: height 1.5s;
+}
+
+.add-guide-icon:hover{
+    height:30px;
+    transition: height 1.5s;
+}
+
+.add-guide-container .add-guide-icon {
+    visibility: hidden;
+    opacity: 0%;
+    transition: visibility,opacity 0.5s linear;
+
+}
+
+.add-guide-container:hover .add-guide-icon {
+    visibility: visible;
+    opacity: 100%;
+    transition: visibility,opacity 0.5s linear;
+
 }
