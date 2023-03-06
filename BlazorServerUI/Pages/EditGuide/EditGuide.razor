@@ -33,7 +33,7 @@
                     <ReactiveInputField WidthWithUnit="30ch" GhostText="Optional short description" UseArea="true" InitialValue="@guideData.Description" OnValueChangeWithReset="ChangeGuideDescription"/>
                 </div>
                 <div style="margin: 5px">
-                    <input id="show-steps" type="checkbox" style="cursor: pointer" @onchange="ChangeDisplayOfStepNumbers" selected="@guideData.StepNumbersVisible"/>
+                    <input id="show-steps" type="checkbox" style="cursor: pointer" @onchange="ChangeDisplayOfStepNumbers" checked="@guideData.StepNumbersVisible"/>
                     <label for="show-steps" style="cursor: pointer">Show step numbers</label>
                 </div>
             </div>
