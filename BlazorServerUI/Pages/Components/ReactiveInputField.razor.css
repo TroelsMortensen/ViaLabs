@@ -44,9 +44,15 @@ textarea:not(:focus):valid ~ .floating-label
     top: -16px;
     left: 12px;
     color: #000000;
-    text-decoration: underline 1px #66afe9;
+    text-decoration: underline 1px #000000;
     /*background-color: #ffffff;*/
     padding:0 5px 0 5px;
+}
+
+input:focus ~ .floating-label,
+textarea:focus ~ .floating-label{
+    text-decoration: underline 1px #66afe9;
+    
 }
 
 .floating-input:focus {
