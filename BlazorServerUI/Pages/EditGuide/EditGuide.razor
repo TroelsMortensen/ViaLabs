@@ -234,6 +234,6 @@
             SnackBarHandler.ShowError(slideResult.GetCombinedErrorMessage());
             return;
         }
-        SlideStepQuery query = new(createSlideCommand.SlideId);
+        SingleSlideStepQuery query = new(createSlideCommand.SlideId);
     }
 }

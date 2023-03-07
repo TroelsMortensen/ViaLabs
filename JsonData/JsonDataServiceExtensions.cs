@@ -29,6 +29,7 @@ public static class JsonDataServiceExtensions
     private static void AddForEditGuideView(IServiceCollection services)
     {
         services.AddScoped<IQueryHandler<GuideDataForEditQuery, GuideDataVM>, GuideDataQueryHandler>();
+        services.AddScoped<IQueryHandler<SingleSlideStepQuery, SlideStepVM>, SlideStepQueryHandler>();
     }
 
     private static void AddForProfileView(IServiceCollection services)
