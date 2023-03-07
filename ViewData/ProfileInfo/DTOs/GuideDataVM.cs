@@ -14,7 +14,7 @@ public class GuideDataVM
 
     public bool IsPublished { get; set; }
     
-    public ICollection<SlideDetails> Slides { get; set; }
+    public ICollection<SlideStep> Slides { get; set; }
 
     public ICollection<CategoryVM> CategoriesByTeacher { get; set; }
 }

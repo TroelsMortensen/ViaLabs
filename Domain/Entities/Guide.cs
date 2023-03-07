@@ -10,7 +10,7 @@ public class Guide
     public bool IsPublished { get; private set; }
     public bool IsDisplayingStepNums { get; private set; }
 
-    public ICollection<SlideDetails> Slides { get; private set; } = new List<SlideDetails>();
+    public ICollection<SlideStep> Slides { get; private set; } = new List<SlideStep>();
 
     public Guid CategoryId { get; private set; }
 
@@ -125,7 +125,7 @@ public class Guide
 
     public void AddSlide(Guid slideId, int slideIndex, Guid commandSlideContentId)
     {
-        SlideDetails slide = SlideDetails.Create(slideId, slideIndex, commandSlideContentId);
+        SlideStep slide = SlideStep.Create(slideId, slideIndex, commandSlideContentId);
         Slides.ToList().Insert(slideIndex, slide);
     }
 }

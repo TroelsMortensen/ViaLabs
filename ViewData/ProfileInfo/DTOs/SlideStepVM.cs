@@ -1,6 +1,6 @@
 ﻿namespace ViewData.ProfileInfo.DTOs;
 
-public class SlideDetailsVM
+public class SlideStepVM
 {
     public Guid Id { get; set; }
     public int Index { get; set; }
