@@ -25,9 +25,9 @@
      showgrid="false"
      inkscape:zoom="1.4061537"
      inkscape:cx="216.54816"
-     inkscape:cy="87.472657"
-     inkscape:window-width="3124"
-     inkscape:window-height="1408"
+     inkscape:cy="87.117077"
+     inkscape:window-width="2558"
+     inkscape:window-height="1403"
      inkscape:window-x="1913"
      inkscape:window-y="0"
      inkscape:window-maximized="0"
@@ -60,18 +60,6 @@
        id="path4900" />
     <path
        style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 95.990979,151.78268 -30.454,-4.14174"
-       id="path5015" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 95.990979,166.4006 -30.454,-4.14174"
-       id="path5097" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 95.990979,180.77488 -30.454,-4.14174"
-       id="path5099" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 112.07068,151.78268 30.454,-4.14174"
        id="path5467" />
     <path
@@ -84,15 +72,11 @@
        id="path5471" />
     <path
        style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       d="m 95.990979,137.48244 -30.454,-4.14174"
-       id="path1017" />
-    <path
-       style="fill:none;stroke:#000000;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        d="m 112.07068,137.48244 30.454,-4.14174"
        id="path1019" />
     <g
        id="g6243"
-       transform="matrix(0.86344168,0,0,0.86344168,-20.162053,78.785162)">
+       transform="matrix(0.86344168,0,0,0.86344168,-54.971844,78.220679)">
       <path
          id="rect5495"
          style="fill:#00ff02;fill-opacity:1;stroke:#000000;stroke-width:1.5;stroke-linecap:round"
