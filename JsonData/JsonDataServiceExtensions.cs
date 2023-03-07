@@ -45,6 +45,8 @@ public static class JsonDataServiceExtensions
         services.AddScoped<ICategoryRepo, CategoryJsonRepo>();
         services.AddScoped<IGuideRepo, GuideJsonRepo>();
         services.AddScoped<IExternalResourceRepo, ExternalResourceJsonRepo>();
+        services.AddScoped<ISlideContentRepo, SlideContentJsonRepo>();
+        
         services.AddScoped<IUnitOfWork, JsonUnitOfWorkImpl>();
     }
 

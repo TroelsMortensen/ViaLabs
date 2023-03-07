@@ -21,6 +21,8 @@ public class JsonDataContext : IDisposable
 
     internal ICollection<ExternalResource> ExternalResources => Data.ExternalResources;
 
+    internal ICollection<SlideContent> SlideContents => Data.SlideContents;
+
     public JsonDataContext(IJsonHelper jsonHelper)
     {
         this.jsonHelper = jsonHelper;
