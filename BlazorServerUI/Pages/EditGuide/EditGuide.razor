@@ -8,6 +8,8 @@
 @using Application.UseCases.GuideUseCases.ChangeCategory
 @using Application.UseCases.GuideUseCases.ChangeDescription
 @using Application.UseCases.GuideUseCases.ChangeStepsNumberVisibility
+@using Application.UseCases.GuideUseCases.CreateSlide
+@using Application.UseCases.GuideUseCases.CreateSlideContent
 @using BlazorServerUI.Popups
 @inject IQueryDispatcher QueryDispatcher
 @inject ICommandDispatcher CommandDispatcher
@@ -217,6 +219,21 @@
 
     private async Task CreateNewSlide(int stepIndex)
     {
+        CreateSlideContentCommand createSlideContentCommand = new CreateSlideContentCommand(Guid.NewGuid());
+        Result contentResult = await CommandDispatcher.DispatchAsync(createSlideContentCommand);
+        if (contentResult.HasErrors)
+        {
+            SnackBarHandler.ShowError(contentResult.GetCombinedErrorMessage());
+            return;
+        }
+        CreateSlideCommand createSlideCommand = new CreateSlideCommand(guideData.GuideId, Guid.NewGuid(), stepIndex, createSlideContentCommand.SlideContentId);
+        Result slideResult = await CommandDispatcher.DispatchAsync(createSlideCommand);
         
+        if (slideResult.HasErrors)
+        {
+            SnackBarHandler.ShowError(slideResult.GetCombinedErrorMessage());
+            return;
+        }
+        SlideDetailsQuery query = new(createSlideCommand.SlideId);
     }
 }

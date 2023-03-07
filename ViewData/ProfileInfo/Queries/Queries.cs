@@ -11,3 +11,5 @@ public record CategoryInfoByIdQuery(Guid Id) : IQuery<CategoryVM>;
 public record GuideHeaderQuery(Guid Id) : IQuery<GuideHeaderVM>;
 
 public record GuideDataForEditQuery(Guid Id) : IQuery<GuideDataVM>;
+
+public record SlideDetailsQuery(Guid Id) : IQuery<SlideDetailsVM>;
