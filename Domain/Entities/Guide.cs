@@ -90,11 +90,6 @@ public class Guide
         IsDisplayingStepNums = false;
     }
 
-    public void AddSlide(SlideDetails s, int index)
-    {
-        Slides.Add(s);
-    }
-
     public Result ChangeDescription(string desc)
     {
         if (string.IsNullOrEmpty(desc))
@@ -126,5 +121,11 @@ public class Guide
     public void ChangeCategoryTo(Category category)
     {
         CategoryId = category.Id;
+    }
+
+    public void AddSlide(Guid slideId, int slideIndex, Guid commandSlideContentId)
+    {
+        SlideDetails slide = SlideDetails.Create(slideId, slideIndex, commandSlideContentId);
+        Slides.ToList().Insert(slideIndex, slide);
     }
 }
