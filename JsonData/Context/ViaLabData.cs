@@ -11,4 +11,5 @@ public class ViaLabData
 
     public ICollection<Guide> Guides { get; set; } = new List<Guide>();
     public ICollection<ExternalResource> ExternalResources { get; set; } = new List<ExternalResource>();
+    public ICollection<SlideContent> SlideContents { get; set; } = new List<SlideContent>();
 }
