@@ -26,7 +26,13 @@ public class GuideDataQueryHandler : IQueryHandler<GuideDataForEditQuery, GuideD
                 CategoryId = guide.CategoryId,
                 Description = guide.Description,
                 StepNumbersVisible = guide.IsDisplayingStepNums,
-                Slides = guide.Slides,
+                Slides = guide.Slides.Select(step => new SlideStepVM
+                {
+                    Id = step.Id,
+                    Title = step.Title,
+                    Index = step.StepIndex,
+                    ContentId = step.SlideContentId
+                }).ToList(),
                 CategoriesByTeacher = context
                     .Categories
                     .Where(category => category.Owner.Equals(guide.TeacherId))

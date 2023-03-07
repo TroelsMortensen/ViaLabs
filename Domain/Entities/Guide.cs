@@ -10,7 +10,7 @@ public class Guide
     public bool IsPublished { get; private set; }
     public bool IsDisplayingStepNums { get; private set; }
 
-    public ICollection<SlideStep> Slides { get; private set; } = new List<SlideStep>();
+    public IList<SlideStep> Slides { get; private set; }
 
     public Guid CategoryId { get; private set; }
 
@@ -68,6 +68,8 @@ public class Guide
         TeacherId = teacherId;
         IsPublished = false;
         IsDisplayingStepNums = false;
+        Description = "";
+        Slides = new List<SlideStep>();
     }
 
     public void Publish()
@@ -126,6 +128,6 @@ public class Guide
     public void AddSlide(Guid slideId, int slideIndex, Guid commandSlideContentId)
     {
         SlideStep slide = SlideStep.Create(slideId, slideIndex, commandSlideContentId);
-        Slides.ToList().Insert(slideIndex, slide);
+        Slides.Insert(slideIndex, slide);
     }
 }

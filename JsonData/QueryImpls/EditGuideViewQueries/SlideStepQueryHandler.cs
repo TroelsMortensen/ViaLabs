@@ -26,7 +26,7 @@ public class SlideStepQueryHandler : IQueryHandler<SingleSlideStepQuery, SlideSt
                 Index = step.StepIndex,
                 Title = step.Title,
                 ContentId = step.SlideContentId
-            }).SingleOrDefault(vm => vm.ContentId.Equals(query.SlideStepId));
+            }).SingleOrDefault(vm => vm.Id.Equals(query.SlideStepId));
 
         if (slideStepVm == null)
         {

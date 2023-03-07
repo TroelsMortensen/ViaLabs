@@ -1,4 +1,6 @@
-﻿namespace ViewData.ProfileInfo.DTOs;
+﻿using Domain.Entities;
+
+namespace ViewData.ProfileInfo.DTOs;
 
 public class SlideStepVM
 {
@@ -6,4 +8,6 @@ public class SlideStepVM
     public int Index { get; set; }
     public string Title { get; set; } = "";
     public Guid ContentId { get; set; }
+
+    public SlideContent? SlideContent { get; set; } // this will be lazy loaded by the client
 }
