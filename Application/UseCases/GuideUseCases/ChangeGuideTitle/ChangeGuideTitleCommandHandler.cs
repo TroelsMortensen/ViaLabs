@@ -5,12 +5,12 @@ using Domain.OperationResult;
 
 namespace Application.UseCases.GuideUseCases.ChangeGuideTitle;
 
-public class ChangeGuideTitleHandler : ICommandHandler<ChangeGuideTitleCommand>
+public class ChangeGuideTitleCommandHandler : ICommandHandler<ChangeGuideTitleCommand>
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IGuideRepo guideRepo;
 
-    public ChangeGuideTitleHandler(IUnitOfWork unitOfWork, IGuideRepo guideRepo)
+    public ChangeGuideTitleCommandHandler(IUnitOfWork unitOfWork, IGuideRepo guideRepo)
     {
         this.unitOfWork = unitOfWork;
         this.guideRepo = guideRepo;

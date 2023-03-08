@@ -28,7 +28,7 @@ public static class ServiceExtensions
     private static void AddGuideHandlers(IServiceCollection services)
     {
         services.AddScoped<ICommandHandler<CreateGuideCommand>, GuideCreateHandler>();
-        services.AddScoped<ICommandHandler<ChangeGuideTitleCommand>, ChangeGuideTitleHandler>();
+        services.AddScoped<ICommandHandler<ChangeGuideTitleCommand>, ChangeGuideTitleCommandHandler>();
         services.AddScoped<ICommandHandler<ChangeGuideCategoryCommand>, ChangeGuideCategoryCommandHandler>();
         services.AddScoped<ICommandHandler<ChangeGuideDescriptionCommand>, ChangeGuideDescriptionCommandHandler>();
         services.AddScoped<ICommandHandler<HideStepNumbersCommand>, HideGuideStepNumbersCommandHandler>();
