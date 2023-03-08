@@ -6,7 +6,7 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.EditGuideViewQueries;
 
-public class SlideStepQueryHandler : IQueryHandler<SingleSlideStepQuery, SlideStepVM>
+public class SlideStepQueryHandler : IQueryHandler<SingleSlideStepQuery, SlideVM>
 {
     private readonly JsonDataContext context;
 
@@ -15,12 +15,12 @@ public class SlideStepQueryHandler : IQueryHandler<SingleSlideStepQuery, SlideSt
         this.context = context;
     }
 
-    public Task<SlideStepVM> Query(SingleSlideStepQuery query)
+    public Task<SlideVM> Query(SingleSlideStepQuery query)
     {
-        SlideStepVM? slideStepVm = context.Guides
+        SlideVM? slideStepVm = context.Guides
             .SelectMany(guide => guide.Slides)
             // .Where(step => step.Id.Equals(query.SlideStepId))
-            .Select(step => new SlideStepVM
+            .Select(step => new SlideVM
             {
                 Id = step.Id,
                 Index = step.StepIndex,

@@ -10,7 +10,7 @@ public class Guide
     public bool IsPublished { get; private set; }
     public bool IsDisplayingStepNums { get; private set; }
 
-    public IList<SlideStep> Slides { get; private set; }
+    public IList<Slide> Slides { get; private set; }
 
     public Guid CategoryId { get; private set; }
 
@@ -69,7 +69,7 @@ public class Guide
         IsPublished = false;
         IsDisplayingStepNums = false;
         Description = "";
-        Slides = new List<SlideStep>();
+        Slides = new List<Slide>();
     }
 
     public void Publish()
@@ -128,12 +128,23 @@ public class Guide
     public void AddSlide(Guid slideId, int slideIndex, Guid commandSlideContentId)
     {
         // TODO need a unit test for this
-        SlideStep slide = SlideStep.Create(slideId, slideIndex, commandSlideContentId);
+        Slide slide = Slide.Create(slideId, slideIndex, commandSlideContentId);
         Slides = Slides.OrderBy(step => step.StepIndex).ToList();
         Slides.Insert(slideIndex, slide);
         for (int i = slideIndex+1; i < Slides.Count; i++)
         {
             Slides[i].PushStepDown();
         }
+    }
+
+    public Result ChangeSlideTitle(Guid slideId, string title)
+    {
+        Slide? slide = Slides.SingleOrDefault(step => step.Id.Equals(slideId));
+        if (slide == null)
+        {
+            return Result.Failure("Guide.Slide.Id", $"Could not find specific slide with ID {slideId}");
+        }
+
+        return slide.ChangeTitle(title);
     }
 }

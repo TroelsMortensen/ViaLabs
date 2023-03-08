@@ -2,7 +2,7 @@
 
 public class GuideDataVM
 {
-    private IList<SlideStepVM> slides;
+    private IList<SlideVM> slides;
     public Guid GuideId { get; set; }
 
     public string Title { get; set; }
@@ -16,7 +16,7 @@ public class GuideDataVM
     public bool IsPublished { get; set; }
 
     // public IList<SlideStepVM> Slides { get; set; }
-    public IList<SlideStepVM> Slides
+    public IList<SlideVM> Slides
     {
         get
         {

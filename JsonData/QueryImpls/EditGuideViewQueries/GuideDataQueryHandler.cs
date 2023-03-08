@@ -26,7 +26,7 @@ public class GuideDataQueryHandler : IQueryHandler<GuideDataForEditQuery, GuideD
                 CategoryId = guide.CategoryId,
                 Description = guide.Description,
                 StepNumbersVisible = guide.IsDisplayingStepNums,
-                Slides = guide.Slides.Select(step => new SlideStepVM
+                Slides = guide.Slides.Select(step => new SlideVM
                 {
                     Id = step.Id,
                     Title = step.Title,

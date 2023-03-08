@@ -20,7 +20,7 @@ public class SlideContentJsonRepo: ISlideContentRepo
         return Task.CompletedTask;
     }
 
-    public Task<SlideStep> GetAsync(Guid slideContentId)
+    public Task<Slide> GetAsync(Guid slideContentId)
     {
         throw new NotImplementedException();
     }

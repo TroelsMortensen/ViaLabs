@@ -2,7 +2,7 @@
 
 namespace ViewData.ProfileInfo.DTOs;
 
-public class SlideStepVM
+public class SlideVM
 {
     public Guid Id { get; set; }
     public int Index { get; set; }
