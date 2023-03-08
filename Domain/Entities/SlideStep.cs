@@ -26,4 +26,9 @@ public class SlideStep
     {
         return new SlideStep(slideId, slideIndex, slideContentId);
     }
+
+    public void PushStepDown()
+    {
+        StepIndex++;
+    }
 }

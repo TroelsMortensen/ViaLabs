@@ -127,7 +127,13 @@ public class Guide
 
     public void AddSlide(Guid slideId, int slideIndex, Guid commandSlideContentId)
     {
+        // TODO need a unit test for this
         SlideStep slide = SlideStep.Create(slideId, slideIndex, commandSlideContentId);
+        Slides = Slides.OrderBy(step => step.StepIndex).ToList();
         Slides.Insert(slideIndex, slide);
+        for (int i = slideIndex+1; i < Slides.Count; i++)
+        {
+            Slides[i].PushStepDown();
+        }
     }
 }
