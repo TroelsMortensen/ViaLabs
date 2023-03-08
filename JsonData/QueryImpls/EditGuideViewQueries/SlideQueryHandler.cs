@@ -6,16 +6,16 @@ using ViewData.ProfileInfo.Queries;
 
 namespace JsonData.QueryImpls.EditGuideViewQueries;
 
-public class SlideStepQueryHandler : IQueryHandler<SingleSlideStepQuery, SlideVM>
+public class SlideQueryHandler : IQueryHandler<SingleSlideQuery, SlideVM>
 {
     private readonly JsonDataContext context;
 
-    public SlideStepQueryHandler(JsonDataContext context)
+    public SlideQueryHandler(JsonDataContext context)
     {
         this.context = context;
     }
 
-    public Task<SlideVM> Query(SingleSlideStepQuery query)
+    public Task<SlideVM> Query(SingleSlideQuery query)
     {
         SlideVM? slideStepVm = context.Guides
             .SelectMany(guide => guide.Slides)
