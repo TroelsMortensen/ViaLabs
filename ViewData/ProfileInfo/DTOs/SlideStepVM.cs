@@ -10,4 +10,6 @@ public class SlideStepVM
     public Guid ContentId { get; set; }
 
     public SlideContent? SlideContent { get; set; } // this will be lazy loaded by the client
+
+    public bool ShowTitleEditing { get; set; }
 }
