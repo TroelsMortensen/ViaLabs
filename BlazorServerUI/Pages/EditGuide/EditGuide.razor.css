@@ -105,3 +105,22 @@
     opacity: 100%;
     transition-delay: 100ms;
 }
+
+.step-container {
+    position: relative;
+    cursor:pointer;
+}
+
+.step-options {
+    position: absolute;
+    display: flex;
+    right: 0;
+}
+
+.step-container:hover .step-options {
+    visibility: visible;
+}
+
+.step-container .step-options {
+    visibility: hidden;
+}

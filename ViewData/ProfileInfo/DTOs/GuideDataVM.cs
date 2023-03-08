@@ -4,7 +4,9 @@ public class GuideDataVM
 {
     private IList<SlideStepVM> slides;
     public Guid GuideId { get; set; }
+
     public string Title { get; set; }
+
     // public string CategoryName { get; set; }
     public Guid CategoryId { get; set; }
 
@@ -13,9 +15,14 @@ public class GuideDataVM
 
     public bool IsPublished { get; set; }
 
+    // public IList<SlideStepVM> Slides { get; set; }
     public IList<SlideStepVM> Slides
     {
-        get => slides.OrderBy(vm => vm.Index).ToList();
+        get
+        {
+            slides = slides.OrderBy(vm => vm.Index).ToList();
+            return slides;
+        }
         set => slides = value;
     }
 
