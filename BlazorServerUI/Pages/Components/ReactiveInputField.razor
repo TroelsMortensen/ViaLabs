@@ -6,6 +6,7 @@
                 type="text" 
                 required 
                 @onchange="@OnChange"
+                @onfocusout="async () => { ChangeEventArgs arg = new ();arg.Value = textValue; await OnChange(arg); }"
                 value="@textValue"
                 @onfocus="() => backup = textValue">
             
@@ -18,6 +19,7 @@
                type="text"
                required
                @onchange="@OnChange"
+               @onfocusout="async () => { ChangeEventArgs arg = new ();arg.Value = textValue; await OnChange(arg); }"
                value="@textValue"
                @onfocus="() => backup = textValue"/>
     }
@@ -59,16 +61,15 @@
             bool wasSuccess = await OnValueChangeWithReset?.Invoke(s)!;
             if (!wasSuccess)
             {
-                // InitialValue = "";
+    // InitialValue = "";
                 textValue = "";
                 await Task.Yield();
                 await InvokeAsync(StateHasChanged);
 
-                // InitialValue = tmp;
+    // InitialValue = tmp;
                 textValue = tmp;
                 await Task.Yield();
                 await InvokeAsync(StateHasChanged);
-
             }
         }
     }
