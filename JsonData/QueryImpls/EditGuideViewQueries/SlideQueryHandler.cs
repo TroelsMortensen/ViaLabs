@@ -17,7 +17,7 @@ public class SlideQueryHandler : IQueryHandler<SingleSlideQuery, SlideVM>
 
     public Task<SlideVM> Query(SingleSlideQuery query)
     {
-        SlideVM? slideStepVm = context.Guides
+        SlideVM? slideVm = context.Guides
             .SelectMany(guide => guide.Slides)
             // .Where(step => step.Id.Equals(query.SlideStepId))
             .Select(step => new SlideVM
@@ -26,13 +26,13 @@ public class SlideQueryHandler : IQueryHandler<SingleSlideQuery, SlideVM>
                 Index = step.StepIndex,
                 Title = step.Title,
                 ContentId = step.SlideContentId
-            }).SingleOrDefault(vm => vm.Id.Equals(query.SlideStepId));
+            }).SingleOrDefault(vm => vm.Id.Equals(query.SlideId));
 
-        if (slideStepVm == null)
+        if (slideVm == null)
         {
-            throw new NotFoundException($"Slide step with ID {query.SlideStepId} was not found");
+            throw new NotFoundException($"Slide step with ID {query.SlideId} was not found");
         }
 
-        return Task.FromResult(slideStepVm);
+        return Task.FromResult(slideVm);
     }
 }

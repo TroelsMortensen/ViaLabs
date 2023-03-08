@@ -12,4 +12,4 @@ public record GuideHeaderQuery(Guid Id) : IQuery<GuideHeaderVM>;
 
 public record GuideDataForEditQuery(Guid Id) : IQuery<GuideDataVM>;
 
-public record SingleSlideQuery(Guid SlideStepId) : IQuery<SlideVM>;
+public record SingleSlideQuery(Guid SlideId) : IQuery<SlideVM>;

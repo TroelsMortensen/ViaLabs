@@ -15,7 +15,6 @@ public class GuideDataVM
 
     public bool IsPublished { get; set; }
 
-    // public IList<SlideStepVM> Slides { get; set; }
     public IList<SlideVM> Slides
     {
         get
