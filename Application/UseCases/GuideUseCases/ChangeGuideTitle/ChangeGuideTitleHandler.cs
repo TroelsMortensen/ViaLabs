@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.GuideUseCases.ChangeTitle;
+namespace Application.UseCases.GuideUseCases.ChangeGuideTitle;
 
 public class ChangeGuideTitleHandler : ICommandHandler<ChangeGuideTitleCommand>
 {
