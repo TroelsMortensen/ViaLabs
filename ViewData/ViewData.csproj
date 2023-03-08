@@ -11,9 +11,9 @@
       <ProjectReference Include="..\Domain\Domain.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="GuideManagement\DTOs" />
-      <Folder Include="GuideManagement\Queries" />
-    </ItemGroup>
+<!--    <ItemGroup>-->
+<!--      <Folder Include="GuideManagement\DTOs" />-->
+<!--      <Folder Include="GuideManagement\Queries" />-->
+<!--    </ItemGroup>-->
 
 </Project>
