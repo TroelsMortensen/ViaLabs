@@ -43,6 +43,13 @@
                 <span style="margen-left:auto;margin-right: auto">Guide steps:</span>
                 @for (int i = 0; i < guideData.Slides.Count; i++)
                 {
+                    int index = i;
+                    @if (i < guideData.Slides.Count)
+                    {
+                        <div class="hide-able-icon-container">
+                            <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step" @onclick="() => CreateNewSlide(index)"/>
+                        </div>
+                    }
                     <div style="display:flex; border: solid 1px; margin: 3px;">
                         @if (guideData.StepNumbersVisible)
                         {
@@ -54,12 +61,7 @@
                             <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
                         </div>
                     </div>
-                    @if (i < guideData.Slides.Count - 1)
-                    {
-                        <div class="hide-able-icon-container">
-                            <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step" @onclick="() => CreateNewSlide(i)"/>
-                        </div>
-                    }
+                    
                 }
                 <div
                     style="margin-bottom: 10px;margin-top: 10px">
@@ -218,7 +220,7 @@
 
     private async Task CreateNewSlide(int stepIndex)
     {
-        CreateSlideCommand command = new(guideData.GuideId, Guid.NewGuid(), stepIndex, Guid.NewGuid());
+        CreateSlideCommand command = new(guideData.GuideId, Guid.NewGuid(), stepIndex);
         Result slideResult = await CommandDispatcher.DispatchAsync(command);
         if (slideResult.HasErrors)
         {
@@ -227,7 +229,7 @@
         }
 
         SingleSlideStepQuery query = new(command.SlideId);
-        SlideStepVM slideStepVm = await QueryDispatcher.QueryAsync(query);
+        SlideStepVM slideStepVm = await QueryDispatcher.QueryAsync(query);  
 
 
         // hack to make the view update, I have to change the "value" of a variable used in the page.

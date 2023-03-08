@@ -19,13 +19,13 @@ private readonly ISlideContentRepo slideContentRepo;
 
     public async Task<Result> Handle(CreateSlideCommand command)
     {
-        SlideContent slideContent = SlideContent.Create(command.SlideContentId);
+        SlideContent slideContent = SlideContent.Create(Guid.NewGuid());
                 await slideContentRepo.CreateAsync(slideContent);
         
         
         
         Guide guide = await guideRepo.GetAsync(command.GuideId);
-        guide.AddSlide(command.SlideId, command.StepIndex, command.SlideContentId);
+        guide.AddSlide(command.SlideId, command.StepIndex, slideContent.Id);
 
         await unitOfWork.SaveChangesAsync();
         return Result.Success();
