@@ -5,7 +5,7 @@ using Application.UseCases.CategoryUseCases.CategoryUpdate;
 using Application.UseCases.GuideUseCases.ChangeCategory;
 using Application.UseCases.GuideUseCases.ChangeDescription;
 using Application.UseCases.GuideUseCases.ChangeGuideTitle;
-using Application.UseCases.GuideUseCases.ChangeStepsNumberVisibility;
+using Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility;
 using Application.UseCases.GuideUseCases.Create;
 using Application.UseCases.GuideUseCases.CreateSlide;
 using Microsoft.Extensions.DependencyInjection;
