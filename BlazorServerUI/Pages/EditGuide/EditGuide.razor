@@ -41,33 +41,50 @@
             </div>
             <div class="steps-box" style="text-align: center">
                 <span style="margen-left:auto;margin-right: auto">Guide steps:</span>
-                @for (int i = 0; i < guideData.Slides.Count; i++)
-                {
-                    int index = i;
-                    @if (i < guideData.Slides.Count)
+                @{
+                    int i = 0;
+                    foreach (SlideStepVM vm in guideData.Slides)
                     {
-                        <div class="hide-able-icon-container">
-                            <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step" @onclick="() => CreateNewSlide(index)"/>
-                        </div>
-                    }
-                    <div class="step-container" style="display:flex; border: solid 1px; margin: 3px;">
-                        @if (guideData.StepNumbersVisible)
+                        int index = i;
+                        @if (index < guideData.Slides.Count)
                         {
-                            <label style="margin-left: 5px">@(i).</label>
-                        }
-                        <label style="margin-left: 5px; border: 1px solid">@guideData.Slides[i].Title</label>
-                        <div class="step-options">
-                            <span >
-                                <img src="icons/edit.gif" style="height: 1.2em; cursor:pointer; margin-right: 3px" title="Edit text"/>
-                            </span>
-                            <div style="padding: 1px">
-                                <span style="display: inline">
-                                    <img src="icons/UpArrow.svg" style="height: 0.6em;cursor: pointer;display: block;margin-bottom: 3px;" title="Move up"/>
-                                    <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
-                                </span>
+                            <div class="hide-able-icon-container">
+                                <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step" @onclick="() => CreateNewSlide(index)"/>
                             </div>
+                        }
+                        <div class="step-container" style="display:flex; border: solid 1px; margin: 3px;">
+                            @if (guideData.StepNumbersVisible)
+                            {
+                                <label style="margin-left: 5px">@(index).</label>
+                            }
+                            @if (vm.ShowTitleEditing)
+                            {
+                                <span style="margin-left:5px">
+                                    <ReactiveInputField GhostText="Step title" InitialValue="@vm.Title" WidthWithUnit="125%" OnValueChangeWithReset="arg => UpdateStepTitle(arg, vm)"></ReactiveInputField>
+                                </span>
+                            }
+                            else
+                            {
+                                <label style="margin-left: 5px;">@vm.Title</label>
+                                <div class="step-options">
+                                    <span >
+                                        <img src="icons/edit.gif"
+                                             style="height: 1.2em; cursor:pointer; margin-right: 3px"
+                                             title="Edit text"
+                                             @onclick='() => { vm.ShowTitleEditing = !vm.ShowTitleEditing; }'/>
+                                    </span>
+                                    <div style="padding: 1px">
+                                        <span style="display: inline">
+                                            <img src="icons/UpArrow.svg" style="height: 0.6em;cursor: pointer;display: block;margin-bottom: 3px;" title="Move up"/>
+                                            <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            }
+
                         </div>
-                    </div>
+                        i++;
+                    }
                 }
                 <div
                     style="margin-bottom: 10px;margin-top: 10px">
@@ -239,25 +256,15 @@
         SingleSlideStepQuery query = new(command.SlideId);
         SlideStepVM slideStepVm = await QueryDispatcher.QueryAsync(query);
 
-
-    // hack to make the view update, I have to change the "value" of a variable used in the page.
-    // It is not enough to add a new element to the Slides collection, this will not trigger an update,
-    // for whatever reason, in this specific case.
-    // I cannot make StateHasChanged to work.
-        //
-        // IList<SlideStepVM> tempSlides = guideData.Slides;
-        // tempSlides.Insert(stepIndex, slideStepVm);
-        // guideData.Slides = tempSlides;
-
         guideData.Slides.Insert(stepIndex, slideStepVm);
     }
 
-    // private void CreateNewSlide1()
-    // {
-    //     guideData.Slides.Add(new SlideStepVM
-    //     {
-    //         Title = "Yes man!"
-    //     });
-    //     
-    // }
+
+    private async Task<bool> UpdateStepTitle(string s, SlideStepVM vm)
+    {
+        vm.ShowTitleEditing = false;
+        StateHasChanged();
+        await Task.Yield();
+        return true;
+    }
 }
