@@ -54,9 +54,9 @@
                             <img src="icons/DownArrow.svg" style="height: 0.6em;cursor: pointer;display: block" title="Move down"/>
                         </div>
                     </div>
-                    @if(i < guideData.Slides.Count - 1)
+                    @if (i < guideData.Slides.Count - 1)
                     {
-                        <div class="hide-able-icon-container" >
+                        <div class="hide-able-icon-container">
                             <img src="icons/AddGuideStep.svg" class="add-guide-icon" title="Add new guide step" @onclick="() => CreateNewSlide(i)"/>
                         </div>
                     }
@@ -112,7 +112,7 @@
     private readonly MarkdigAdapter converter = new();
 
     private GuideDataVM guideData = null!;
-    
+
 
     protected override async Task OnInitializedAsync()
     {
@@ -225,18 +225,18 @@
             SnackBarHandler.ShowError(slideResult.GetCombinedErrorMessage());
             return;
         }
-        
+
         SingleSlideStepQuery query = new(command.SlideId);
         SlideStepVM slideStepVm = await QueryDispatcher.QueryAsync(query);
-        
-        
+
+
         // hack to make the view update, I have to change the "value" of a variable used in the page.
-        // It is not enough to add a new element to the Slides collection, this will not trigger an update.
+        // It is not enough to add a new element to the Slides collection, this will not trigger an update,
+        // for whatever reason, in this specific case.
         // I cannot make StateHasChanged to work.
-        
+
         IList<SlideStepVM> tempSlides = guideData.Slides;
         tempSlides.Insert(stepIndex, slideStepVm);
-        guideData.Slides = tempSlides; 
-
+        guideData.Slides = tempSlides;
     }
 }
