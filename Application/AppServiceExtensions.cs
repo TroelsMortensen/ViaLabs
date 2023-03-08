@@ -6,6 +6,7 @@ using Application.UseCases.GuideUseCases.ChangeCategory;
 using Application.UseCases.GuideUseCases.ChangeDescription;
 using Application.UseCases.GuideUseCases.ChangeGuideTitle;
 using Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility;
+using Application.UseCases.GuideUseCases.ChangeSlideTitle;
 using Application.UseCases.GuideUseCases.Create;
 using Application.UseCases.GuideUseCases.CreateSlide;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +35,7 @@ public static class ServiceExtensions
         services.AddScoped<ICommandHandler<HideStepNumbersCommand>, HideGuideStepNumbersCommandHandler>();
         services.AddScoped<ICommandHandler<ShowStepNumbersCommand>, ShowGuideStepNumbersCommandHandler>();
         services.AddScoped<ICommandHandler<CreateSlideCommand>, CreateSlideCommandHandler>();
+        services.AddScoped<ICommandHandler<ChangeSlideTitleCommand>, ChangeSlideTitleCommandHandler>();
     }
 
 

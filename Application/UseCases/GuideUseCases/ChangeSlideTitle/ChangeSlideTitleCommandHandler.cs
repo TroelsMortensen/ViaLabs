@@ -20,7 +20,13 @@ public class ChangeSlideTitleCommandHandler : ICommandHandler<ChangeSlideTitleCo
     {
         Guide guide = await guideRepo.GetAsync(command.GuideId);
         Result result = guide.ChangeSlideTitle(command.StepId, command.Title);
-    
+
+        if (result.HasErrors)
+        {
+            return result;
+        }
+
+        await unitOfWork.SaveChangesAsync();
         return Result.Success();
     }
 }
