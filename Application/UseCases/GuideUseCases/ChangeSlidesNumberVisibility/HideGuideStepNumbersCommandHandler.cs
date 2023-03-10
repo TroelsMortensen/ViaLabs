@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.SlideUseCases.ChangeSlidesNumberVisibility;
+namespace Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility;
 
 public class HideGuideStepNumbersCommandHandler : ICommandHandler<HideStepNumbersCommand>
 {
