@@ -4,10 +4,11 @@
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
 @using Domain.OperationResult
-@using Application.UseCases.GuideUseCases.ChangeTitle
 @using Application.UseCases.GuideUseCases.ChangeCategory
 @using Application.UseCases.GuideUseCases.ChangeDescription
-@using Application.UseCases.GuideUseCases.ChangeStepsNumberVisibility
+@using Application.UseCases.GuideUseCases.ChangeGuideTitle
+@using Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility
+@using Application.UseCases.GuideUseCases.ChangeSlideTitle
 @using Application.UseCases.GuideUseCases.CreateSlide
 @using BlazorServerUI.Popups
 @using Domain.Entities
@@ -43,7 +44,7 @@
                 <span style="margen-left:auto;margin-right: auto">Guide steps:</span>
                 @{
                     int i = 0;
-                    foreach (SlideStepVM vm in guideData.Slides)
+                    foreach (SlideVM vm in guideData.Slides)
                     {
                         int index = i;
                         @if (index < guideData.Slides.Count)
@@ -253,16 +254,24 @@
             return;
         }
 
-        SingleSlideStepQuery query = new(command.SlideId);
-        SlideStepVM slideStepVm = await QueryDispatcher.QueryAsync(query);
+        SingleSlideQuery query = new(command.SlideId);
+        SlideVM slideVm = await QueryDispatcher.QueryAsync(query);
 
-        guideData.Slides.Insert(stepIndex, slideStepVm);
+        guideData.Slides.Insert(stepIndex, slideVm);
     }
 
 
-    private async Task<bool> UpdateStepTitle(string s, SlideStepVM vm)
+    private async Task<bool> UpdateStepTitle(string title, SlideVM vm)
     {
         vm.ShowTitleEditing = false;
+        ChangeSlideTitleCommand command = new(guideData.GuideId, vm.Id, title);
+        Result result = await CommandDispatcher.DispatchAsync(command);
+        if (result.HasErrors)
+        {
+            SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
+            return false;
+        }
+        vm.Title = title;
         StateHasChanged();
         await Task.Yield();
         return true;
