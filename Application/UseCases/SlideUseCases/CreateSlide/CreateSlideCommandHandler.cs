@@ -22,8 +22,6 @@ private readonly ISlideContentRepo slideContentRepo;
         SlideContent slideContent = SlideContent.Create(Guid.NewGuid());
                 await slideContentRepo.CreateAsync(slideContent);
         
-        
-        
         Guide guide = await guideRepo.GetAsync(command.GuideId);
         guide.AddSlide(command.SlideId, command.StepIndex, slideContent.Id);
 
