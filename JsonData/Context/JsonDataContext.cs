@@ -12,7 +12,6 @@ public class JsonDataContext : IDisposable
     private ViaLabData Data
     {
         get => data ??= LoadData(); // auto-completed into this from larger get body.
-        set => data = value;
     }
 
     internal ICollection<Teacher> Teachers => Data.Teachers;
@@ -41,14 +40,14 @@ public class JsonDataContext : IDisposable
             File.WriteAllText(path, vldAsJson);
         } else
         {
-            Data = LoadData();
+            data = LoadData();
         }
     }
 
     internal async Task SaveChangesAsync()
     {
         await SaveData();
-        Data = null;
+        data = null;
     }  
     
     private ViaLabData LoadData()
@@ -69,6 +68,6 @@ public class JsonDataContext : IDisposable
 
     public void Dispose()
     {
-        Data = null;
+        data = null;
     }
 }
