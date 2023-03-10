@@ -2,7 +2,7 @@
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
-using Application.UseCases.GuideUseCases.ChangeDescription;
+using Application.UseCases.GuideUseCases.ChangeGuideDescription;
 using Application.UseCases.GuideUseCases.ChangeGuideTitle;
 using Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility;
 using Application.UseCases.GuideUseCases.CreateGuide;

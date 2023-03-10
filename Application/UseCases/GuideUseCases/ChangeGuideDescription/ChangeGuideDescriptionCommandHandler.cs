@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.GuideUseCases.ChangeDescription;
+namespace Application.UseCases.GuideUseCases.ChangeGuideDescription;
 
 public class ChangeGuideDescriptionCommandHandler : ICommandHandler<ChangeGuideDescriptionCommand>
 {

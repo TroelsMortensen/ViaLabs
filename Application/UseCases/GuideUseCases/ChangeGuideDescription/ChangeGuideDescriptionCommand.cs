@@ -1,3 +1,3 @@
-﻿namespace Application.UseCases.GuideUseCases.ChangeDescription;
+﻿namespace Application.UseCases.GuideUseCases.ChangeGuideDescription;
 
 public record ChangeGuideDescriptionCommand(Guid GuideId, string Description);
