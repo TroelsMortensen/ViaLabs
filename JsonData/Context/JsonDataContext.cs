@@ -45,9 +45,9 @@ public class JsonDataContext : IDisposable
         }
     }
 
-    internal void SaveChanges()
+    internal async Task SaveChangesAsync()
     {
-        SaveData();
+        await SaveData();
         Data = null;
     }  
     
@@ -58,13 +58,13 @@ public class JsonDataContext : IDisposable
         return data;
     }
 
-    private void SaveData()
+    private async Task SaveData()
     {
         if (Data is null) 
             throw new NullReferenceException("You are trying to save non-existing data. Severe server error");
         
         string vldAsJson = jsonHelper.Serialize(Data);
-        File.WriteAllText(path, vldAsJson);
+        await File.WriteAllTextAsync(path, vldAsJson);
     }
 
     public void Dispose()

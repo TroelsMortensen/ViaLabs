@@ -11,8 +11,7 @@ public class JsonUnitOfWorkImpl : IUnitOfWork
 
     public Task SaveChangesAsync()
     {
-        context.SaveChanges();
-        return Task.CompletedTask;
+        return context.SaveChangesAsync();
     }
 
 
