@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.GuideUseCases.CreateSlide;
+namespace Application.UseCases.SlideUseCases.CreateSlide;
 
 public class CreateSlideCommandHandler : ICommandHandler<CreateSlideCommand>
 {
