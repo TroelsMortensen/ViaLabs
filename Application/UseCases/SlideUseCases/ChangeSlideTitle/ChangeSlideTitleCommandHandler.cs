@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.GuideUseCases.ChangeSlideTitle;
+namespace Application.UseCases.SlideUseCases.ChangeSlideTitle;
 
 public class ChangeSlideTitleCommandHandler : ICommandHandler<ChangeSlideTitleCommand>
 {
