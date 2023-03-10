@@ -3,7 +3,7 @@ using Application.RepositoryContracts;
 using Domain.Entities;
 using Domain.OperationResult;
 
-namespace Application.UseCases.GuideUseCases.Create;
+namespace Application.UseCases.GuideUseCases.CreateGuide;
 
 public class GuideCreateHandler : ICommandHandler<CreateGuideCommand>
 {
