@@ -9,10 +9,7 @@ public class JsonDataContext : IDisposable
     private readonly string path = "vialabs.json";
 
     private ViaLabData? data;
-    private ViaLabData Data
-    {
-        get => data ??= LoadData(); // auto-completed into this from larger get body.
-    }
+    private ViaLabData Data => data ??= LoadData(); // auto-completed into this from larger get body.
 
     internal ICollection<Teacher> Teachers => Data.Teachers;
     internal ICollection<Category> Categories => Data.Categories;
