@@ -2,11 +2,11 @@
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
-using Application.UseCases.GuideUseCases.ChangeCategory;
 using Application.UseCases.GuideUseCases.ChangeDescription;
 using Application.UseCases.GuideUseCases.ChangeGuideTitle;
 using Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility;
 using Application.UseCases.GuideUseCases.CreateGuide;
+using Application.UseCases.GuideUseCases.MoveGuideToCategory;
 using Application.UseCases.SlideUseCases.ChangeSlideTitle;
 using Application.UseCases.SlideUseCases.CreateSlide;
 using Microsoft.Extensions.DependencyInjection;
