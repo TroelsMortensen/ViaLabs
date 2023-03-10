@@ -54,8 +54,8 @@ public class JsonDataContext : IDisposable
     private ViaLabData LoadData()
     {
         string vldAsJson = File.ReadAllText(path);
-        ViaLabData data = jsonHelper.Deserialize<ViaLabData>(vldAsJson);
-        return data;
+        ViaLabData resultData = jsonHelper.Deserialize<ViaLabData>(vldAsJson);
+        return resultData;
     }
 
     private async Task SaveData()
