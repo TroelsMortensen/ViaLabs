@@ -8,12 +8,10 @@ public class JsonUnitOfWorkImpl : IUnitOfWork
 
     private readonly JsonDataContext context;
 
-
     public Task SaveChangesAsync()
     {
         return context.SaveChangesAsync();
     }
-
 
     public JsonUnitOfWorkImpl(JsonDataContext context)
     {
