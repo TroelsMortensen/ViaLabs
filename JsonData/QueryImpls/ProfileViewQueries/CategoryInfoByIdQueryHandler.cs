@@ -19,7 +19,7 @@ public class CategoryInfoByIdQueryHandler : IQueryHandler<CategoryInfoByIdQuery,
     public Task<CategoryVM> Query(CategoryInfoByIdQuery byIdQuery)
     {
         CategoryVM result = context.Categories.Where(category => category.Id.Equals(byIdQuery.Id))
-            .Select(cat => new CategoryVM(cat.Id, cat.Title, cat.BackgroundColor))
+            .Select(cat => new CategoryVM(cat.Id.Value, cat.Title, cat.BackgroundColor))
             .First();
         return Task.FromResult(result);
     }

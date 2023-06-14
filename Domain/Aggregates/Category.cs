@@ -1,10 +1,11 @@
 ﻿using Domain.OperationResult;
+using Domain.Values;
 
 namespace Domain.Aggregates;
 
 public class Category
 {
-    public Guid Id { get; private set; }
+    public CategoryId Id { get; private set; }
 
     public string Title { get; private set; }
 
@@ -12,7 +13,7 @@ public class Category
 
     public string Owner { get; private set; }
 
-    public static Result<Category> Create(string title, string backgroundColor, string owningTeacher, Guid id)
+    public static Result<Category> Create(string title, string backgroundColor, string owningTeacher, CategoryId id)
     {
         title = title == null ? "" : title.Trim(' ');
 
@@ -29,7 +30,7 @@ public class Category
             );
     }
 
-    private Category(Guid id, string title, string backgroundColor, string owningTeacher)
+    private Category(CategoryId id, string title, string backgroundColor, string owningTeacher)
     {
         Id = id;
         Title = title;

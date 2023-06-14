@@ -1,4 +1,5 @@
 ﻿using Domain.OperationResult;
+using Domain.Values;
 
 namespace Domain.Aggregates;
 
@@ -12,12 +13,12 @@ public class Guide
 
     public IList<Slide> Slides { get; private set; }
 
-    public Guid CategoryId { get; private set; }
+    public CategoryId CategoryId { get; private set; }
 
     public string TeacherId { get; private set; }
     public string Description { get; private set; }
 
-    public static Result<Guide> Create(Guid guideId, string title, Guid categoryId, string teacherId)
+    public static Result<Guide> Create(Guid guideId, string title, CategoryId categoryId, string teacherId)
     {
         Result validationResult = Validate(guideId, title, categoryId, teacherId);
         if (validationResult.HasErrors)
@@ -29,13 +30,9 @@ public class Guide
         return Result.Success(guide);
     }
 
-    private static Result Validate(Guid guideId, string title, Guid categoryId, string teacherId)
+    private static Result Validate(Guid guideId, string title, CategoryId categoryId, string teacherId)
     {
         Result result = new();
-        if (guideId == null) // needed?
-        {
-            result.AddError("Guide.Id", "Guide ID cannot be empty.");
-        }
 
         if (categoryId == null)
         {
@@ -60,7 +57,7 @@ public class Guide
     {
     }
 
-    private Guide(Guid guideId, string title, Guid categoryId, string teacherId)
+    private Guide(Guid guideId, string title, CategoryId categoryId, string teacherId)
     {
         Id = guideId;
         Title = title;

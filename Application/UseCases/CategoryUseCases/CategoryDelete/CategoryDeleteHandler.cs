@@ -37,13 +37,13 @@ public class CategoryDeleteHandler : ICommandHandler<DeleteCategoryCommand>
     private async Task<Result> CheckIfCategoryCanBeDeleted(Category categoryForDeletion)
     {
         Result result = new();
-        ICollection<Guide> guidesInCategory = await guideRepo.GetByCategoryAsync(categoryForDeletion.Id);
+        ICollection<Guide> guidesInCategory = await guideRepo.GetByCategoryAsync(categoryForDeletion.Id.Value);
         if (guidesInCategory.Any())
         {
             result.AddError("Category.Guides", "Cannot delete a category, which contains guides.");
         }
 
-        ICollection<ExternalResource> externalResources = await externalResourceRepo.GetByCategoryAsync(categoryForDeletion.Id);
+        ICollection<ExternalResource> externalResources = await externalResourceRepo.GetByCategoryAsync(categoryForDeletion.Id.Value);
         if (externalResources.Any())
         {
             result.AddError("Category.ExternalResources", "Cannot delete a category, which contains external resources.");

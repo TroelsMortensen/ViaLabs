@@ -25,7 +25,7 @@ public class ProfileInfoOverviewQueryHandler : IQueryHandler<ProfileInfoOverview
             .Where(category => category.Owner.Equals(teacher))
             .Select(c =>
                 new CategoryWithGuidesAndResourcesVM(
-                    new CategoryVM(c.Id, c.Title, c.BackgroundColor),
+                    new CategoryVM(c.Id.Value, c.Title, c.BackgroundColor),
                     context.Guides.Where(guide => guide.CategoryId.Equals(c.Id)).Select(g => new GuideHeaderVM(g.Id, g.Title)).ToList(),
                     context.ExternalResources.Where(ext => ext.CategoryId.Equals(c.Id)).Select(er => new ExternalResourceDisplayVM(er.Id, er.Title, er.Url, er.Description)).ToList()
                 )

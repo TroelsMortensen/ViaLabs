@@ -23,7 +23,6 @@
 
     <ItemGroup>
       <Folder Include="ByFeature" />
-      <Folder Include="ByUtil" />
     </ItemGroup>
 
     <ItemGroup>

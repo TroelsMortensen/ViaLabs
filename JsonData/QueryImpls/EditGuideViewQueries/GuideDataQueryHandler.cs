@@ -23,7 +23,7 @@ public class GuideDataQueryHandler : IQueryHandler<GuideDataForEditQuery, GuideD
             {
                 GuideId = guide.Id,
                 Title = guide.Title,
-                CategoryId = guide.CategoryId,
+                CategoryId = guide.CategoryId.Value,
                 Description = guide.Description,
                 StepNumbersVisible = guide.IsDisplayingStepNums,
                 Slides = guide.Slides.Select(step => new SlideVM
@@ -36,7 +36,7 @@ public class GuideDataQueryHandler : IQueryHandler<GuideDataForEditQuery, GuideD
                 CategoriesByTeacher = context
                     .Categories
                     .Where(category => category.Owner.Equals(guide.TeacherId))
-                    .Select(category => new CategoryVM(category.Id, category.Title, category.BackgroundColor))
+                    .Select(category => new CategoryVM(category.Id.Value, category.Title, category.BackgroundColor))
                     .ToList()
             }).SingleOrDefault(vm => vm.GuideId.Equals(query.Id));
         if (guideData == null)

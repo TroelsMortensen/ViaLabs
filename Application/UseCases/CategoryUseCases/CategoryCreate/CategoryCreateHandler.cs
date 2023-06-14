@@ -2,6 +2,7 @@
 using Application.RepositoryContracts;
 using Domain.Aggregates;
 using Domain.OperationResult;
+using Domain.Values;
 
 namespace Application.UseCases.CategoryUseCases.CategoryCreate;
 
@@ -18,7 +19,7 @@ public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand>
 
     public async Task<Result> Handle(CreateCategoryCommand command)
     {
-        Result<Category> newCatResult = Category.Create(command.Title, command.BackgroundColor, command.OwningTeacher, command.Id);
+        Result<Category> newCatResult = Category.Create(command.Title, command.BackgroundColor, command.OwningTeacher, CategoryId.FromString(command.Id.ToString()));
         
         if (newCatResult.HasErrors)
             return Result.Failure(newCatResult.Errors);
