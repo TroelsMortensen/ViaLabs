@@ -1,5 +1,6 @@
 ﻿using Application.RepositoryContracts;
 using Domain.Aggregates;
+using Domain.Aggregates.Teacher;
 using Domain.Exceptions;
 using JsonData.Context;
 

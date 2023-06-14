@@ -35,6 +35,8 @@ public class OperationResultTests
         Assert.True(result.IsFailure);
     }
 
+    
+    
     public static List<object[]> FailureData()
     {
         return new List<object[]>

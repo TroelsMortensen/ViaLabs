@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates;
+using Domain.Aggregates.Teacher;
 using Domain.Exceptions;
 using JsonData.Context;
 using ViewData;
@@ -25,7 +26,7 @@ public class TeacherForProfileViewQueryHandler : IQueryHandler<TeacherQuery, Tea
             throw new NotFoundException($"Teacher with name {query.TeacherName} was not found.");
         }
 
-        TeacherVM resultVm = new(teacher.Name);
+        TeacherVM resultVm = new(teacher.Name.Value);
         return Task.FromResult(resultVm);
     }
 }

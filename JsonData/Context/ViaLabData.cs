@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates;
+using Domain.Aggregates.Teacher;
 
 namespace JsonData.Context;
 

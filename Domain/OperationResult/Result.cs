@@ -1,4 +1,6 @@
-﻿namespace Domain.OperationResult;
+﻿using Domain.Values;
+
+namespace Domain.OperationResult;
 
 public class Result
 {
@@ -85,6 +87,11 @@ public class Result
 
         return this;
     }
+
+    public  Result<T> IfSuccessElse<T>(Func<Result, Result<T>> success,Func<Result, Result<T>> failure )
+    {
+        return IsSuccess ? success(this) : failure(this);
+    }
 }
 
 public class Result<T> : Result
@@ -100,7 +107,9 @@ public class Result<T> : Result
         value = tvalue;
     }
 
+    public static implicit operator Result<T>(T t) => new Result<T>(t);
 
+    public static Result<T> FromResult(Result r) => new Result<T>(r.Errors);
 
     private Result()
     {

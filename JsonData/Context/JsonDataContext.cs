@@ -1,4 +1,6 @@
 ﻿using Domain.Aggregates;
+using Domain.Aggregates.Teacher;
+using Domain.Values;
 using JsonData.JsonSerializationUtils;
 
 namespace JsonData.Context;
@@ -29,7 +31,7 @@ public class JsonDataContext : IDisposable
             {
                 Teachers = new List<Teacher>()
                 {
-                    Teacher.Create("VIA\\TRMO").Value
+                    Teacher.Create(TeacherName.Create("VIA\\TRMO").Value).Value
                 },
                 UnApprovedTeachers = new List<Teacher>(),
             };
