@@ -1,6 +1,6 @@
 ﻿using Application.HandlerContracts;
 using Application.RepositoryContracts;
-using Domain.Entities;
+using Domain.Aggregates;
 using Domain.OperationResult;
 
 namespace Application.UseCases.GuideUseCases.ChangeGuideTitle;

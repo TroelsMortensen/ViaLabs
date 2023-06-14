@@ -1,6 +1,6 @@
 ﻿using Domain.OperationResult;
 
-namespace Domain.Entities;
+namespace Domain.Aggregates;
 
 public class Guide
 {

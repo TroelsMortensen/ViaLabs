@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Aggregates;
 using JsonData.JsonSerializationUtils;
 
 namespace JsonData.Context;

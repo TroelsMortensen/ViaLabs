@@ -1,4 +1,4 @@
-﻿using Domain.Entities;
+﻿using Domain.Aggregates;
 using Domain.OperationResult;
 
 namespace UnitTests.Domain.Entities;

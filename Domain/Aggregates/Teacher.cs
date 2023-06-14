@@ -1,7 +1,6 @@
-﻿using System.Text.Json.Serialization;
-using Domain.OperationResult;
+﻿using Domain.OperationResult;
 
-namespace Domain.Entities;
+namespace Domain.Aggregates;
 
 public class Teacher
 {
