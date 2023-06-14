@@ -20,7 +20,7 @@ public class ChangeGuideTitleCommandHandler : ICommandHandler<ChangeGuideTitleCo
     {
         Guide guide = await guideRepo.GetAsync(command.GuideId);
         Result result = guide.ChangeTitle(command.NewTitle);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             return result;
         }

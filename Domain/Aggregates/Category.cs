@@ -19,7 +19,7 @@ public class Category
 
         Result validationResult = ValidateData(title, backgroundColor);
 
-        return validationResult.HasErrors
+        return validationResult.IsFailure
             ? new Result<Category>(validationResult.Errors)
             : new(
                 new Category(
@@ -146,7 +146,7 @@ public class Category
     public Result Update(string newTitle, string newBackgroundColor)
     {
         Result validationResult = ValidateData(newTitle, newBackgroundColor);
-        if (validationResult.HasErrors)
+        if (validationResult.IsFailure)
             return validationResult;
 
         Title = newTitle;

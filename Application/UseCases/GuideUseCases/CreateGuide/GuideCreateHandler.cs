@@ -20,7 +20,7 @@ public class GuideCreateHandler : ICommandHandler<CreateGuideCommand>
     public async Task<Result> Handle(CreateGuideCommand command)
     {
         Result<Guide> result = Guide.Create(command.GuideId, command.Title,  CategoryId.FromGuid(command.CategoryId), command.TeacherName);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             return Result.Failure(result.Errors);
         }

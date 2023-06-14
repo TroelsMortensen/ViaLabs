@@ -26,7 +26,7 @@ public class CategoryDeleteHandler : ICommandHandler<DeleteCategoryCommand>
         Category categoryForDeletion = await categoryRepo.GetAsync(command.Id);
         Result result = await CheckIfCategoryCanBeDeleted(categoryForDeletion);
 
-        if (result.HasErrors) return result;
+        if (result.IsFailure) return result;
 
         await categoryRepo.DeleteAsync(command.Id);
         await unitOfWork.SaveChangesAsync();

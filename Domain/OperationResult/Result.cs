@@ -26,7 +26,8 @@ public class Result
     public void AddError(string attribute, string msg) => errors.Add(new Error(attribute, msg));
     public void AddErrors(IEnumerable<Error> errorsToAdd) => this.errors.AddRange(errorsToAdd);
     public IEnumerable<Error> Errors => errors.AsReadOnly();
-    public bool HasErrors => Errors.Any();
+    public bool IsFailure => Errors.Any();
+    public bool IsSuccess => !IsFailure;
 
     // convenience method, which should probably not actually be used. Errors display format should be defined in UI.
     public string GetCombinedErrorMessage() 
@@ -68,6 +69,21 @@ public class Result
         Result result = new Result();
         result.AddError(attribute, message);
         return result;
+    }
+
+    public static Result Validation()
+    {
+        return new Result();
+    }
+
+    public Result Require(Func<bool> func, string attr, string error)
+    {
+        if (!func())
+        {
+            AddError(attr, error);
+        }
+
+        return this;
     }
 }
 
@@ -115,7 +131,7 @@ public class Result<T> : Result
 
     public T Value
     {
-        get => HasErrors ? throw new NoValueWhenErrorsException() : this.value;
+        get => IsFailure ? throw new NoValueWhenErrorsException() : this.value;
         set => this.value = value;
     }
 }

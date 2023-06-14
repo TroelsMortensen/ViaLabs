@@ -67,7 +67,7 @@
 
         Result result = await CommandDispatcher.DispatchAsync(createCategory);
 
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;

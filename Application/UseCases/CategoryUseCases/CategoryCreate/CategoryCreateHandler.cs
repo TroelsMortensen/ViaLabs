@@ -21,7 +21,7 @@ public class CategoryCreateHandler : ICommandHandler<CreateCategoryCommand>
     {
         Result<Category> newCatResult = Category.Create(command.Title, command.BackgroundColor, command.OwningTeacher, CategoryId.FromString(command.Id.ToString()));
         
-        if (newCatResult.HasErrors)
+        if (newCatResult.IsFailure)
             return Result.Failure(newCatResult.Errors);
 
         Category category = newCatResult.Value;

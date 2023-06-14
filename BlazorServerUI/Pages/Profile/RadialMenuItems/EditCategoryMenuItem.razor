@@ -70,7 +70,7 @@
         UpdateCategoryCommand to = new(categoryVm.Id, editedCategoryTitle!, editedBackgroundColor!);
 
         Result result = await UpdateCategoryHandler.Handle(to);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             errorLabel = result.GetCombinedErrorMessage();
             return;

@@ -184,7 +184,7 @@
     private async Task<bool> ChangeGuideTitle(string arg)
     {
         Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideTitleCommand(guideData.GuideId, arg));
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
             return false;
@@ -197,7 +197,7 @@
     {
         ChangeGuideCategoryCommand command = new(guideData.GuideId, Guid.Parse(arg));
         Result result = await CommandDispatcher.DispatchAsync(command);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
         }
@@ -209,7 +209,7 @@
     {
         Console.WriteLine("Here");
         Result result = await CommandDispatcher.DispatchAsync(new ChangeGuideDescriptionCommand(guideData.GuideId, arg));
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
             return false;
@@ -235,7 +235,7 @@
         }
 
 
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
             return;
@@ -247,7 +247,7 @@
     {
         CreateSlideCommand command = new(guideData.GuideId, Guid.NewGuid(), stepIndex);
         Result slideResult = await CommandDispatcher.DispatchAsync(command);
-        if (slideResult.HasErrors)
+        if (slideResult.IsFailure)
         {
             SnackBarHandler.ShowError(slideResult.GetCombinedErrorMessage());
             return;
@@ -265,7 +265,7 @@
         vm.ShowTitleEditing = false;
         ChangeSlideTitleCommand command = new(guideData.GuideId, vm.Id, title);
         Result result = await CommandDispatcher.DispatchAsync(command);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             SnackBarHandler.ShowError(result.GetCombinedErrorMessage());
             return false;

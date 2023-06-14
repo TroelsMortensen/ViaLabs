@@ -20,7 +20,7 @@ public class CategoryUpdateHandler : ICommandHandler<UpdateCategoryCommand>
     {
         Category catBeingUpdated = await categoryRepo.GetAsync(request.Id);
         Result result = catBeingUpdated.Update(request.Title, request.BackgroundColor);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             return result;
         }

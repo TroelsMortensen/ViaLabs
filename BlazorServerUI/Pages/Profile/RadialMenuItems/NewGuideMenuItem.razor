@@ -71,7 +71,7 @@
         CreateGuideCommand createGuideCommand = new(Guid.NewGuid(), Category.Id, newGuideTitle, teacherVm.Name);
 
         Result result = await CommandDispatcher.DispatchAsync(createGuideCommand);
-        if (result.HasErrors)
+        if (result.IsFailure)
         {
             createGuideErrorLabel = result.GetCombinedErrorMessage();
             return;

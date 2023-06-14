@@ -13,7 +13,7 @@ public class Teacher
         Teacher teacher = new(name);
         Result validationResult = Validate(name);
 
-        return validationResult.HasErrors ? new(validationResult.Errors) : new(teacher);
+        return validationResult.IsFailure ? new(validationResult.Errors) : new(teacher);
     }
 
     private static Result Validate(string name)

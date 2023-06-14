@@ -21,7 +21,7 @@ public class Guide
     public static Result<Guide> Create(Guid guideId, string title, CategoryId categoryId, string teacherId)
     {
         Result validationResult = Validate(guideId, title, categoryId, teacherId);
-        if (validationResult.HasErrors)
+        if (validationResult.IsFailure)
         {
             return Result.Failure<Guide>(validationResult.Errors);
         }

@@ -22,7 +22,7 @@ public class ChangeGuideDescriptionCommandHandler : ICommandHandler<ChangeGuideD
         
         Result result = guide.ChangeDescription(command.Description);
         
-        if (result.HasErrors) return result;
+        if (result.IsFailure) return result;
 
         await unitOfWork.SaveChangesAsync();
         
