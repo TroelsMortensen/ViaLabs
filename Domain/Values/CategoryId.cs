@@ -12,4 +12,9 @@ public record CategoryId()
     {
         return new CategoryId(Guid.NewGuid());
     }
+
+    public static CategoryId FromString(string idAsString)
+    {
+        return new CategoryId(Guid.Parse(idAsString));
+    }
 }
