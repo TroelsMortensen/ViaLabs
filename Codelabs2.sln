@@ -10,8 +10,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazorServerUI", "BlazorSer
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MarkdownEditorComponent", "MarkdownEditorComponent\MarkdownEditorComponent.csproj", "{3D202D23-6A75-4E56-909D-B6FE1CA14B91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTests_deprecated", "UnitTests_deprecated\UnitTests_deprecated.csproj", "{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewData", "ViewData\ViewData.csproj", "{5EC3474F-BF51-485A-9879-CFF0122C4595}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{969D4557-5856-468A-8D78-4F4BF757243E}"
@@ -54,10 +52,6 @@ Global
 		{3D202D23-6A75-4E56-909D-B6FE1CA14B91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D202D23-6A75-4E56-909D-B6FE1CA14B91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D202D23-6A75-4E56-909D-B6FE1CA14B91}.Release|Any CPU.Build.0 = Release|Any CPU
-		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{77B34C5F-1A9F-4ABF-B5CC-CC5E2D39AE62}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5EC3474F-BF51-485A-9879-CFF0122C4595}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5EC3474F-BF51-485A-9879-CFF0122C4595}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5EC3474F-BF51-485A-9879-CFF0122C4595}.Release|Any CPU.ActiveCfg = Release|Any CPU
