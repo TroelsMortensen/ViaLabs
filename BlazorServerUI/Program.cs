@@ -1,9 +1,9 @@
 using Application;
+using ApplicationEntry;
+using ApplicationEntry.CommandDispatcherImpls;
+using ApplicationEntry.QueryDispatcherImpls;
 using BlazorServerUI.Popups;
 using BlazorServerUI.StateContainers.Profile;
-using Dispatcher;
-using Dispatcher.Command;
-using Dispatcher.Query;
 using JsonData;
 using Microsoft.AspNetCore.Authentication.Negotiate;
 

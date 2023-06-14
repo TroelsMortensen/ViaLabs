@@ -2,7 +2,7 @@
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Domain.OperationResult;
 
-namespace Dispatcher.Command;
+namespace ApplicationEntry.CommandDispatcherImpls;
 
 public class CommandDispatcherWithOverloadMethods
 {

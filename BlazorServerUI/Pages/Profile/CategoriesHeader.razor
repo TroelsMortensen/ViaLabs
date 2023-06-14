@@ -1,15 +1,11 @@
-﻿@using BlazorServerUI.StateContainers.Profile
+﻿@using SingleCategoryInfoQuery = ViewData.ProfileInfo.Queries.CategoryInfoByIdQuery
+@using ApplicationEntry
+@using BlazorServerUI.StateContainers.Profile
+@using Domain.OperationResult
+@using ViewData.ProfileInfo.DTOs
+@using Application.UseCases.CategoryUseCases.CategoryCreate
 @using BlazorServerUI.Popups
 @using System.Drawing
-@using Application.HandlerContracts
-@using Application.UseCases.CategoryUseCases.CategoryCreate
-@using Dispatcher
-@using Domain.OperationResult
-@using JsonData.QueryImpls.ProfileViewQueries
-@using ViewData
-@using ViewData.ProfileInfo.DTOs
-@using ViewData.ProfileInfo.Queries
-@using SingleCategoryInfoQuery = ViewData.ProfileInfo.Queries.CategoryInfoByIdQuery
 @inject ICommandDispatcher CommandDispatcher
 @inject ProfileStateContainer ProfileStateContainer
 @inject IQueryDispatcher CategoryQueryHandler

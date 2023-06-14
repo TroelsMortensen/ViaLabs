@@ -1,9 +1,9 @@
 ﻿using System.Reflection;
 using Application.HandlerContracts;
-using Dispatcher.Exceptions;
+using ApplicationEntry.Exceptions;
 using Domain.OperationResult;
 
-namespace Dispatcher.Command;
+namespace ApplicationEntry.CommandDispatcherImpls;
 
 /**
  * From here

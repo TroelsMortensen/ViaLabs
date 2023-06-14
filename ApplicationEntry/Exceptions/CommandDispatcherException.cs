@@ -1,4 +1,4 @@
-﻿namespace Dispatcher.Exceptions;
+﻿namespace ApplicationEntry.Exceptions;
 
 public class CommandDispatcherException : Exception
 {

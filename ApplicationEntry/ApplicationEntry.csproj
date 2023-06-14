@@ -11,4 +11,8 @@
       <ProjectReference Include="..\ViewData\ViewData.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Commands\Category" />
+    </ItemGroup>
+
 </Project>

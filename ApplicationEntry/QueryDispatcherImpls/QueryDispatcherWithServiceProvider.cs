@@ -1,8 +1,8 @@
-﻿using Dispatcher.Exceptions;
+﻿using ApplicationEntry.Exceptions;
 using Microsoft.Extensions.DependencyInjection;
 using ViewData;
 
-namespace Dispatcher.Query;
+namespace ApplicationEntry.QueryDispatcherImpls;
 
 /**
  * Inspiration found here https://www.youtube.com/watch?v=4e83trumwcM
@@ -48,7 +48,8 @@ public class QueryDispatcherWithServiceProvider : IQueryDispatcher
         }
 
         // TODO not efficient using reflection, but I got annoyed and have left it as is, for now. Will totally come back some day.
-        return (Task<TResult>)queryHandler.GetType().GetMethod(nameof(Query))!.Invoke(queryHandler, new []{q}); 
+        // TODO jeg ændrede navn på nameof(QueryAsync) efter ændring af namespace navn, der før hed Query.
+        return (Task<TResult>)queryHandler.GetType().GetMethod(nameof(QueryAsync))!.Invoke(queryHandler, new []{q}); 
     }
 
     // private Task<TResult> Query1<TQuery, TResult>(IQuery<TResult> query, TQuery type) where TQuery : IQuery<TResult>

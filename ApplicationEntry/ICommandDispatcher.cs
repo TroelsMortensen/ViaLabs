@@ -1,6 +1,6 @@
 ﻿using Domain.OperationResult;
 
-namespace Dispatcher;
+namespace ApplicationEntry;
 
 public interface ICommandDispatcher
 {

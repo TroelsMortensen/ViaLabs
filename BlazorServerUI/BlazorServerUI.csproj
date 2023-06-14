@@ -12,7 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
-      <ProjectReference Include="..\Dispatcher\Dispatcher.csproj" />
+      <ProjectReference Include="..\ApplicationEntry\ApplicationEntry.csproj" />
       <ProjectReference Include="..\JsonData\JsonData.csproj" />
       <ProjectReference Include="..\MarkdownEditorComponent\MarkdownEditorComponent.csproj" />
     </ItemGroup>

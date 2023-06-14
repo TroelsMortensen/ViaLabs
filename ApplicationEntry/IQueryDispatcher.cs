@@ -1,6 +1,6 @@
 ﻿using ViewData;
 
-namespace Dispatcher;
+namespace ApplicationEntry;
 
 public interface IQueryDispatcher
 {

@@ -2,11 +2,11 @@
 using Application.UseCases.CategoryUseCases.CategoryCreate;
 using Application.UseCases.CategoryUseCases.CategoryDelete;
 using Application.UseCases.CategoryUseCases.CategoryUpdate;
-using Dispatcher.Exceptions;
+using ApplicationEntry.Exceptions;
 using Domain.OperationResult;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dispatcher.Command;
+namespace ApplicationEntry.CommandDispatcherImpls;
 
 public class CommandDispatcherWithSwitch : ICommandDispatcher
 {

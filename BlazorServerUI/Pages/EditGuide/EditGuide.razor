@@ -1,17 +1,16 @@
 ﻿@page "/EditGuide/{GuideId:guid}"
+@using ApplicationEntry
 @using BlazorServerUI.MarkdownConvert
-@using Dispatcher
 @using ViewData.ProfileInfo.DTOs
 @using ViewData.ProfileInfo.Queries
 @using Domain.OperationResult
-@using Application.UseCases.GuideUseCases.ChangeGuideDescription
 @using Application.UseCases.GuideUseCases.ChangeGuideTitle
 @using Application.UseCases.GuideUseCases.ChangeSlidesNumberVisibility
 @using Application.UseCases.GuideUseCases.MoveGuideToCategory
 @using Application.UseCases.SlideUseCases.ChangeSlideTitle
 @using Application.UseCases.SlideUseCases.CreateSlide
 @using BlazorServerUI.Popups
-@using Domain.Entities
+@using Application.UseCases.GuideUseCases.ChangeGuideDescription
 @inject IQueryDispatcher QueryDispatcher
 @inject ICommandDispatcher CommandDispatcher
 
