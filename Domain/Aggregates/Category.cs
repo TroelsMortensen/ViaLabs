@@ -54,7 +54,7 @@ public class Category
     {
     }
 
-    private static Result ValidateData(string title, string backgroundColor)
+    private static Result ValidateData(string title, string backgroundColor) 
     {
         Result result = new();
 

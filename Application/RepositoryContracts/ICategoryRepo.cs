@@ -1,4 +1,5 @@
 ﻿using Domain.Aggregates;
+using Domain.OperationResult;
 
 namespace Application.RepositoryContracts;
 

@@ -1,6 +1,7 @@
 ﻿using Application.RepositoryContracts;
 using Domain.Aggregates;
 using Domain.Exceptions;
+using Domain.OperationResult;
 using JsonData.Context;
 
 namespace JsonData.Repositories;

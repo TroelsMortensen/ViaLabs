@@ -23,8 +23,8 @@ public class CategoryDeleteHandler : ICommandHandler<DeleteCategoryCommand>
 
     public async Task<Result> Handle(DeleteCategoryCommand command)
     {
-        Category categoryForDeletion = await categoryRepo.GetAsync(command.Id);
-        Result result = await CheckIfCategoryCanBeDeleted(categoryForDeletion);
+        Result<Category> categoryForDeletionResult = await categoryRepo.GetAsync(command.Id);
+        Result result = await CheckIfCategoryCanBeDeleted(categoryForDeletionResult.Value);
 
         if (result.IsFailure) return result;
 

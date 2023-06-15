@@ -21,9 +21,9 @@ public class ChangeGuideCategoryCommandHandler : ICommandHandler<ChangeGuideCate
     public async Task<Result> Handle(ChangeGuideCategoryCommand command)
     {
         Guide guide = await guideRepo.GetAsync(command.GuideId);
-        Category category = await categoryRepo.GetAsync(command.CategoryId);
+        Result<Category> category = await categoryRepo.GetAsync(command.CategoryId);
 
-        guide.ChangeCategoryTo(category);
+        guide.ChangeCategoryTo(category.Value);
         
         await unitOfWork.SaveChangesAsync();
         

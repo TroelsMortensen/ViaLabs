@@ -1,4 +1,6 @@
-﻿using Domain.Values;
+﻿using System.Runtime.CompilerServices;
+using Domain.Aggregates;
+using Domain.Values;
 
 namespace Domain.OperationResult;
 
@@ -92,6 +94,14 @@ public class Result
     {
         return IsSuccess ? success(this) : failure(this);
     }
+
+
+    public async Task<Result<Category>> Then<T>(Func<Task<Result<Category>>> func)
+    {
+        return await func();
+    }
+
+    
 }
 
 public class Result<T> : Result
@@ -120,6 +130,11 @@ public class Result<T> : Result
         AddError(errorCode, errorMessage);
     }
 
+    public Result(Result fromResult)
+    {
+        AddErrors(fromResult.Errors);
+    }
+
 
     // public Result()
     // {
@@ -143,6 +158,7 @@ public class Result<T> : Result
         get => IsFailure ? throw new NoValueWhenErrorsException() : this.value;
         set => this.value = value;
     }
+
 }
 
 public record struct Error(string Attribute, string Message);
